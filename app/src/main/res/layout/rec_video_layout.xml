@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:elevation="20dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    android:layout_width="180dp"
+    android:layout_height="150dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rl_youtube"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+          android:id="@+id/youtube_player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoPlay="false"
+            app:showYouTubeButton="true"
+            app:handleNetworkEvents="true"
+            app:enableAutomaticInitialization="true"
+            app:showFullScreenButton="false" />
+        </RelativeLayout>
+        <!--  <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+              android:id="@+id/videoplayer"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"/>
+
+          <ImageView
+              android:id="@+id/img_replay"
+              android:layout_width="match_parent"
+              android:layout_height="200dp"
+              android:scaleType="fitXY"
+
+              />
+
+          <ImageView
+              android:id="@+id/clickPlay"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/iconplay"
+              android:layout_centerInParent="true"
+              />-->
+
+
+
+        <RelativeLayout
+            android:id="@+id/rel"
+            android:visibility="gone"
+            android:layout_width="180dp"
+            android:layout_height="150dp">
+
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+                android:id="@+id/videoplayer"
+                android:layout_width="180dp"
+                android:layout_height="150dp"/>
+
+            <ImageView
+                android:id="@+id/img_replay"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+
+                />
+
+            <ImageView
+                android:id="@+id/clickPlay"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/iconplay"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text will be here"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:layout_below="@id/rel"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_bold"
+            android:layout_margin="10dp"/>
+
+
+
+        <RelativeLayout
+            android:layout_below="@id/video_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/txt_dateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="djfhdjkhfjd"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

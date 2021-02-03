@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+
+
+                <ImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerInside"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/rod"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_back"
+                    android:layout_width="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/grey_circle"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:layout_centerInParent="true"
+                        android:background="?actionBarItemBackground"
+
+                        android:tint="@color/white"
+                        android:src="@drawable/bback"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@+id/rl_chat"
+                    android:background="@drawable/grey_circle"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:id="@+id/imgshare"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="10dp"
+                        android:layout_centerInParent="true"
+                        android:background="?actionBarItemBackground"
+
+                        android:tint="@color/white"
+                        android:src="@drawable/share"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_chat"
+                    android:layout_width="35dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/grey_circle"
+                    android:layout_height="35dp">
+                    <com.varunest.sparkbutton.SparkButton
+                        android:id="@+id/spark_button"
+                        android:layout_width="35dp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_height="35dp"
+                        android:visibility="visible"
+                        app:sparkbutton_activeImage="@drawable/heart_new"
+                        app:sparkbutton_inActiveImage="@drawable/fav"
+                        app:sparkbutton_iconSize="25dp"
+                        app:sparkbutton_primaryColor="@color/pink"
+                        app:sparkbutton_secondaryColor="@color/pink" />
+
+                    <com.varunest.sparkbutton.SparkButton
+                        android:id="@+id/spark_fav_already"
+                        android:layout_width="35dp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_height="35dp"
+                        android:visibility="gone"
+                        app:sparkbutton_activeImage="@drawable/fav"
+                        app:sparkbutton_inActiveImage="@drawable/heart_new"
+                        app:sparkbutton_iconSize="25dp"
+                        app:sparkbutton_primaryColor="@color/pink"
+                        app:sparkbutton_secondaryColor="@color/pink" />
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#dbdbdb"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_rewardDetail"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/img_product"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/grey_light"
+                android:text="-"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/txt_product_name"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/pink"
+                    android:text="-"/>
+
+                <TextView
+                    android:id="@+id/txt_dis1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_toRightOf="@+id/txt_point"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/pink"
+                    android:text=" Points"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_available"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/grey_light"
+                android:text="Available Stock"/>
+
+
+            <TextView
+                android:id="@+id/txtStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:visibility="visible"
+                android:layout_toRightOf="@+id/txt_available"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/relPrice"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/grey_light"
+                android:text=""/>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/rl_3"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_colo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:text="Color"/>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_new"
+                    android:layout_width="200dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/txt_colo"
+                    android:background="@drawable/greylight_stroke"
+                    android:layout_height="40dp">
+                    <Spinner
+                        android:id="@+id/spin_color"
+                        android:layout_width="fill_parent"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="50dp"
+                        android:padding="1dip"
+                        android:prompt="@string/spinner_color"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/rl_4"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/txt_siz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:text="Model"/>
+
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txt_siz"
+                    android:background="@drawable/greylight_stroke"
+                    android:layout_height="40dp">
+                    <Spinner
+                        android:id="@+id/spin_model"
+                        android:layout_width="fill_parent"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="50dp"
+                        android:padding="1dip"
+                        android:prompt="@string/spinner_title"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/rl_5"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/txt_weight1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:text="Weight"/>
+
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txt_weight1"
+                    android:background="@drawable/greylight_stroke"
+                    android:layout_height="40dp">
+                    <Spinner
+                        android:id="@+id/spin_weight"
+                        android:layout_width="fill_parent"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="50dp"
+                        android:padding="1dip"
+                        android:prompt="@string/spinner_title"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/rl"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_height="45dp">
+
+                    <Button
+                        android:id="@+id/btn_redeem"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/pinkcart_rounded"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Redeem"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#dbdbdb"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_mrp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                >
+
+                <TextView
+                    android:id="@+id/txt_mrp1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Category :"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+
+
+                <TextView
+                    android:id="@+id/txt_CatName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toRightOf="@+id/txt_mrp1"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_brand1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Brand     :"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/txt_CatName"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+
+
+                <TextView
+                    android:id="@+id/txt_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/txt_CatName"
+                    android:layout_toRightOf="@+id/txt_brand1"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/txt_weight11"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Weight    :"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/txt_brand1"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:visibility="gone"
+                   android:layout_toRightOf="@+id/txt_weight11"
+                   android:layout_below="@+id/txt_brand"
+                   android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/txt_weight"
+                     android:layout_width="wrap_content"
+                     android:textColor="@color/black"
+                     android:layout_marginTop="5dp"
+                     android:layout_marginLeft="5dp"
+                     android:fontFamily="@font/open_sans_regular"
+                     android:layout_height="wrap_content"
+                     android:text="----"/>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:textColor="@color/black"
+                       android:layout_marginTop="5dp"
+                       android:layout_toRightOf="@+id/txt_weight"
+                       android:layout_marginLeft="5dp"
+                       android:fontFamily="@font/open_sans_regular"
+                       android:textSize="14sp"
+                       android:layout_height="wrap_content"
+                       android:text="Kg"/>
+
+               </RelativeLayout>
+
+
+
+
+                <TextView
+                    android:id="@+id/txt_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_weight11"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Description :"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_des"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rec_reward_video"/>
+        </LinearLayout>
+    </ScrollView>
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
+</RelativeLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/rl_check"
+        android:layout_marginTop="35dp"
+        android:layout_height="wrap_content">
+
+
+        <CheckBox
+            android:id="@+id/check_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/rl_check"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="130dp"
+                android:id="@+id/rl_5"
+                android:background="@drawable/grey_cartstrk"
+                android:layout_height="130dp">
+                <RelativeLayout
+                    android:layout_width="120dp"
+                    android:id="@+id/card"
+                   android:layout_centerInParent="true"
+                    android:layout_height="120dp">
+
+
+                    <ImageView
+                        android:id="@+id/img_product"
+                        android:layout_width="120dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/rod"
+                        android:layout_height="120dp"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+
+                android:layout_toRightOf="@+id/rl_5"
+                android:id="@+id/txt_name"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="-"
+                android:maxEms="15"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_toRightOf="@+id/rl_5"
+                android:id="@+id/txt_color"
+                android:layout_below="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="-"
+                android:maxEms="15"
+                android:visibility="visible"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_toRightOf="@+id/rl_5"
+                android:id="@+id/txt_model"
+                android:layout_below="@+id/txt_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="-"
+                android:maxEms="15"
+                android:visibility="visible"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/rl1"
+                android:layout_toRightOf="@+id/rl_5"
+                android:layout_below="@+id/txt_model"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_sym"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="RM"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/pink"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/txt_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_sym"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
+                    android:textColor="@color/pink"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:id="@+id/rl_count"
+                android:layout_toRightOf="@+id/rl_5"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/rl1"
+                android:layout_marginTop="10dp"
+                android:layout_height="35dp">
+
+
+                <ImageView
+                    android:id="@+id/img_minus"
+                    android:layout_width="37dp"
+                    android:padding="8dp"
+                    android:layout_centerVertical="true"
+                    android:background="?actionBarItemBackground"
+                    android:layout_height="37dp"
+                    android:src="@drawable/min" />
+
+                <TextView
+                    android:id="@+id/txt_itemCount"
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:text="1"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/grey_light"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:id="@+id/img_plus"
+                    android:layout_width="37dp"
+                    android:padding="8dp"
+                    android:layout_alignParentRight="true"
+                    android:background="?actionBarItemBackground"
+                    android:layout_height="37dp"
+                    android:src="@drawable/add" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/txt_brand"
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/rl_count"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="9dp"
+                    android:layout_alignParentRight="true"
+                    android:background="?actionBarItemBackground"
+                    android:src="@drawable/dete"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

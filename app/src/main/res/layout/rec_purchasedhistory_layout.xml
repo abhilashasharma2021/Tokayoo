@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_history"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:elevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="In Progress"
+                android:textColor="@color/pink"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_order">
+
+
+                <RelativeLayout
+                    android:id="@+id/card"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/greylight_strk"
+                    android:gravity="center">
+
+
+                    <ImageView
+                        android:id="@+id/img_product"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/a5"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:text="Order"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/card"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Date"
+                    android:textColor="@color/grey_light"
+                    android:textSize="16sp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/card">
+
+                    <TextView
+                        android:id="@+id/txt_sym1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="RM"
+                        android:textColor="@color/pink"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@+id/txt_sym1"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/pink"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:visibility="gone">
+
+                <TextView
+
+                    android:id="@+id/txt_qt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Qty :"
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
+
+                <TextView
+
+                    android:id="@+id/txt_qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toRightOf="@+id/txt_qt"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="1"
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/txt_orderNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/txt_order"
+                android:fontFamily="@font/opensans_bold"
+                android:text="-"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/txt_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_qty"
+                android:layout_marginStart="15dp"
+
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Black"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_color"
+                android:layout_marginStart="15dp"
+
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Model 1"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Order No."
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_count"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="#dbdbdb"
+        android:gravity="center"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/txt_sym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="+"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txt_sym"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="2"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txt_count"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="more"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#dbdbdb" />
+
+
+</LinearLayout>

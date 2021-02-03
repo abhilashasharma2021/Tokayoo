@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddressListActivity">
+    <LinearLayout
+        android:id="@+id/linearHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/pink_rounded"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edit_Search"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:fontFamily="@font/open_sans_regular"
+                android:hint="Search"
+                android:paddingLeft="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?actionBarItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/search_100" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_Name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_back"
+                android:layout_width="35dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_height="35dp">
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="8dp"
+                    android:layout_centerInParent="true"
+                    android:background="?actionBarItemBackground"
+                    android:tint="@color/grey_light"
+                    android:src="@drawable/bback"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/rl_back"
+                android:text="Address List"
+                android:textColor="@color/black"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_below="@+id/linearHeader"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#dbdbdb"/>
+
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/iv_noaddress"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:src="@drawable/noaddress"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_above="@+id/rl_bot"
+        android:layout_below="@+id/linearHeader"
+        android:id="@+id/rec_address_list"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:id="@+id/rl_bot"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="135dp"
+            android:layout_height="35dp"
+            android:background="@drawable/pinkcart_rounded"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="+ Add New"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
+</RelativeLayout>

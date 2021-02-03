@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_new"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:background="@drawable/greylight_strk"
+        android:layout_height="wrap_content">
+
+       <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/el_1"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_margin="3dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/img"
+                android:scaleType="centerInside"
+                android:src="@drawable/dress" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_below="@+id/el_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/view"
+            android:layout_marginTop="5dp"
+            android:background="#dbdbdb"/>
+        <TextView
+            android:id="@+id/txtOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="-"
+            android:layout_below="@+id/view"
+            android:textColor="@color/grey_light"
+            android:textSize="14sp"
+            android:visibility="visible"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_below="@+id/txtOne"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_sym"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="RM"
+                android:textColor="@color/pink"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/txt_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/txt_sym"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="-"
+                android:textColor="@color/pink"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

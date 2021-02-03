@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tokayoapp">
+
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/logo_350"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/logo_350"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.WebViewActivity"></activity>
+
+
+
+        <activity android:name=".Activities.RoughActivity">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".Activities.ChangePasswordActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activities.ShowCompanies" />
+        <activity android:name=".Activities.ShowCountry" />
+        <activity android:name=".Activities.stripepayment.AddCardDetailPayment" />
+        <activity android:name=".Activities.stripepayment.ShowCardDetailPayment" />
+        <activity android:name=".Activities.RewardAddressList" />
+        <activity
+            android:name=".Activities.EditAddressActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ForgotPasswod"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ContactUs"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.PaymentMode"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activities.SliderPopUp_imageActivity" />
+        <activity
+            android:name=".Activities.ShowNewArrival"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.FaqActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.PrivacyPolicy"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.TermAndCondActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.AboutUsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ReedeemPopUpActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.OrderProductDetails"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ChangeAddressPopup"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.SettingActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.ProductDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.RedempItemDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.RedemptionHistoryActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.OrderDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.TrackActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.AddNewActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.AddressListActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.PurchaseHistoryActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.NotificationActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.EditProfileActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.RewardsDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.SubCategoryActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.FavDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.MobileOTPActivity"
+            android:windowSoftInputMode="stateHidden">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+
+        </activity>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:windowSoftInputMode="stateHidden">
+
+            <!--
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+            -->
+
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="message/rfc822" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" /> <!-- Firebase Notifications -->
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="fb133301092005452" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/Facebook_App_ID" />
+
+        <service
+            android:name=".Fcm.MyFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Fcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>

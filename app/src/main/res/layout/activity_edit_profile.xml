@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:background="?actionBarItemBackground"
+            android:padding="10dp"
+            android:src="@drawable/bback" />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_back"
+            android:text="Edit Profile"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/opensans_bold"
+            android:textColor="@color/grey_light"
+            android:textSize="16dp" />
+
+
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/rl"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_Img"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:tint="@color/pink"
+                android:src="@drawable/user_100">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="-20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ins_200" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nickname"
+                    android:id="@+id/txt_1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="@color/grey_light"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:hint="Nickname"
+                    android:layout_below="@+id/txt_1"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/grey_light"
+                    android:textSize="14sp">
+
+
+                </EditText>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:theme="@style/myTextInputLabel">
+
+
+                    <EditText
+                        android:id="@+id/edt_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Mobile Number"
+                        android:backgroundTint="@color/dark"
+                        android:inputType="number"
+                        android:maxLength="35"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/grey_light"
+                        android:textColorHint="@color/grey_light"
+                        android:textSize="14sp">
+
+
+                    </EditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:id="@+id/txt_2"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="xyz@gmail.com"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/txt_2"
+                    android:id="@+id/txt_email"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_light"
+                    android:layout_height="25dp">
+
+
+
+                </TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_below="@+id/txt_email"
+                    android:background="@color/grey_light"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:theme="@style/myTextInputLabel">
+
+
+                    <EditText
+
+                        android:id="@+id/edt_Email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Email"
+                        android:backgroundTint="@color/grey_light"
+                        android:maxLength="30"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/dark"
+                        android:textColorHint="@color/grey_light"
+                        android:textSize="14sp">
+
+
+                    </EditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+               >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contact"
+                    android:id="@+id/txt_3"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <EditText
+                        android:id="@+id/edt_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:backgroundTint="@color/grey_light"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Contact"
+                         android:layout_below="@+id/txt_3"
+                        android:inputType="number"
+                        android:maxLength="22"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/dark"
+                        android:textColorHint="@color/grey_light"
+                        android:textSize="14sp">
+
+
+                    </EditText>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Country"
+                    android:id="@+id/txt_4"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+
+                    <EditText
+                        android:id="@+id/edt_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:backgroundTint="@color/grey_light"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Country"
+                        android:layout_below="@+id/txt_4"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:textColor="@color/dark"
+                        android:textColorHint="@color/grey_light"
+                        android:textSize="14sp">
+
+
+                    </EditText>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="State"
+                    android:id="@+id/txt_5"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+                <EditText
+                    android:id="@+id/edt_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/txt_5"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="@color/grey_light"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:hint="State"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/grey_light"
+                    android:textSize="14sp">
+
+
+                </EditText>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Postal Code"
+                    android:id="@+id/txt_6"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+
+                <EditText
+                        android:id="@+id/edt_pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                         android:layout_below="@+id/txt_6"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:backgroundTint="@color/grey_light"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Postal Code"
+                        android:maxLines="1"
+                        android:maxLength="10"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/dark"
+                        android:textColorHint="@color/grey_light"
+                        android:textSize="14sp">
+
+
+                    </EditText>
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
+
+                <Button
+                    android:id="@+id/btn_update"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/pinkcontinue_rounded"
+                    android:elevation="6dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:gravity="center"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
+</RelativeLayout>

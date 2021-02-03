@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.OrderDetailsActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_toRightOf="@+id/rl_back"
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/txt_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Order No."
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/txt_orderNo"
+                    android:layout_toRightOf="@+id/txt_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="-"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
+
+
+
+            </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_back"
+                    android:layout_width="35dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="35dp">
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:layout_centerInParent="true"
+                        android:background="?actionBarItemBackground"
+                        android:tint="@color/grey_light"
+                        android:src="@drawable/bback"
+                        />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl2"
+
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_deli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Deliver To"
+                    android:textColor="@color/grey_light"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_below="@+id/txt_deli"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textColor="#222"
+                    android:text="-"/>
+
+                <TextView
+                    android:id="@+id/txt_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txtName"
+                    android:text="-"
+                    android:textColor="#222"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_toRightOf="@+id/txt_country"
+                    android:layout_below="@+id/txtName"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="2dp"
+                    android:textColor="#222"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_below="@+id/txtNumber"
+                    android:id="@+id/txtAddress"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14dp"
+                    android:textColor="#444"
+                    android:text="-"/>
+
+
+            </RelativeLayout>
+            <View
+                android:layout_below="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#dbdbdb"/>
+
+
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/txt_order1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Order No."
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/txt_orderNo1"
+                android:layout_toRightOf="@+id/txt_order1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="-"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/txt_orderstatus"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="-"
+                        android:textColor="@color/pink"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/txt_orderNo1"
+                    android:id="@+id/rec_order_details"/>
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl3"
+
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_ship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Shipping Info"
+                android:textColor="@color/grey_light"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/txt_companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:layout_below="@+id/txt_ship"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                android:textColor="@color/grey_light"
+                android:text="---"/>
+
+
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:layout_below="@+id/txt_companyName"
+                android:textSize="14sp"
+                android:layout_marginTop="15dp"
+                android:textColor="#222"
+                android:text="Tracking No."/>
+                <TextView
+                    android:id="@+id/txt_tracking"
+                    android:layout_toRightOf="@+id/txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_below="@+id/txt_companyName"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="14sp"
+                    android:textIsSelectable="true"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#222"
+                    android:text="----"/>
+
+
+
+                <ImageView
+                    android:id="@+id/iv_copy"
+                    android:layout_width="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="25dp"
+                    android:visibility="gone"
+                    android:layout_below="@+id/btn_track"
+                    android:layout_marginRight="40dp"
+                   android:layout_alignParentRight="true"
+                    android:background="?actionBarItemBackground"
+                    android:tint="@color/grey_light"
+                    android:src="@drawable/copy"
+                    />
+
+
+                <Button
+                    android:id="@+id/btn_track"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/pinkcontinue_rounded"
+                    android:elevation="6dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Track"
+                    android:visibility="gone"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_alignParentRight="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+                <Button
+                    android:id="@+id/btn_trackfad"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/greylight_rounded"
+                    android:elevation="6dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:gravity="center"
+                    android:text="Track"
+                    android:visibility="visible"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey_light"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_below="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#dbdbdb"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/txt_sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price Subtotal"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_sym2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="RM"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_subtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/txt_sym2"
+                        android:text="-"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
+
+
+
+
+
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/txt_net"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Net Weight"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_sym5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Kg"
+                        android:layout_toRightOf="@+id/txt_weight"
+                        android:layout_marginRight="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/txt_deliver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Fee"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_sym1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="RM"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_deliv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/txt_sym1"
+                        android:text="-"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/txt_price1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Price"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_sym3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="RM"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/txt_sym3"
+                        android:text="-"
+                        android:layout_marginRight="15dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                </RelativeLayout>
+
+
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/txt_oredr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order Time"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_ordertime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="-"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/txt_orderdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_ordertime"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/txt_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Time"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_pay_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="-"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/txt_pay_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_toLeftOf="@+id/txt_pay_time"
+                    android:text="-"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:visibility="gone"
+                android:id="@+id/rl_ship"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/txt_shipi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ship Time"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_shipi_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="------"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/txt_shipi_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/txt_shipi_time"
+                    android:text="----------"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:visibility="visible"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/txt_comp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complete Time"
+                    android:visibility="gone"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_txt_comp_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="------"
+                    android:visibility="gone"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_txt_comp_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="7dp"
+                    android:layout_toLeftOf="@+id/txt_txt_comp_time"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="----------"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
+</RelativeLayout>

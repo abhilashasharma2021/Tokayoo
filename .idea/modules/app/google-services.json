@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "754720663924",
+    "firebase_url": "https://tokayo-eaacc.firebaseio.com",
+    "project_id": "tokayo-eaacc",
+    "storage_bucket": "tokayo-eaacc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754720663924:android:669d6f290f400a00c22421",
+        "android_client_info": {
+          "package_name": "com.tokayoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754720663924-ranfr2qcc1j31m6fhbkjftmkj50rk7kg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tokayoapp",
+            "certificate_hash": "ca007da018317fcfa2a4ba467e9c20b3fb979d62"
+          }
+        },
+        {
+          "client_id": "754720663924-et2e80rqeoeb2dvkkrhoquv465c4m5tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfF7mYA4m03MuwMckUJ8QCMuMe1QH2vos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754720663924-et2e80rqeoeb2dvkkrhoquv465c4m5tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

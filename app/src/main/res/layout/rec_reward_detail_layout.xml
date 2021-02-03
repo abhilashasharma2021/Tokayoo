@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_new"
+        android:layout_width="80dp"
+        android:elevation="2dp"
+        app:contentPadding="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="6dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="80dp">
+        <RelativeLayout
+            android:id="@+id/rl_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <ImageView
+                android:id="@+id/img_product1"
+                android:layout_width="120dp"
+                android:scaleType="fitXY"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/accessories"
+                android:layout_height="120dp"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

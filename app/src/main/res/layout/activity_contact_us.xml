@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ContactUs">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
+
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fishingggg"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Us"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_alignParentBottom="true"/>
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:background="?actionBarItemBackground"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/back_100"
+                    android:tint="@color/white" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/txt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/grey_light"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:singleLine="true"
+                    android:maxLength="80"
+                    android:id="@+id/edt_email"
+                    android:layout_below="@+id/txt2"
+                    android:hint="Contact"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/txt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Number"
+                    android:textColor="@color/grey_light"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:id="@+id/edt_number"
+                    android:inputType="number"
+                    android:layout_below="@+id/txt3"
+                    android:hint="Mobile"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/greyew_rounded">
+                <EditText
+                    android:id="@+id/edt_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:hint="Type your message here maximum word length is 150 words..."
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:maxLength="150"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_submit"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center"
+                    android:background="@drawable/pinkcart_rounded"
+                    android:layout_marginBottom="40dp"
+                    android:layout_centerVertical="true"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
+</RelativeLayout>

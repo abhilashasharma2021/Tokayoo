@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ShowCountry">
+
+
+    <RelativeLayout
+        android:id="@+id/relHeader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:background="?actionBarItemBackground"
+            android:tint="@color/grey_light"
+            android:src="@drawable/bback"/>
+
+
+        <TextView
+            android:id="@+id/txtCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/imgBack"
+            android:text="Countries"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_bold"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dbdbdb"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
+    <com.kodmap.library.kmrecyclerviewstickyheader.KmRecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_below="@+id/relHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
