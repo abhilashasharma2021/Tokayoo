@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.util.Log;
@@ -14,16 +15,21 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.smarteist.autoimageslider.SliderView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
+import com.tokayoapp.Activities.ProductDetailsActivity;
+import com.tokayoapp.Activities.WebViewImage;
 import com.tokayoapp.Modal.SliderModel;
 import com.tokayoapp.R;
+import com.tokayoapp.Utils.AppConstant;
 
 import java.util.List;
 
@@ -55,7 +61,16 @@ public class SliderAdapterExample extends SliderViewAdapter<SliderAdapterExample
 
 
         }
-
+        viewHolder.imageViewBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstant.sharedpreferences=context.getSharedPreferences(AppConstant.MyPREFERENCES,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=AppConstant.sharedpreferences.edit();
+                editor.putString(AppConstant.ImageUrl,dataAdapterOBJ.getURL());
+                editor.commit();
+                context.startActivity(new Intent(context, WebViewImage.class));
+            }
+        });
 
     }
 

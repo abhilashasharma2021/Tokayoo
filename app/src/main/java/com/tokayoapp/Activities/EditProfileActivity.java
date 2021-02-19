@@ -284,6 +284,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 String reward_point = response.getString("reward_point");
 
                                 Log.e("sfhcsdkj",reward_point);
+                                Log.e("sdgbvdsfb",image);
 
 
                                     edt_name.setText(username);
@@ -296,7 +297,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 editor.putString(AppConstant.UserCountry, country);
                                 editor.putString(AppConstant.UserPin, postal_code);
                                 editor.putString(AppConstant.UserState, state);
-                               // editor.putString(AppConstant.UserImage, image);
+                                 editor.putString(AppConstant.UserImage, image);
                                // editor.putString(AppConstant.UserRewardPoints,reward_point);
                                 editor.commit();
 

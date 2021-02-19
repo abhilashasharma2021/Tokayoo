@@ -5,6 +5,16 @@ public class SliderModel {
     public String Name;
     public String Icon;
 
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String URL;
+
     public String getImage() {
         return Image;
     }

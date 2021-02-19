@@ -305,6 +305,7 @@ public class AccountFragment extends Fragment {
                                 }
 
                                 txt_point.setText(reward_point);
+                                txt_name.setText(username);
 
                             }
                         } catch (JSONException e) {

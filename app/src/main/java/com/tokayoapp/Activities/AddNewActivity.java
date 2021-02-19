@@ -1,5 +1,6 @@
 package com.tokayoapp.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,13 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.tokayoapp.Fragments.CartFragment;
 import com.tokayoapp.R;
 import com.tokayoapp.Utils.API;
@@ -40,20 +48,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class AddNewActivity extends AppCompatActivity {
     RelativeLayout rl_back;
-    EditText edt_address, edt_contact, edt_name;
+    EditText edt_contact, edt_name;
     Button btn_save;
     String strName = "", strContact = "", strAddress = "", strUserId = "", strAddAddressType = "", strAddressId = "";
 
-    TextView txt_country;
+    TextView txt_country,edt_address;
     String strDefaultStatus = "",strSelectedCountryCode="";
     ProgressBar spin_kit;
     CheckBox check_default;
     String country_name ="";
 
+    private static final int AUTOCOMPLETE_REQUEST_CODE_SEARCH = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +126,21 @@ public class AddNewActivity extends AppCompatActivity {
         });
 
 
+        if (!Places.isInitialized()) {
+            Places.initialize(AddNewActivity.this, getString(R.string.api_key), Locale.getDefault());
+        }
+
+
+        edt_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .build(AddNewActivity.this);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE_SEARCH);
+            }
+        });
         check_default.setChecked(false);
 
 
@@ -160,6 +186,85 @@ public class AddNewActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE_SEARCH) {
+            if (resultCode == RESULT_OK) {
+
+                if (data != null) {
+
+                    Place place = Autocomplete.getPlaceFromIntent(data);
+                    Log.e("oireuftoe", "Place: " + place.getName() + ", " + place.getLatLng() +
+                            place.getAddress());
+
+                    LatLng pickUplatlng = place.getLatLng();
+
+                    try {
+                        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                        if (pickUplatlng != null) {
+
+                            double st_ClinicLat=pickUplatlng.latitude;
+                            double st_ClinicLong=pickUplatlng.longitude;
+                            Log.e("Scflkl",st_ClinicLat+"");
+                            Log.e("Scflkl",st_ClinicLong+"");
+
+                            AppConstant.sharedpreferences =getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                            editor.putString(AppConstant.SEARCH_USER_LAT,pickUplatlng.latitude + "");
+                            editor.putString(AppConstant.SEARCH_USER_LONG,pickUplatlng.longitude + "");
+                            editor.commit();
+                         /*   SharedHelper.putKey(getApplicationContext(), AppConstats.SEARCH_LOCATION_LAT, pickUplatlng.latitude + "");
+                            SharedHelper.putKey(getApplicationContext(), AppConstats.SEARCH_LOCATION_LNG, pickUplatlng.longitude + "");*/
+
+                            Log.e("rtrere", "latlng" + pickUplatlng.latitude + "," + pickUplatlng.longitude);
+                            List<Address> addressList = geocoder.getFromLocation(pickUplatlng.latitude, pickUplatlng.longitude, 1);
+
+                            if (addressList != null) {
+
+                                strAddress = addressList.get(0).getAddressLine(0);
+                                Log.e("rehhbfd", "msg : " + strAddress);
+
+                                if (strAddress.equals("")) {
+                                    edt_address.setText("");
+                                }
+                                else {
+                                    edt_address.setText(strAddress);
+                                    edt_address.setTextColor(getResources().getColor(R.color.black));
+                                }
+
+
+                                //autoCompleteSearch.setText(address);
+
+                            }
+                        }
+
+
+                    } catch (Exception e) {
+                        Log.e("gfvdfrgvd", e.getMessage(), e);
+                    }
+
+
+
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                assert status.getStatusMessage() != null;
+                Log.i("oireuftoe", status.getStatusMessage());
+            }
+
+        }
+    }
+
+
+
+
+
+
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);

@@ -72,6 +72,9 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:1.0.16'
-    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+   // compileOnly 'com.google.android.wearable:wearable:2.8.1'
+
+    /*google map search location*/
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

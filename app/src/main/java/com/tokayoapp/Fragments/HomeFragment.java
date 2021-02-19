@@ -252,6 +252,7 @@ public class HomeFragment extends Fragment {
                                 String id = jsonObject.getString("id");
                                 String image = jsonObject.getString("image");
                                 String path = jsonObject.getString("path");
+                                String URL = jsonObject.getString("URL");
 
                                 Log.e("dfgkldkg", path + image);
 
@@ -260,6 +261,7 @@ public class HomeFragment extends Fragment {
 
                                 sliderModel.setImage(jsonObject.getString("image"));
                                 sliderModel.setPath(jsonObject.getString("path"));
+                                sliderModel.setURL(jsonObject.getString("URL"));
 
                                 listOfSlider.add(sliderModel);
 

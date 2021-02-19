@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tokayoapp">
 
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -24,10 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.WebViewActivity"></activity>
-
-
-
+        <activity android:name=".Activities.WebViewImage"></activity>
+        <activity android:name=".Activities.WebViewActivity" />
         <activity android:name=".Activities.RoughActivity">
 
             <!--

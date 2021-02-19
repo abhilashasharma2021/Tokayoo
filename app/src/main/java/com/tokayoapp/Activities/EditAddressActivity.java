@@ -1,10 +1,13 @@
 package com.tokayoapp.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +22,14 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.facebook.places.model.PlaceFields;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.tokayoapp.R;
 import com.tokayoapp.Utils.API;
 import com.tokayoapp.Utils.AppConstant;
@@ -26,15 +37,21 @@ import com.tokayoapp.Utils.AppConstant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 public class EditAddressActivity extends AppCompatActivity {
     Button btn_save;
     String strAddressId = "";
-   RelativeLayout rl_back;
-   TextView txt_country;
-    EditText edt_address, edt_contact, edt_name;
+    RelativeLayout rl_back;
+   TextView txt_country,edt_address;
+    EditText  edt_contact, edt_name;
     String strUserName = "", strUserAddress = "", strUserMobile = "",strdefaultStatus="";
     CheckBox check_default;
     String strDefaultStatus = "",strSelectedCountryCode="";
+    private static final int AUTOCOMPLETE_REQUEST_CODE_SEARCH = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +92,24 @@ public class EditAddressActivity extends AppCompatActivity {
                 startActivity(new Intent(EditAddressActivity.this, AddressListActivity.class));
             }
         });
+
+
+        if (!Places.isInitialized()){
+
+           Places.initialize(EditAddressActivity.this,getString(R.string.api_key), Locale.getDefault());
+        }
+
+
+        edt_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .build(EditAddressActivity.this);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE_SEARCH);
+            }
+        });
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +133,79 @@ public class EditAddressActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE_SEARCH) {
+            if (resultCode == RESULT_OK) {
+
+                if (data != null) {
+
+                    Place place = Autocomplete.getPlaceFromIntent(data);
+                    Log.e("oireuftoe", "Place: " + place.getName() + ", " + place.getLatLng() +
+                            place.getAddress());
+
+                    LatLng pickUplatlng = place.getLatLng();
+
+                    try {
+                        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                        if (pickUplatlng != null) {
+
+                            double st_ClinicLat = pickUplatlng.latitude;
+                            double st_ClinicLong = pickUplatlng.longitude;
+                            Log.e("Scflkl", st_ClinicLat + "");
+                            Log.e("Scflkl", st_ClinicLong + "");
+
+                            AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                            editor.putString(AppConstant.SEARCH_USER_LAT, pickUplatlng.latitude + "");
+                            editor.putString(AppConstant.SEARCH_USER_LONG, pickUplatlng.longitude + "");
+                            editor.commit();
+                         /*   SharedHelper.putKey(getApplicationContext(), AppConstats.SEARCH_LOCATION_LAT, pickUplatlng.latitude + "");
+                            SharedHelper.putKey(getApplicationContext(), AppConstats.SEARCH_LOCATION_LNG, pickUplatlng.longitude + "");*/
+
+                            Log.e("rtrere", "latlng" + pickUplatlng.latitude + "," + pickUplatlng.longitude);
+                            List<Address> addressList = geocoder.getFromLocation(pickUplatlng.latitude, pickUplatlng.longitude, 1);
+
+                            if (addressList != null) {
+
+                                strUserAddress = addressList.get(0).getAddressLine(0);
+                                Log.e("rehhbfd", "msg : " + strUserAddress);
+
+                                if (strUserAddress.equals("")) {
+                                    edt_address.setText("");
+                                } else {
+                                    edt_address.setText(strUserAddress);
+                                    edt_address.setTextColor(getResources().getColor(R.color.black));
+                                }
+
+
+                                //autoCompleteSearch.setText(address);
+
+                            }
+                        }
+
+
+                    } catch (Exception e) {
+                        Log.e("gfvdfrgvd", e.getMessage(), e);
+                    }
+
+
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                assert status.getStatusMessage() != null;
+                Log.i("oireuftoe", status.getStatusMessage());
+            }
+
+        }
+
+
+    }
     public void edit_Address() {
 
 

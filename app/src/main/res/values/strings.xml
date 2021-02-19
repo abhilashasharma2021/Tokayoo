@@ -14,6 +14,7 @@
     <string name="spinner_title">Choose Model</string>
     <string name="spinner_color">Choose Color</string>
     <string name="spinner_weight">Choose Weight</string>
+    <string name="api_key">AIzaSyBJDITUc81Fks2JG3ql6T9gzM1499Pq6Eo</string>
     <string name="publishablekey">pk_live_cCAjlviGTK6ol7DkaLR95NuQ00YENURuHa</string>
     <string name="Facebook_App_ID">2634700419966740</string>
     <string name="title_activity_web_view">WebViewActivity</string>

@@ -8,6 +8,7 @@ public class AppConstant {
     public static SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPREFERENCES";
     public static final String UserId = "UserId";
+    public static final String ImageUrl = "ImageUrl";
     public static final String UserName = "UserName";
     public static final String UserEmail = "UserEmail";
     public static final String BrandId = "BrandId";
@@ -75,6 +76,8 @@ public class AppConstant {
     public static final String Favorite = "Favorite";
     public static final String NetDeliveryCharge = "NetDeliveryCharge";
     public static final String Statusback = "Statusback";
+    public static final String SEARCH_USER_LAT = "SEARCH_USER_LAT";
+    public static final String SEARCH_USER_LONG = "SEARCH_USER_LONG";
 
 
 

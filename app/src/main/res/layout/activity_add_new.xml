@@ -124,7 +124,7 @@
                 android:maxLength="100"
                 android:id="@+id/edt_name"
                 android:layout_below="@+id/txt1"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
                 android:hint="Name"/>
 
@@ -196,12 +196,11 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:singleLine="true"
-                android:maxLength="180"
+                android:layout_height="wrap_content"
                 android:id="@+id/edt_address"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/txt3"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -209,6 +208,15 @@
 
 
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/grey_light"/>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_marginTop="20dp"

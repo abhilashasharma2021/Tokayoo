@@ -563,36 +563,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                 txt_brand.setText(sub_brand_name);
                                 txt_catName.setText(brand_name);
-                                JSONArray jsonArray1 = new JSONArray(color);
 
-                                for (int k = 0; k < jsonArray1.length(); k++) {
-
-                                    JSONObject object = jsonArray1.getJSONObject(k);
-
-                                    String id_1 = object.getString("id");
-                                    String product_id = object.getString("product_id");
-                                    String color_new = object.getString("color");
-                                }
                                 String size_new = jsonObject.getString("size");
 
-                                JSONArray jsonArray2 = new JSONArray(size_new);
-
-                                for (int l = 0; l < jsonArray2.length(); l++) {
-                                    JSONObject object1 = jsonArray2.getJSONObject(l);
-                                    String id2 = object1.getString("id");
-                                    String product_id = object1.getString("product_id");
-                                    String size = object1.getString("size");
-                                }
 
                                 String video_new = jsonObject.getString("video");
-                                JSONArray jsonArray3 = new JSONArray(video_new);
 
-                                for (int m = 0; m < jsonArray3.length(); m++) {
-                                    JSONObject obj = jsonArray3.getJSONObject(m);
-                                    /*String id3 = obj.getString("id");
-                                    String product_id_3 = obj.getString("product_id");
-                                    String video = obj.getString("video");*/
-                                }
 
 
                                 if (!stock.equals("")) {
@@ -1105,12 +1081,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 String price = jsonObject.getString("price");
                                 String weight = jsonObject.getString("weight");
                                 final String stock = jsonObject.getString("stock");
-                                String image_new = jsonObject.getString("images");
+
                                 final String path = jsonObject.getString("path");
                                 String video_path = jsonObject.getString("video_path");
                                 String cart_status = jsonObject.getString("cart_status");
                                 String cart_quantity = jsonObject.getString("cart_quantity");
-
+                                String image_new = jsonObject.getString("images");
                                 Log.e("yuyuy", image_new);
                                 Log.e("yuyuy", path);
                                 Log.e("yuyuy", cart_status);
@@ -1194,34 +1170,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 txt_catName.setText(brand_name);
                                 JSONArray jsonArray1 = new JSONArray(color);
 
-                                for (int k = 0; k < jsonArray1.length(); k++) {
 
-                                    JSONObject object = jsonArray1.getJSONObject(k);
-
-                                    String id_1 = object.getString("id");
-                                    String product_id = object.getString("product_id");
-                                    String color_new = object.getString("color");
-                                }
                                 String size_new = jsonObject.getString("size");
 
                                 JSONArray jsonArray2 = new JSONArray(size_new);
 
-                                for (int l = 0; l < jsonArray2.length(); l++) {
-                                    JSONObject object1 = jsonArray2.getJSONObject(l);
-                                    String id2 = object1.getString("id");
-                                    String product_id = object1.getString("product_id");
-                                    String size = object1.getString("size");
-                                }
+
 
                                 String video_new = jsonObject.getString("video");
                                 JSONArray jsonArray3 = new JSONArray(video_new);
 
-                                for (int m = 0; m < jsonArray3.length(); m++) {
-                                    JSONObject obj = jsonArray3.getJSONObject(m);
-                                    String id3 = obj.getString("id");
-                                    String product_id_3 = obj.getString("product_id");
-                                    String video = obj.getString("video");
-                                }
+
 
 
                                 final int stock_count = Integer.parseInt(stock);
@@ -1295,16 +1254,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                                 String image = jsonObject.getString("image");
+                                Log.e("sajfckdjsvj", image);
                                 JSONArray jsonArray = new JSONArray(image);
                                 for (int j = 0; j < jsonArray.length(); j++) {
                                     ProductDetailModal productDetailModal = new ProductDetailModal();
                                     JSONObject jsonObject1 = jsonArray.getJSONObject(j);
                                     JSONObject object = jsonArray.getJSONObject(0);
 
-                                    String id = jsonObject1.getString("id");
-                                    String product_id = jsonObject1.getString("product_id");
+
 
                                     final String image2 = object.getString("image");
+                                    Log.e("dshkfvdhvh", image2 );
 
                                     try {
                                         if (object != null) {
