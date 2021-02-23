@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Adapter.FavouriteDetailAdapter;
 import com.tokayoapp.Adapter.ProductDetailAdapter;
@@ -83,6 +87,7 @@ public class FavDetailsActivity extends AppCompatActivity {
     ArrayList<ProductDetailModal> scrollList;
     String strProdutStatus = "";
     TextView txtStock;
+    SliderView sliderView;
     String ColorStatus="",ModelStatus="",strFavorite="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,10 +162,11 @@ public class FavDetailsActivity extends AppCompatActivity {
                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                 strProductSubImage = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImages, "");
                 final String ProductSubImagesPosition = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImagesPosition, "");
-
-                final RecyclerView recyclerviewSroll = dialogView.findViewById(R.id.recyclerviewSroll);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FavDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
-                recyclerviewSroll.setLayoutManager(linearLayoutManager);
+                sliderView = dialogView.findViewById(R.id.imageSlider);
+                sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+                sliderView.startAutoCycle();
 
                 AndroidNetworking.post(API.BASEURL + API.product_details)
                         .addBodyParameter("product_id", strfavouriteId)
@@ -189,7 +195,9 @@ public class FavDetailsActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    layoutManager = new LinearLayoutManager(FavDetailsActivity.this, RecyclerView.HORIZONTAL, false);
+                                    ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(FavDetailsActivity.this, scrollList);
+                                    sliderView.setSliderAdapter(productDetailAdapter);
+                                    /*layoutManager = new LinearLayoutManager(FavDetailsActivity.this, RecyclerView.HORIZONTAL, false);
                                     recyclerviewSroll.setLayoutManager(layoutManager);
                                     recyclerviewSroll.setHasFixedSize(true);
                                     ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(FavDetailsActivity.this, scrollList);
@@ -197,7 +205,7 @@ public class FavDetailsActivity extends AppCompatActivity {
                                     if (!ProductSubImagesPosition.equals("")) {
                                         int pos = Integer.parseInt(ProductSubImagesPosition);
                                         recyclerviewSroll.scrollToPosition(pos);
-                                    }
+                                    }*/
 
                                 } catch (JSONException e) {
                                     Log.e("fdgfdbgf", e.getMessage());

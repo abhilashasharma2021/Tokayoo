@@ -378,7 +378,7 @@ public class LoginActivity extends AppCompatActivity{
                                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                 editor.putString(AppConstant.UserId,id);
-                                editor.putString(AppConstant.SelectedCountryCode, selected_country_code);
+                                editor.putString(AppConstant.SelectedCountryCode,selected_country_code);
                                 editor.putString(AppConstant.UserName, username);
                                 editor.putString(AppConstant.UserEmail, email);
                                 editor.putString(AppConstant.UserMobile, response.getString("contact"));

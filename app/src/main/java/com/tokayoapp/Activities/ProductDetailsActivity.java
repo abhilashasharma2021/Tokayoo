@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,9 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Adapter.ProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductVideoAdapter;
@@ -82,7 +86,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ArrayList<ProductVideoModal> videoModalArrayList = new ArrayList<>();
     RecyclerView rec_product_video;
     RecyclerView.LayoutManager videomanager;
-
+    SliderView sliderView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +127,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         imgProduct = findViewById(R.id.imgProduct);
 
 
-      show_video();
+
+
 
         videomanager = new LinearLayoutManager(ProductDetailsActivity.this, RecyclerView.HORIZONTAL, false);
         rec_product_video.setLayoutManager(videomanager);
@@ -138,14 +143,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.custom_enlarge_image_layout, null);
                 dialogBuilder.setView(dialogView);
-
+                sliderView = dialogView.findViewById(R.id.imageSlider);
                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                 strProductSubImage = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImages, "");
                 final String ProductSubImagesPosition = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImagesPosition, "");
 
-                final RecyclerView recyclerviewSroll = dialogView.findViewById(R.id.recyclerviewSroll);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
-                recyclerviewSroll.setLayoutManager(linearLayoutManager);
+                sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+                sliderView.startAutoCycle();
 
                 AndroidNetworking.post(API.BASEURL + API.product_details)
                         .addBodyParameter("product_id", strProdutId)
@@ -174,15 +180,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    layoutManager = new LinearLayoutManager(ProductDetailsActivity.this, RecyclerView.HORIZONTAL, false);
-                                    recyclerviewSroll.setLayoutManager(layoutManager);
-                                    recyclerviewSroll.setHasFixedSize(true);
+
                                     ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(ProductDetailsActivity.this, scrollList);
-                                    recyclerviewSroll.setAdapter(productDetailAdapter);
-                                    if (!ProductSubImagesPosition.equals("")) {
+                                    sliderView.setSliderAdapter(productDetailAdapter);
+                                  /*  if (!ProductSubImagesPosition.equals("")) {
                                         int pos = Integer.parseInt(ProductSubImagesPosition);
                                         recyclerviewSroll.scrollToPosition(pos);
-                                    }
+                                    }*/
 
                                 } catch (JSONException e) {
                                     Log.e("fdgfdbgf", e.getMessage());
@@ -227,8 +231,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         if (strProdutStatus.equals("Category")) {
             show_ProductDetail();
+            show_video();
         } else {
             newArrival_details();
+            show_arrivalVideo();
         }
 
 
@@ -1058,7 +1064,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Sprite chasingDots = new ChasingDots();
         spin_kit.setIndeterminateDrawable(chasingDots);
         //AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=product_details")
-        AndroidNetworking.post(API.BASEURL + API.product_details)
+        AndroidNetworking.post(API.BASEURL + API.show_arrival_product)
                 .addBodyParameter("product_id", strProdutId)
                 .addBodyParameter("user_id", strUserId)
                 .setTag("show Product Detail")
@@ -1082,6 +1088,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 String weight = jsonObject.getString("weight");
                                 final String stock = jsonObject.getString("stock");
 
+
+                                Log.e("dkhkjsdfhj", stock);
                                 final String path = jsonObject.getString("path");
                                 String video_path = jsonObject.getString("video_path");
                                 String cart_status = jsonObject.getString("cart_status");
@@ -1183,7 +1191,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
 
-                                final int stock_count = Integer.parseInt(stock);
+                              //  final int stock_count = Integer.parseInt(stock);
+
+                                if (!stock.equals("")) {
+                                    stock_count = Integer.parseInt(stock);
+                                }
+
 
                                 img_plus.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1358,4 +1371,57 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
 
     }
+
+
+    public void show_arrivalVideo() {
+        AndroidNetworking.post(API.BASEURL + API.show_arrival_product)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("user_id", strUserId)
+                .setTag("show Video")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("awefsfds", response.toString() );
+                        videoModalArrayList=new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String video = jsonObject.getString("video");
+                                JSONArray jsonArray = new JSONArray(video);
+
+                                for (int j = 0; j < jsonArray.length(); j++) {
+
+                                    ProductVideoModal videoModal = new ProductVideoModal();
+                                    JSONObject jsonObject1 = jsonArray.getJSONObject(j);
+                                    String status=jsonObject1.getString("status");
+
+                                    videoModal.setVideo(jsonObject1.getString("link"));
+                                    videoModal.setStatus(jsonObject1.getString("status"));
+
+                                    Log.e("xzlclxzklvkc", jsonObject1.getString("link") );
+                                    videoModalArrayList.add(videoModal);
+                                }
+
+
+                            }
+
+                            productVideoAdapter = new ProductVideoAdapter(ProductDetailsActivity.this, videoModalArrayList);
+                            rec_product_video.setAdapter(productVideoAdapter);
+
+                        } catch (JSONException e) {
+                            Log.e("fdgfdbgf", e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("dfghfh", anError.getMessage());
+                    }
+                });
+
+    }
+
 }

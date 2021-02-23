@@ -16,7 +16,6 @@
             <ImageView
                 android:id="@+id/img_product1"
                 android:layout_width="match_parent"
-                android:scaleType="centerInside"
                 android:src="@drawable/accessories"
                 android:layout_height="150dp"/>
 

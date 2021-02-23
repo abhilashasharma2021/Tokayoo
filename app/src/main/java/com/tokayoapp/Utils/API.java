@@ -25,6 +25,7 @@ public class API {
     public  static String show_reward="action=show_reward";
     public  static String update_profile="action=update_profile";
     public  static String product_details="action=product_details";
+    public  static String show_arrival_product="action=show_arrival_product";
     public  static String show_reward_details="action=show_reward_details";
     public  static String reward_reedem="action=reward_reedem";
     public  static String about_us="action=about_us";

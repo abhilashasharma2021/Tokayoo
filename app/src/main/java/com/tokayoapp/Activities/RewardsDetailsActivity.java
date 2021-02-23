@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Adapter.ProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductVideoAdapter;
@@ -89,7 +93,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
     ArrayList<ProductVideoModal>videoModalArrayList=new ArrayList<>();
     RecyclerView rec_reward_video;
     RecyclerView.LayoutManager videomanager;
-
+    SliderView sliderView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,11 +152,12 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 strProductSubImage = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImages, "");
                 final String ProductSubImagesPosition = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImagesPosition, "");
 
-                final RecyclerView recyclerviewSroll = dialogView.findViewById(R.id.recyclerviewSroll);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RewardsDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
-                recyclerviewSroll.setLayoutManager(linearLayoutManager);
-                Log.e("sdfdsfdsfs",strRewardId);
-                Log.e("sdfdsfdsfs",strUserId);
+                sliderView = dialogView.findViewById(R.id.imageSlider);
+                sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+               //set scroll delay in seconds :
+                sliderView.startAutoCycle();
 
                 AndroidNetworking.post(API.BASEURL + API.show_reward_details)
                         .addBodyParameter("reward_id", strRewardId)
@@ -180,8 +185,9 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                                             scrollList.add(productDetailModal);
                                         }
                                     }
-
-                                    layoutManager = new LinearLayoutManager(RewardsDetailsActivity.this, RecyclerView.HORIZONTAL, false);
+                                    ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(RewardsDetailsActivity.this, scrollList);
+                                    sliderView.setSliderAdapter(productDetailAdapter);
+                               /*     layoutManager = new LinearLayoutManager(RewardsDetailsActivity.this, RecyclerView.HORIZONTAL, false);
                                     recyclerviewSroll.setLayoutManager(layoutManager);
                                     recyclerviewSroll.setHasFixedSize(true);
                                     ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(RewardsDetailsActivity.this, scrollList);
@@ -189,7 +195,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                                     if (!ProductSubImagesPosition.equals("")) {
                                         int pos = Integer.parseInt(ProductSubImagesPosition);
                                         recyclerviewSroll.scrollToPosition(pos);
-                                    }
+                                    }*/
 
                                 } catch (JSONException e) {
                                     Log.e("fdgfdbgf", e.getMessage());
