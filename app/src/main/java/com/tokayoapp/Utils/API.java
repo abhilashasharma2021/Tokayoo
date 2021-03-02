@@ -22,6 +22,7 @@ public class API {
     public  static String show_color="action=show_color";
     public  static String size="action=size";
     public  static String show_model="action=show_model";
+    public  static String show_size="action=show_size";
     public  static String show_reward="action=show_reward";
     public  static String update_profile="action=update_profile";
     public  static String product_details="action=product_details";

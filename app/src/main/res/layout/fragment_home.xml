@@ -51,7 +51,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         card_view:cardCornerRadius="1dp"
         card_view:cardElevation="2dp"
         card_view:cardMaxElevation="2dp"
@@ -69,10 +69,11 @@
 
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 app:sliderAnimationDuration="600"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorRadius="1dp"
                 app:sliderCircularHandlerEnabled="true"
                 app:sliderIndicatorAnimationDuration="600"
                 app:sliderScrollTimeInSec="1"
