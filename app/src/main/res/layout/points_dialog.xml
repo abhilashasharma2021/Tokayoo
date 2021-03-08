@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="sdsds"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:id="@+id/message"/>
+
+        <Button
+            android:id="@+id/btn_redeem"
+            android:layout_below="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="40dp"
+            android:background="@drawable/pinkcontinue_rounded"
+            android:elevation="6dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="Redeem"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -92,7 +92,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/imgUser"
                 android:background="@null"
-                android:hint="Username"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"

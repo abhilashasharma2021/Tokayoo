@@ -47,9 +47,9 @@ public class AddCardDetailPayment extends AppCompatActivity {
     String strTotalPrice = "";
     TextView txtPrice;
     ProgressBar spin_kit;
-    String st_paymentStatus = "", st_user_id = "", st_TotalAmount = "", st_address_id = "", st_CheckoutStatus = "";
-    String st_RewardId = "", st_RewardPoints = "", strMobile = "", strFullName = "", strAddress = "";
-    String st_WeightId = "", st_ColorId = "", st_ModelId = "";
+    String st_paymentStatus = "", st_user_id = "", st_TotalAmount = "", st_address_id = "",st_delivery_charge="", st_CheckoutStatus = "",st_NetDeliveryCharge="";
+    String st_RewardId = "", st_RewardPoints = "", strMobile = "", strFullName = "", strAddress = "",strOrderItems="";
+    String st_WeightId = "", st_ColorId = "", st_ModelId = "",st_RewardSizeId="";
     ProgressDialog dialog;
 
 
@@ -73,7 +73,10 @@ public class AddCardDetailPayment extends AppCompatActivity {
         st_ModelId = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedModelId, "");
         st_ColorId = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedColorId, "");
         st_WeightId = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedWeightId, "");
-
+        strOrderItems = AppConstant.sharedpreferences.getString(AppConstant.OrderItems, "");
+        st_NetDeliveryCharge= AppConstant.sharedpreferences.getString(AppConstant.NetDeliveryCharge,"");
+        st_RewardSizeId= AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedSizeId, "");
+        st_delivery_charge = AppConstant.sharedpreferences.getString(AppConstant.delivery_charge, "");
         dialog = new ProgressDialog(AddCardDetailPayment.this);
 
         txtPrice = findViewById(R.id.txtPrice);
@@ -240,6 +243,8 @@ public class AddCardDetailPayment extends AppCompatActivity {
                 .addBodyParameter("address_id", st_address_id)
                 .addBodyParameter("total_amount", st_TotalAmount)
                 .addBodyParameter("order_type", st_paymentStatus)
+                .addBodyParameter("order_item",strOrderItems)
+                .addBodyParameter("delevery_charge",st_NetDeliveryCharge)
                 .setTag("Order")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -341,12 +346,14 @@ public class AddCardDetailPayment extends AppCompatActivity {
                 .addBodyParameter("color_id", st_ColorId)
                 .addBodyParameter("model_id", st_ModelId)
                 .addBodyParameter("weight", st_WeightId)
+                .addBodyParameter("delevery_charge",st_delivery_charge)
                 .addBodyParameter("username", strFullName)
                 .addBodyParameter("total_point", st_RewardPoints)
                 .addBodyParameter("order_type", st_paymentStatus)
                 .addBodyParameter("order_status", "0")
                 .addBodyParameter("contact", strMobile)
                 .addBodyParameter("address", strAddress)
+                .addBodyParameter("size_id",st_RewardSizeId)
                 .setTag("Reward Checkout")
                 .setPriority(Priority.HIGH)
                 .build()

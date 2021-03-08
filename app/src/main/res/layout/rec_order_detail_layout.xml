@@ -51,7 +51,6 @@
                     android:id="@+id/img_product"
                     android:layout_width="match_parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/a5"
                     android:layout_centerInParent="true"
                     android:layout_height="120dp"/>
             </RelativeLayout>

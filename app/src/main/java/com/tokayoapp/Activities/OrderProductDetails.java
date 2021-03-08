@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -24,11 +25,15 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Adapter.OrderDetailAdapter;
 import com.tokayoapp.Adapter.OrderProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductVideoAdapter;
+import com.tokayoapp.Adapter.ScrollImagesAdapter;
 import com.tokayoapp.Modal.OrderDetailModal;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.Modal.ProductVideoModal;
@@ -55,13 +60,12 @@ public class OrderProductDetails extends AppCompatActivity {
     ArrayList<ProductDetailModal> productModelArrayList = new ArrayList<>();
     TextView txt_product_name, txt_price, txt_description, txt_catName, txt_color, txt_brand, txt_weight, txt_qty;
     String strUserId = "", strOrderId = "", strProdutId = "";
-
-
     ProductVideoAdapter productVideoAdapter;
     ArrayList<ProductVideoModal> videoModalArrayList = new ArrayList<>();
     RecyclerView rec_product_video;
     RecyclerView.LayoutManager videomanager;
-
+    SliderView sliderView;
+    String strProductSubImage="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +78,7 @@ public class OrderProductDetails extends AppCompatActivity {
         Log.e("gffbv", strUserId);
         Log.e("gffbv", strOrderId);
         Log.e("gffbv", strProdutId);
-
+   //     Toast.makeText(OrderProductDetails.this,strUserId,Toast.LENGTH_LONG).show();
         rl_back = findViewById(R.id.rl_back);
         txt_qty = findViewById(R.id.txt_qty);
         txt_color = findViewById(R.id.txt_color);
@@ -106,6 +110,93 @@ public class OrderProductDetails extends AppCompatActivity {
         videomanager = new LinearLayoutManager(OrderProductDetails.this, RecyclerView.HORIZONTAL, false);
         rec_product_video.setLayoutManager(videomanager);
         rec_product_video.setHasFixedSize(true);
+
+
+    imgProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  Toast.makeText(OrderProductDetails.this, "check", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OrderProductDetails.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.custom_enlarge_image_layout, null);
+                dialogBuilder.setView(dialogView);
+                sliderView = dialogView.findViewById(R.id.imageSlider);
+                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                strProductSubImage = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImages, "");
+                final String ProductSubImagesPosition = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImagesPosition, "");
+
+                sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+                sliderView.startAutoCycle();
+
+
+                Log.e("OrderProductDetails", "onClick: " +strUserId);
+                Log.e("OrderProductDetails", "strOrderId: " +strOrderId);
+                Log.e("OrderProductDetails", "strProdutId: " +strProdutId);
+                AndroidNetworking.post(API.BASEURL + API.show_orderProduct_detail)
+                        .addBodyParameter("user_id", strUserId)
+                        .addBodyParameter("order_id", strOrderId)
+                        .addBodyParameter("product_id", strProdutId)
+                        .setTag("single order detail")
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e("dsbvxcbcx", response.toString());
+                                productModelArrayList=new ArrayList<>();
+                                try {
+                                    String img = response.getString("img");
+                                    String path = response.getString("path");
+                                    Log.e("OrderProductDetails", "onResponse: " +img);
+                                    JSONArray jsonArray = new JSONArray(img);
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject=jsonArray.getJSONObject(i);
+                                        String image=jsonObject.getString("image");
+                                       ProductDetailModal productDetailModal = new ProductDetailModal();
+                                       productDetailModal.setImage(jsonObject.getString("image"));
+                                        productDetailModal.setPath(response.getString("path"));
+                                        productModelArrayList.add(productDetailModal);
+
+
+                                    }
+
+                                    ScrollImagesAdapter productDetailAdapter = new ScrollImagesAdapter(OrderProductDetails.this, productModelArrayList);
+                                    sliderView.setSliderAdapter(productDetailAdapter);
+
+
+                                } catch (JSONException e) {
+                                    Log.e("gfdgh", e.getMessage());
+                                    spin_kit.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                Log.e("grtygh", anError.getMessage());
+                                spin_kit.setVisibility(View.GONE);
+                            }
+                        });
+
+
+
+                ImageView imageView = dialogView.findViewById(R.id.my_image);
+
+                try {
+                    Picasso.with(OrderProductDetails.this).load(strProductSubImage).into(imageView);
+
+                } catch (Exception e) {
+
+                }
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+
+
 
         spark_button.setEventListener(new SparkEventListener() {
             @Override
@@ -142,7 +233,7 @@ public class OrderProductDetails extends AppCompatActivity {
         AndroidNetworking.post(API.BASEURL + API.show_orderProduct_detail)
                 .addBodyParameter("user_id", strUserId)
                 .addBodyParameter("order_id", strOrderId)
-                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("cart_id", strProdutId)
                 .setTag("single order detail")
                 .setPriority(Priority.HIGH)
                 .build()
@@ -161,7 +252,7 @@ public class OrderProductDetails extends AppCompatActivity {
                             String delete_status = response.getString("delete_status");
                             String img = response.getString("img");
                             String purchased_quantity = response.getString("purchased_quantity");
-                            String purchased_weight = response.getString("weight");
+                            String purchased_weight = response.getString("purchased_weight");
                             String purchased_color = response.getString("purchased_color");
                             String purchased_model = response.getString("purchased_model");
                             String category = response.getString("category");

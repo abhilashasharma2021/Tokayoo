@@ -8,11 +8,13 @@ public class AppConstant {
     public static SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPREFERENCES";
     public static final String UserId = "UserId";
+    public static final String Id = "Id";
     public static final String ImageUrl = "ImageUrl";
     public static final String UserName = "UserName";
     public static final String UserEmail = "UserEmail";
     public static final String BrandId = "BrandId";
-    public static final String ResultFav = "ResultFav";
+    public static final String FinalSizeId = "FinalSizeId";
+    public static final String RewardSelectedSizeId = "RewardSelectedSizeId";
     public static final String ProdutId = "ProdutId";
     public static final String UserMobile = "UserMobile";
     public static final String RewardId = "RewardId";

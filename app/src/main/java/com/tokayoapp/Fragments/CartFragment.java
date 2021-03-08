@@ -89,7 +89,7 @@ public class CartFragment extends Fragment {
     public static ArrayList<String> arrayListItems;
     public static ArrayList<String> arrayListItemsQuantity;
     public static String strItemsStatus = "", strSelectedItems = "",LastAddressId="";
-   String st_cartdId="";
+   String  size_id="";
   public static   ArrayList<String>Arr_cartId = new ArrayList<>();
   public static   ArrayList<String>Arr_ProQty = new ArrayList<>();
   public  static int CountAll=0;
@@ -206,7 +206,10 @@ public class CartFragment extends Fragment {
                         editor.putString(AppConstant.CheckoutStatus, "OrderProduct");
                         editor.putString(AppConstant.OrderItems, strItemsStatus);
                         editor.putString(AppConstant.defaultIdAddress,stdefaultIdAddress );
+                        editor.putString(AppConstant.FinalSizeId,size_id);
+
                         editor.commit();
+                    Log.e("CartFragment", "size_id: " +size_id);
                         startActivity(new Intent(getActivity(), PaymentMode.class));
                         Animatoo.animateZoom(getActivity());
                     }
@@ -294,6 +297,8 @@ public class CartFragment extends Fragment {
         }
         Log.e("dfssgsgfgfggffg", strSelectedItems+"");
 
+        Log.e("CartFragment", "strUserId: " +strUserId);
+        Log.e("CartFragment", "cart_id: " +strSelectedItems);
         AndroidNetworking.post(API.BASEURL + API.showCartTotalPrice)
                 .addBodyParameter("user_id", strUserId)
                 .addBodyParameter("cart_id", strSelectedItems)
@@ -311,6 +316,8 @@ public class CartFragment extends Fragment {
                                 String grand_total = response.getString("grand_total");
                                 String net_weight = response.getString("net_weight");
 
+
+                                Log.e("CartFragment", "grand_total1: " +grand_total);
                                 txt_subTotal.setText(sub_total);
                                 txt_Totalprice.setText(grand_total);
                                 txt_delivery.setText(delivery_charge);
@@ -350,7 +357,7 @@ public class CartFragment extends Fragment {
         Sprite chasingDots = new ChasingDots();
         spin_kit.setIndeterminateDrawable(chasingDots);
         Log.e("fidseufk", strUserId);
-        Log.e("fidseufk", strCompanyID);
+
         // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_cart")
         AndroidNetworking.post(API.BASEURL + API.show_cart)
                 .addBodyParameter("user_id", strUserId)
@@ -378,21 +385,24 @@ public class CartFragment extends Fragment {
                             Log.e("dfkjdj", sub_total);
 
                             txtShowComPrice.setText(response.getString("company_delivery_charge"));
-                            Log.e("dfvsfgsffsd", grand_total);
-
+                            Log.e("CartFragment", "show: " +grand_total);
                             Log.e("dfkjdj", sub_total);
                             JSONArray jsonArray = new JSONArray(product);
 
                             for (int j = 0; j < jsonArray.length(); j++) {
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(j);
                                 String id_new = jsonObject1.getString("id");
+                               size_id = jsonObject1.getString("size_id");
 
+                                Log.e("CartFragment", "size_id: " +size_id);
                                 Log.e("sgvdsgb", id_new);
 
-                                AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                               /* AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                 editor.putString(AppConstant.CartGrandTotal, grand_total);
-                                editor.commit();
+                                editor.putString(AppConstant.FinalSizeId, jsonObject1.getString("size_id"));
+
+                                editor.commit();*/
 
 
 

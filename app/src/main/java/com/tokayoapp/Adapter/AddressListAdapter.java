@@ -76,22 +76,37 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
         final String id = addressListModal.getId();
         Log.e("dfdfvcx", addressListModal.getId() + "");
         holder.txt_name.setText(addressListModal.getName());
-        holder.tx_contact.setText(addressListModal.getContact());
+
         holder.txtAddress.setText(addressListModal.getAddress());
-        holder.txt_country.setText(strSelectedCountryCode);
+        holder.tx_contact.setText(addressListModal.getContact());
+     /*   String [] code=addressListModal.getContact().split("-");
+        if (code.length==1){
+            holder.txt_country.setText(code[0]);
+        }else if (code.length==2){
+            holder.txt_country.setText(code[0]);
+            holder.tx_contact.setText(code[1]);
+        }else {
+
+        }
+*/
         String default_Status = addressListModal.getStatus();
         Log.e("jhkljvc", addressListModal.getStatus() + "");/*1 means check default selected 0 means not selected*/
-
-
 
 
         if (default_Status.equals("1")) {
 
             holder.tx_details.setVisibility(View.VISIBLE);
             holder.txt_name.setText(addressListModal.getName());
-            holder.tx_contact.setText(addressListModal.getContact());
             holder.txtAddress.setText(addressListModal.getAddress());
+            holder.tx_contact.setText(addressListModal.getContact());
+           /* if (code.length==1){
+                holder.txt_country.setText(code[0]);
+            }else if (code.length==2){
+                holder.txt_country.setText(code[0]);
+                holder.tx_contact.setText(code[1]);
+            }else {
 
+            }*/
             AppConstant.sharedpreferences = context.getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
             editor.putString(AppConstant.defaultIdAddress, addressListModal.getId());

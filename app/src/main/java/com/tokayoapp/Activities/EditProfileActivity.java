@@ -53,10 +53,11 @@ public class EditProfileActivity extends AppCompatActivity {
     File f;
     TextView txt_email;
     EditText edt_country,edt_state,edt_pin,edt_name,edt_contact;
-    String strUserId="",strUserName="",strUserMobile="",strUserImage="",strCountry="",strState="",strPostal="",strUserEmail="";
+    String strUserId="",strUserName="",strUserMobile="",strUserImage="",strCountry="",strState="",strPostal="",strUserEmail="",strSelectedCountryCode="";
     ProgressBar spin_kit;
     ImageView img_back;
     Button btn_update;
+    TextView txt_countrycode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
         edt_state = findViewById(R.id.edt_state);
         profile_Img = findViewById(R.id.profile_Img);
         btn_update = findViewById(R.id.btn_update);
+        txt_countrycode = findViewById(R.id.txt_countrycode);
 
 
        AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -90,23 +92,28 @@ public class EditProfileActivity extends AppCompatActivity {
         strCountry= AppConstant.sharedpreferences.getString(AppConstant.UserCountry, "");
         strState= AppConstant.sharedpreferences.getString(AppConstant.UserState, "");
         strPostal= AppConstant.sharedpreferences.getString(AppConstant.UserPin, "");
+        strSelectedCountryCode = AppConstant.sharedpreferences.getString(AppConstant.SelectedCountryCode, "");
+
         Log.e("dsfl", strUserId);
         Log.e("dsfl", strUserName);
         Log.e("dsfl", strUserMobile);
         Log.e("dsfl", strUserEmail);
         Log.e("dsfl", strPostal);
         Log.e("dsfl", strState);
-        Log.e("dsfl", strCountry);
+        Log.e("hfghfghff", strCountry);
         Log.e("dsfl", strUserImage);
 
 
 
-        txt_email.setText(strUserEmail);
+      /*  txt_email.setText(strUserEmail);
         edt_name.setText(strUserName);
         edt_contact.setText(strUserMobile);
         edt_country.setText(strCountry);
         edt_state.setText(strState);
-        edt_pin.setText(strPostal);
+        edt_pin.setText(strPostal);*/
+
+        show_profile();
+
 
         try {
             Picasso.with(EditProfileActivity.this).load(strUserImage).into(profile_Img);
@@ -120,7 +127,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
                 strUserName=edt_name.getText().toString().trim();
-                strUserMobile=edt_contact.getText().toString().trim();
+                String countrycode=txt_countrycode.getText().toString().trim();
+                if (strSelectedCountryCode.equals("")){
+                    strUserMobile="+60-"+edt_contact.getText().toString().trim();
+                }else {
+                    strUserMobile=countrycode+"-"+edt_contact.getText().toString().trim();
+                }
+
                 strCountry=edt_country.getText().toString().trim();
                 strState=edt_state.getText().toString().trim();
                 strPostal=edt_pin.getText().toString().trim();
@@ -243,7 +256,6 @@ public class EditProfileActivity extends AppCompatActivity {
         return "";
     }
 
-
     public void update_profile(String strUserName, String strcontact, String strCountry, String strState, String strPostal){
 
         spin_kit.setVisibility(View.VISIBLE);
@@ -288,7 +300,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
                                     edt_name.setText(username);
-                                    edt_contact.setText(contact);
+                                String [] code=contact.split("-");
+                                txt_countrycode.setText(code[0]);
+                                edt_contact.setText(code[1]);
+
 
                                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
@@ -330,6 +345,96 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+    public void show_profile(){
+
+        spin_kit.setVisibility(View.VISIBLE);
+        Sprite chasingDots = new ChasingDots();
+        spin_kit.setIndeterminateDrawable(chasingDots);
+
+
+        //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
+        AndroidNetworking.upload(API.BASEURL+API.update_profile)
+                .addMultipartParameter("id",strUserId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.e("fjdhfdj",response.toString());
+                        try {
+                            if (response.getString("result").equals("successfully")){
+                                String strId=response.getString( "id");
+                                String username=response.getString( "username");
+                                String email=response.getString( "email");
+                                String contact=response.getString( "contact");
+                                String country=response.getString( "country");
+                                String postal_code=response.getString( "postal_code");
+                                String state = response.getString("state");
+                                String image = response.getString("image");
+                                String reward_point = response.getString("reward_point");
+
+                                Log.e("sfhcsdkj",reward_point);
+                                Log.e("sdgbvdsfb",image);
+
+                                String [] code=contact.split("-");
+                                txt_countrycode.setText(code[0]);
+                                edt_contact.setText(code[1]);
+
+
+                                edt_name.setText(username);
+
+                                txt_email.setText(email);
+                                edt_name.setText(username);
+
+                                edt_country.setText(country);
+                                edt_state.setText(state);
+                                edt_pin.setText(postal_code);
+
+                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                                editor.putString(AppConstant.UserMobile, contact);
+                                editor.putString(AppConstant.UserName, username);
+                                editor.putString(AppConstant.UserCountry, country);
+                                editor.putString(AppConstant.UserPin, postal_code);
+                                editor.putString(AppConstant.UserState, state);
+                                editor.putString(AppConstant.UserImage, image);
+                                // editor.putString(AppConstant.UserRewardPoints,reward_point);
+                                editor.commit();
+
+                                try {
+                                    Picasso.with(EditProfileActivity.this).load(image).into(profile_Img);
+                                } catch (Exception ignored) {
+
+                                }
+                                //  Toast.makeText( EditProfileActivity.this,response.getString( "result" ),Toast.LENGTH_LONG ).show();
+
+                                spin_kit.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            Log.e("fdvgfdfbl", e.getMessage());
+                            spin_kit.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("gfgdfbl", anError.getMessage());
+                        spin_kit.setVisibility(View.GONE);
+                    }
+                });
+
+
+
+
+    }
+
+
+
             }
 
 

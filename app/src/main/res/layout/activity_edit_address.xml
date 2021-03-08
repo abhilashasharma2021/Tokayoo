@@ -151,7 +151,7 @@
             <TextView
                 android:id="@+id/txt_country"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="15dp"
                 android:text=""
                 android:gravity="center_vertical"
@@ -160,18 +160,21 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:textSize="16sp"
                 android:textStyle="normal" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:singleLine="true"
-                android:maxLength="30"
-                android:inputType="number"
-                android:layout_toRightOf="@+id/txt_country"
-                android:id="@+id/edt_contact"
-                android:layout_below="@+id/txt2"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="15dp"
-                android:hint="Contact"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:singleLine="true"
+                    android:maxLength="30"
+                    android:inputType="number"
+                    android:layout_toRightOf="@+id/txt_country"
+                    android:id="@+id/edt_contact"
+                    android:layout_below="@+id/txt2"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="15dp"
+                    android:hint="Contact"/>
+
+
 
 
         </RelativeLayout>
@@ -200,6 +203,7 @@
                 android:layout_below="@+id/txt3"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:hint="Address"/>
 
 

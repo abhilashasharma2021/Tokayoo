@@ -56,6 +56,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import javax.security.auth.login.LoginException;
+
 public class RewardsDetailsActivity extends AppCompatActivity {
 
     RelativeLayout rl_back;
@@ -66,23 +68,26 @@ public class RewardsDetailsActivity extends AppCompatActivity {
     RewardDetailAdapter rewardDetailAdapter;
     ArrayList<RewardDetailModal> rewardDetailArrayListArrayList = new ArrayList<>();
     String strUserId = "", strRewardId = "";
-    Spinner spin_model, spin_color, spin_weight;
+    Spinner spin_model, spin_color, spin_weight,spin_size;
     public static ImageView imgProduct;
     TextView txt_color, txt_model;
-    TextView txt_product_name, txt_brandName, txt_CatName, txt_point,txtStock, txt_brand, txt_weight, txt_description,txt_available;
+    TextView txt_product_name, txt_brandName, txt_CatName, txt_point,txtStock, txt_brand, txt_weight, txt_description,txt_available,tx_Weight;
     ProgressBar spin_kit;
     SparkButton spark_button, spark_fav_already;
     String strFavRewardType = "", strFavStatus = "";
     ArrayList<String> arrayListColorID;
     ArrayList<String> arrayListModelID;
+    ArrayList<String> arrayListSizeID;
     ArrayList<String> arrayListWeightID;
+    ArrayAdapter<String> adapterSize;
+    ArrayList<String> arrayListSize;
     ArrayAdapter<String> adaptercolor;
     ArrayAdapter<String> adapterModel;
     ArrayAdapter<String> adapterWeight;
     ArrayList<String> arrayListColor;
     ArrayList<String> arrayListModel;
     ArrayList<String> arrayListWeight;
-    String strModel = "", strWeight = "", strColor = "",strProductSubImage="",strWeightName="";
+    String strModel = "", strWeight = "", strColor = "",strProductSubImage="",strSize="",SizeStatus="";
     ArrayList<ProductDetailModal> scrollList;
 
     String ColorStatus="",ModelStatus="";
@@ -109,11 +114,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
         //Log.e("sfcds", strFavRewardType);
         Log.e("sfcds", strFavStatus);
         rl_back = findViewById(R.id.rl_back);
-        spin_weight = findViewById(R.id.spin_weight);
+        spin_size = findViewById(R.id.spin_size);
+      //  spin_weight = findViewById(R.id.spin_weight);
         rec_rewardDetail = findViewById(R.id.rec_rewardDetail);
         spin_kit = findViewById(R.id.spin_kit);
         txt_model = findViewById(R.id.txt_model);
         txt_product_name = findViewById(R.id.txt_product_name);
+        tx_Weight = findViewById(R.id.tx_Weight);
         txt_brandName = findViewById(R.id.txt_brandName);
         txt_CatName = findViewById(R.id.txt_CatName);
         txt_color = findViewById(R.id.txt_color);
@@ -138,7 +145,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
         rec_reward_video.setHasFixedSize(true);
 
 
-
+        AvailableStock(strRewardId);
         imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,10 +229,10 @@ public class RewardsDetailsActivity extends AppCompatActivity {
         });
 
 
-        change_Weight();
+      //  change_Weight();
         change_colorAll();
         change_ModelAll();
-
+        change_SizeAll();
         show_RewardDetail();
        /* spark_button.setEventListener(new SparkEventListener() {
             @Override
@@ -265,7 +272,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
 
 
-        spin_weight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  spin_weight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 strWeight = arrayListWeightID.get(i);
@@ -283,7 +290,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
 
 
  /*       spin_color.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -331,7 +338,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
         arrayListModel = new ArrayList<>();
         arrayListModelID = new ArrayList<>();
-        arrayListModelID.add("0");
+        arrayListModelID.add("");
         arrayListModel.add("Select Model");
         spin_model.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -340,23 +347,28 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     if (ColorStatus.equals("1")){
                         strModel = arrayListModelID.get(i);
                         Log.e("dcadsdsdssda", "if");
+                    }else if (SizeStatus.equals("1")){
+                        strModel = arrayListModelID.get(i);
+                        Log.e("dcadsdsdssda", "if");
                     }else {
                         Log.e("dcadsdsdssda", "else");
                     }
                 }else {
+
                     String produtId = AppConstant.sharedpreferences.getString(AppConstant.ProdutId, "");
                     strModel = arrayListModelID.get(i);
                     Log.e("dgfvbg", strModel);
 
-
                     ModelStatus="1";
                     if (ModelStatus.equals("1")){
                         change_color(strModel);
+                        change_SizeModel(strColor,strModel);
+                        AvailableStockFilter(strColor, strModel,strSize);
                     }
 
                 }
 
-                AvailableStock(strColor,strModel);
+
             }
 
             @Override
@@ -367,7 +379,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
         });
         arrayListColor = new ArrayList<>();
         arrayListColorID = new ArrayList<>();
-        arrayListColorID.add("0");
+                arrayListColorID.add("");
         arrayListColor.add("Select Color");
         spin_color.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -375,20 +387,25 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     if (i==0){
                         if (ModelStatus.equals("1")){
                             strColor = arrayListColorID.get(i);
-                        }else {
+                        }else if (SizeStatus.equals("1")){
+                            strColor = arrayListColorID.get(i);
+                        } else {
 
                         }
                 }else {
+
                     strColor = arrayListColorID.get(i);
                     Log.e("ddjbd", strColor);
 
                     ColorStatus="1";
                     if (ColorStatus.equals("1")){
                         change_Model(strColor);
+                        change_Size(strColor);
+                        AvailableStockFilter(strColor, strModel,strSize);
                     }
 
                 }
-                AvailableStock(strColor,strModel);
+
             }
 
             @Override
@@ -397,8 +414,58 @@ public class RewardsDetailsActivity extends AppCompatActivity {
             }
         });
 
-        }
 
+        arrayListSize = new ArrayList<>();
+        arrayListSizeID = new ArrayList<>();
+        arrayListSizeID.add("");
+        arrayListSize.add("Select Size");
+        spin_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Log.e("ProductDetailsActivity", "strSize:1 " + strSize);
+                if (i == 0) {
+                    if (ModelStatus.equals("1")) {
+                        strSize = arrayListSizeID.get(i);
+                        Log.e("ProductDetailsActivity", "strColor: " + strColor);
+
+
+                    } else if (ColorStatus.equals("1")) {
+                        strSize = arrayListSizeID.get(i);
+                        Log.e("ProductDetailsActivity", "strColor: " + strModel);
+                    } else {
+
+                    }
+                } else {
+
+                    strSize = arrayListSizeID.get(i);
+
+                    SizeStatus = "1";
+                    if (SizeStatus.equals("1")) {
+                        change_filterSize(strSize);
+                        change_FilterModel(strSize);
+                        AvailableStockFilter(strColor, strModel, strSize);
+                    }
+
+                }
+
+            }
+
+
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+
+            }
+        });
+
+
+
+
+
+    }
     public void Add_Favorite() {
         Log.e("sdjsjh", strRewardId);
         Log.e("sdjsjh", strUserId);
@@ -441,7 +508,6 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-
     public void show_RewardDetail() {
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
@@ -575,15 +641,14 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                                 btn_redeem.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        if (strColor.equals("")){
-                                            Toast.makeText(RewardsDetailsActivity.this, "Please select Color", Toast.LENGTH_SHORT).show();
-
-                                        }else if (strModel.equals("")){
-                                            Toast.makeText(RewardsDetailsActivity.this, "Please select Model", Toast.LENGTH_SHORT).show();
+                                        String weight=tx_Weight.getText().toString().trim();
+                                        if (weight.equals("")){
+                                            Toast.makeText(RewardsDetailsActivity.this, "Please select variation", Toast.LENGTH_SHORT).show();
 
                                         }else {
                                             Log.e("sfgfgfggf", strModel );
                                             Log.e("sfgfgfggf", strColor );
+                                            Log.e("RewardsDetailsActivity", "strSize: " +strSize);
                                             AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                             editor.putString(AppConstant.CheckoutStatus, "OrderReward");
@@ -594,6 +659,8 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                                             editor.putString(AppConstant.delivery_charge, delivery_charge);
                                             editor.putString(AppConstant.RewardSelectedModelId, strModel);
                                             editor.putString(AppConstant.RewardSelectedColorId, strColor);
+                                            editor.putString(AppConstant.RewardSelectedSizeId, strSize);
+                                            editor.putString(AppConstant.RewardSelectedWeightId, tx_Weight.getText().toString().trim());
                                             editor.commit();
                                             startActivity(new Intent(RewardsDetailsActivity.this, ReedeemPopUpActivity.class));
                                             Animatoo.animateZoom(RewardsDetailsActivity.this);
@@ -606,7 +673,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                                 txt_product_name.setText(reward_name);
                                 txt_description.setText(description);
-                                txt_point.setText(point);
+                              //  txt_point.setText(point);
                                 txt_CatName.setText(category);
                                 txt_brand.setText(brand);
 
@@ -664,15 +731,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
 
     }
-
-
-
     public void change_color(String strModel) {
         Log.e("yhjhjh", strRewardId);
         Log.e("yhjhjh", strModel);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_color")
         ColorStatus="0";
         ModelStatus="1";
+        SizeStatus="0";
         AndroidNetworking.post(API.BASEURL + API.show_reward_color)
                 .addBodyParameter("product_id", strRewardId)
                 .addBodyParameter("model_id",strModel)
@@ -682,7 +747,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("sdskfl", response.toString());
+                        Log.e("rthtgfnvbvb", response.toString());
 
                         arrayListColor = new ArrayList<>();
                         arrayListColorID = new ArrayList<>();
@@ -692,25 +757,33 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                         try {
 
                             for (int i = 0; i < response.length(); i++) {
+
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 String id = jsonObject.getString("id");
                                 String product_id = jsonObject.getString("product_id");
                                 String color = jsonObject.getString("color");
 
-                                String color_info = jsonObject.getString("color_info");
 
-                                JSONObject object = new JSONObject(color_info);
+                                    String color_info = jsonObject.getString("color_info");
+                                if (!color_info.equals("null")) {
+                                    JSONObject object = new JSONObject(color_info);
 
-                                String id_new = object.getString("id");
-                                String color_new = object.getString("color");
+                                    String id_new = object.getString("id");
+                                    String color_new = object.getString("color");
 
-                                arrayListColorID.add(id_new);
-                                Log.e("dkjfkdj", id_new);
+                                    arrayListColorID.add(id_new);
+                                    Log.e("rgrthbtr", id_new);
 
-                                arrayListColor.add(color_new);
+                                    arrayListColor.add(color_new);
 
 
+                                } else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                            arrayListColorID.add("");
+                                    arrayListColor.add("Not Available");
+
+                                }
                             }
 
                             adaptercolor = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListColor);
@@ -719,7 +792,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
-                            Log.e("dsfkdsk", e.getMessage());
+                            Log.e("bhbhfgbcv", e.getMessage());
                         }
 
 
@@ -732,15 +805,11 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 });
 
     }
-
-
-
     public void change_colorAll() {
         Log.e("yhjhjh", strRewardId);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_color")
         AndroidNetworking.post(API.BASEURL + API.show_reward_color)
                 .addBodyParameter("product_id", strRewardId)
-                .setTag("Choose")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
@@ -750,7 +819,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                         arrayListColor = new ArrayList<>();
                         arrayListColorID = new ArrayList<>();
-                        arrayListColorID.add("0");
+                                arrayListColorID.add("");
                         arrayListColor.add("Select Color");
 
 
@@ -758,7 +827,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-
+                                if (!jsonObject.getString("id").equals("null")){
                                 String id = jsonObject.getString("id");
                                 String product_id = jsonObject.getString("product_id");
                                 String color = jsonObject.getString("color");
@@ -775,7 +844,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                                 arrayListColor.add(color_new);
 
+                                }
+                            }
 
+                            if (arrayListColorID.size() == 1) {
+                                arrayListColor.set(0, "Not Available");
+                            } else {
+                                arrayListColor.set(0, "Select Color");
                             }
 
                             adaptercolor = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListColor);
@@ -805,13 +880,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 });
 
     }
-
     public void change_Model(String colorID) {
         Log.e("hfvkjvk", strRewardId);
         Log.e("hfvkjvk", colorID);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_model")
         ColorStatus="1";
         ModelStatus="0";
+        SizeStatus="0";
         AndroidNetworking.post(API.BASEURL + API.show_reward_model)
                 .addBodyParameter("product_id", strRewardId)
                 .addBodyParameter("color_id", colorID)
@@ -848,17 +923,15 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
 
                                 }
+                                else{
+                                    Log.e("xnsjnskl","null nhi h");
+                                    arrayListModelID.add("");
+                                    arrayListModel.add("Not Available");
+                                }
                             }
                             adapterModel = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
                             adapterModel.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                             spin_model.setAdapter(adapterModel);
-                          /*  if(arrayListModel.size()==0){
-
-                                rl_4.setVisibility(View.GONE);
-                            }
-                            else {
-                                rl_4.setVisibility(View.VISIBLE);
-                            }*/
 
                         } catch (JSONException e) {
                             Log.e("etfredg", e.getMessage());
@@ -874,7 +947,6 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 });
 
     }
-
     public void change_ModelAll() {
         Log.e("hfvkjvk", strRewardId);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_model")
@@ -890,7 +962,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                         arrayListModel = new ArrayList<>();
                         arrayListModelID = new ArrayList<>();
-                        arrayListModelID.add("0");
+                        arrayListModelID.add("");
                         arrayListModel.add("Select Model");
 
                         try {
@@ -916,6 +988,12 @@ public class RewardsDetailsActivity extends AppCompatActivity {
 
                                 }
                             }
+
+                            if (arrayListModelID.size() == 1) {
+                                arrayListModel.set(0, "Not Available");
+                            } else {
+                                arrayListModel.set(0,"Select Model");
+                            }
                             adapterModel = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
                             adapterModel.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                             spin_model.setAdapter(adapterModel);
@@ -941,19 +1019,230 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 });
 
     }
+    public void change_filterSize(String strSizeId) {
+        Log.e("yhjhjh", strRewardId);
+        Log.e("yhjhjh", strModel);
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_color")
+        ColorStatus="0";
+        SizeStatus="1";
+        ModelStatus="0";
+        AndroidNetworking.post(API.BASEURL + API.show_reward_color)
+                .addBodyParameter("product_id", strRewardId)
+                .addBodyParameter("size_id",strSizeId)
+                .setTag("Choose")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("rthtgfnvbvb", response.toString());
+
+                        arrayListColor = new ArrayList<>();
+                        arrayListColorID = new ArrayList<>();
 
 
 
-    public void AvailableStock(String strColor, String strModel) {
+                        try {
 
-        Log.e("wetret", strRewardId);
-        Log.e("wetret", strColor);
-        Log.e("wetret", strModel);
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String color = jsonObject.getString("color");
+
+
+                                String color_info = jsonObject.getString("color_info");
+                                if (!color_info.equals("null")) {
+                                    JSONObject object = new JSONObject(color_info);
+
+                                    String id_new = object.getString("id");
+                                    String color_new = object.getString("color");
+
+                                    arrayListColorID.add(id_new);
+                                    Log.e("rgrthbtr", id_new);
+
+                                    arrayListColor.add(color_new);
+
+
+                                } else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                            arrayListColorID.add("");
+                                    arrayListColor.add("Not Available");
+
+                                }
+                            }
+
+                            adaptercolor = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListColor);
+                            adaptercolor.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_color.setAdapter(adaptercolor);
+
+
+                        } catch (JSONException e) {
+                            Log.e("bhbhfgbcv", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("rtfrgf", anError.getMessage());
+                    }
+                });
+
+    }
+    public void change_FilterModel(String sizeid) {
+        Log.e("hfvkjvk", strRewardId);
+        Log.e("hfvkjvk", sizeid);
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_model")
+        ColorStatus="0";
+        SizeStatus="1";
+        ModelStatus="0";
+        AndroidNetworking.post(API.BASEURL + API.show_reward_model)
+                .addBodyParameter("product_id", strRewardId)
+                .addBodyParameter("size_id", sizeid)
+                .setTag("Choose Modal")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("erytruyh", response.toString());
+                        arrayListModel = new ArrayList<>();
+                        arrayListModelID = new ArrayList<>();
+
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String model = jsonObject.getString("model");
+                                String model_info = jsonObject.getString("model_info");
+                                Log.e("dfsdfsf",model_info);
+
+                                if(!model_info.equals("null")){
+
+                                    JSONObject object = new JSONObject(model_info);
+                                    String id_new = object.getString("id");
+                                    String name_new = object.getString("name");
+                                    Log.e("retyr", id_new);
+                                    Log.e("retyr", name_new);
+                                    arrayListModelID.add(id_new);
+                                    arrayListModel.add(name_new);
+
+
+                                }
+                                else{
+                                    Log.e("xnsjnskl","null nhi h");
+                                    arrayListModelID.add("");
+                                    arrayListModel.add("Not Available");
+                                }
+                            }
+                            adapterModel = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_model.setAdapter(adapterModel);
+
+                        } catch (JSONException e) {
+                            Log.e("etfredg", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("tryht", anError.getMessage());
+                    }
+                });
+
+    }
+    public void change_Size(String strColor) {
+        Log.e("sfgddg", strColor+"color");
+        ColorStatus="1";
+        ModelStatus="0";
+        SizeStatus="0";
+        AndroidNetworking.post(API.BASEURL + API.show_reward_size)
+                .addBodyParameter("product_id", strRewardId)
+                .addBodyParameter("color_id", strColor)
+                //.addBodyParameter("model_id", strModel)
+                .setTag("Choose Size")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("trhhj", response.toString());
+                        arrayListSize = new ArrayList<>();
+                        arrayListSizeID = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String size = jsonObject.getString("Size");
+                                String Reward_info = jsonObject.getString("Reward_info");
+                                Log.e("dfsdfsf", Reward_info);
+
+                                if (!Reward_info.equals("null")) {
+
+                                    JSONObject object = new JSONObject(Reward_info);
+                                    String id_new = object.getString("id");
+                                    String name_size = object.getString("size");
+                                    Log.e("retyr", id_new);
+                                    Log.e("retyr", name_size);
+                                    arrayListSizeID.add(id_new);
+                                    arrayListSize.add(name_size);
+
+                                    if (i == 0) {
+                                        strSize = object.getString("id");
+                                    }
+
+
+                                }
+                                else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    arrayListSizeID.add("");
+                                    arrayListSize.add("Not Available");
+                                }
+
+
+                            }
+                            adapterSize = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
+                            adapterSize.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_size.setAdapter(adapterSize);
+
+                        } catch (JSONException e) {
+                            Log.e("thtyhth", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("trhrtht", anError.getMessage());
+                    }
+                });
+
+
+    }
+    public void AvailableStock(String strRewardId) {
+
+        Log.e("RewardsDetailsActivity", "strRewardId: " +strRewardId);
+        Log.e("RewardsDetailsActivity", "strColor: " +strColor);
+        Log.e("RewardsDetailsActivity", "strModel: " +strModel);
+        Log.e("RewardsDetailsActivity", "strSize: " +strSize);
+
 
         AndroidNetworking.post(API.BASEURL + API.available_reward_stock)
                 .addBodyParameter("product_id",strRewardId)
-                .addBodyParameter("color_id",strColor)
-                .addBodyParameter("model_id",strModel)
+               // .addBodyParameter("color_id",strColor)
+              //  .addBodyParameter("model_id",strModel)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -978,11 +1267,187 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
+    public void AvailableStockFilter(String strColor, String strModel,String strSize) {
+
+
+        Log.e("RewardsDetailsActivity", "strRewardId: " +strRewardId);
+        Log.e("RewardsDetailsActivity", "strColor: " +strColor);
+        Log.e("RewardsDetailsActivity", "strModel: " +strModel);
+        Log.e("RewardsDetailsActivity", "strSize: " +strSize);
+
+        AndroidNetworking.post(API.BASEURL + API.available_reward_stock)
+                .addBodyParameter("product_id",strRewardId)
+                .addBodyParameter("color_id",strColor)
+                .addBodyParameter("model_id",strModel)
+                .addBodyParameter("size_id",strSize)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("hgdgthghdg", response.toString());
+                        try {
+                            txt_available.setText("Available Stock "+response.getString("total_stock"));
+                            txt_point.setText(response.getString("price"));
+                            tx_Weight.setText(response.getString("Weight"));
 
 
 
+                        } catch (JSONException e) {
+                            Log.e("fgdfgfgfgffg", e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("fgdfgfgfgffg", anError.getMessage());
+                    }
+                });
+    }
+    public void change_SizeAll() {
+        Log.e("ergrthgth", strRewardId);
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_size")
+        AndroidNetworking.post(API.BASEURL + API.show_reward_size)
+                .addBodyParameter("product_id", strRewardId)
+                .setTag("Choose Size")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("erytruyh", response.toString());
+
+                        arrayListSize = new ArrayList<>();
+                        arrayListSizeID = new ArrayList<>();
+                        arrayListSizeID.add("");
+                        arrayListSize.add("Select Size");
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String size = jsonObject.getString("Size");
+                                String Reward_info = jsonObject.getString("Reward_info");
+                                Log.e("gregr", Reward_info);
+
+                                if (!Reward_info.equals("null")) {
+
+                                    JSONObject object = new JSONObject(Reward_info);
+                                    String id_new = object.getString("id");
+                                    String size_new = object.getString("size");
+                                    Log.e("ergrf", id_new);
+                                    Log.e("rgfg", size_new);
+                                    arrayListSizeID.add(id_new);
+                                    arrayListSize.add(size_new);
 
 
+                                }
+
+                            }
+
+                            if (arrayListSizeID.size() == 1) {
+                                arrayListSize.set(0, "Not available");
+                            } else {
+                                arrayListSize.set(0, "Select Size");
+                            }
+                            adapterSize = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
+                            adapterSize.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_size.setAdapter(adapterSize);
+                          /*  if(arrayListModel.size()==0){
+
+                                rl_4.setVisibility(View.GONE);
+                            }
+                            else {
+                                rl_4.setVisibility(View.VISIBLE);
+                            }*/
+
+                        } catch (JSONException e) {
+                            Log.e("frghfdg", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("tryht", anError.getMessage());
+                    }
+                });
+
+    }
+    public void change_SizeModel(String strColor, String strModel) {
+        Log.e("fbgfgdgggd", strModel+"Model");
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_size")
+        ColorStatus="0";
+        ModelStatus="1";
+        SizeStatus="0";
+        AndroidNetworking.post(API.BASEURL + API.show_reward_size)
+                .addBodyParameter("product_id", strRewardId)
+                //.addBodyParameter("color_id", strColor)
+                .addBodyParameter("model_id", strModel)
+                .setTag("Choose Size")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("trhhj", response.toString());
+                        arrayListSize = new ArrayList<>();
+                        arrayListSizeID = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String size = jsonObject.getString("Size");
+                                String Reward_info = jsonObject.getString("Reward_info");
+                                Log.e("dfsdfsf", Reward_info);
+
+                                if (!Reward_info.equals("null")) {
+
+                                    JSONObject object = new JSONObject(Reward_info);
+                                    String id_new = object.getString("id");
+                                    String name_size = object.getString("size");
+                                    Log.e("retyr", id_new);
+                                    Log.e("retyr", name_size);
+                                    arrayListSizeID.add(id_new);
+                                    arrayListSize.add(name_size);
+
+                                    if (i == 0) {
+                                        strSize = object.getString("id");
+                                    }
+
+
+                                }
+                                else{
+                                   // Log.e("xnsjnskl","null nhi h");
+                                    arrayListSizeID.add("");
+                                    arrayListSize.add("Not Available");
+                                }
+                            }
+                            adapterSize = new ArrayAdapter<>(RewardsDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
+                            adapterSize.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_size.setAdapter(adapterSize);
+
+                        } catch (JSONException e) {
+                            Log.e("thtyhth", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("trhrtht", anError.getMessage());
+                    }
+                });
+
+
+    }
     public void change_Weight() {
         Log.e("hfvkjvk", strRewardId);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_details")
@@ -1053,7 +1518,6 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-
     public void show_video() {
         AndroidNetworking.post(API.BASEURL + API.show_reward_details)
                 .addBodyParameter("reward_id",strRewardId)

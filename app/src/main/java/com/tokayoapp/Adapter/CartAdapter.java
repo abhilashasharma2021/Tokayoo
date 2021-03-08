@@ -23,10 +23,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.airbnb.lottie.parser.IntegerParser;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Fragments.CartFragment;
 import com.tokayoapp.Modal.CartModal;
@@ -49,18 +52,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
     List<CartModal> cartAdapterList;
     String strProdQ;
-    String strUserId = "", strCheckStatus = "",   Quantity = "";
-    String strUpdateQty = "",strAllStatus="";
+    String strUserId = "", strCheckStatus = "", Quantity = "";
+    String strUpdateQty = "", strAllStatus = "";
     boolean isSelectedAll = false;
     int count = 0;
-    String stProductId="";
+    String stProductId = "";
     CartFragment cartFragment;
-    String new_str="" , Newqty="",Status="",strPro_Ids="",strQtys="";
-    ArrayList<String>arrayList=new ArrayList<>();
+    String new_str = "", Newqty = "", Status = "", strPro_Ids = "", strQtys = "";
+    ArrayList<String> arrayList = new ArrayList<>();
     String StrFinalStatus = "";
-    StringBuilder stringBuilder1,stringBuilder2;
+    StringBuilder stringBuilder1, stringBuilder2;
 
-    public CartAdapter(Context context, List<CartModal> getDataAdpter,CartFragment fragment) {
+    public CartAdapter(Context context, List<CartModal> getDataAdpter, CartFragment fragment) {
 
         this.context = context;
         this.cartFragment = fragment;
@@ -83,10 +86,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         strUpdateQty = AppConstant.sharedpreferences.getString(AppConstant.UpdateQty, "");
         strAllStatus = AppConstant.sharedpreferences.getString(AppConstant.AllStatus, "");
 
-        Log.e("rgfdfg", strUserId);
-        Log.e("rgfdfg", strUpdateQty);
-        Log.e("sdgvdsv", strAllStatus);
-
 
         final CartModal cartModal = cartAdapterList.get(position);
 
@@ -96,17 +95,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txt_model.setText(cartModal.getBrand());
         holder.txt_price.setText(cartModal.getProductPrice());
         holder.txt_itemCount.setText(cartModal.getQuantity());
-        Log.e("dfsfsdfsfs", cartModal.getQuantity());
+
         // holder.img_product.setImageResource(cartModal.getImage());
 
         final String color_id = cartModal.getColor_id();
-        Log.e("ujdhfu", cartModal.getColor_id() + "");
+
         final String model_id = cartModal.getModel_id();
-        Log.e("ujdhfu", cartModal.getModel_id() + "");
+
+        Log.e("sfdgfgfgfgfg", cartModal.getStock());
 
 
-
-        CheckboxCheck(cartModal,holder,CartFragment.CountAll);
+        CheckboxCheck(cartModal, holder, CartFragment.CountAll);
      /*   if (cartModal.getStatus_all().equals("1")){
             holder.check_item.setChecked(true);
             CartFragment.check_all.setChecked(true);
@@ -123,74 +122,72 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
               Log.e("dsdfdds", "else");
           }
         }*/
-        Log.e("sfsfsfsss", CartFragment.CountAll+"" );
-
-
+        Log.e("sfsfsfsss", CartFragment.CountAll + "");
 
 
         holder.check_item.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-                                                       @Override
-                                                       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                         @Override
+                                                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                                                           String qty=holder.txt_itemCount.getText().toString().trim();
-                                                           cartModal.setIsselected(!cartModal.isIsselected());
+                                                             String qty = holder.txt_itemCount.getText().toString().trim();
+                                                             cartModal.setIsselected(!cartModal.isIsselected());
 
-                                                           if (cartModal.isIsselected()) {
-                                                               Log.e("scadvsvcvsv", qty );
-                                                               CartFragment.CountAll=0;
-                                                               CheckboxCheck(cartModal,holder, CartFragment.CountAll);
-                                                               holder.check_item.setChecked(true);
-                                                               check_all.setChecked(false);
+                                                             if (cartModal.isIsselected()) {
+                                                                 Log.e("scadvsvcvsv", qty);
+                                                                 CartFragment.CountAll = 0;
+                                                                 CheckboxCheck(cartModal, holder, CartFragment.CountAll);
+                                                                 holder.check_item.setChecked(true);
+                                                                 check_all.setChecked(false);
 
-                                                               if(CartFragment.Arr_cartId.size()==0){
-                                                                   Log.e("scadvsvcvsv", "ifff" );
-                                                                   CartFragment.Arr_cartId.add(cartModal.getId());
-                                                                   cartFragment.ShowIds();
-                                                               }else{
-                                                                   if(!CartFragment.Arr_cartId.contains(cartModal.getId())){
-                                                                       CartFragment.Arr_cartId.add(cartModal.getId());
-                                                                       cartFragment.ShowIds();
-                                                                       Log.e("scadvsvcvsv", "else iff" );
+                                                                 if (CartFragment.Arr_cartId.size() == 0) {
+                                                                     Log.e("scadvsvcvsv", "ifff");
+                                                                     CartFragment.Arr_cartId.add(cartModal.getId());
+                                                                     cartFragment.ShowIds();
+                                                                 } else {
+                                                                     if (!CartFragment.Arr_cartId.contains(cartModal.getId())) {
+                                                                         CartFragment.Arr_cartId.add(cartModal.getId());
+                                                                         cartFragment.ShowIds();
+                                                                         Log.e("scadvsvcvsv", "else iff");
 
-                                                                   }else{
-                                                                       Log.e("scadvsvcvsv", "else" );
+                                                                     } else {
+                                                                         Log.e("scadvsvcvsv", "else");
 
-                                                                       for (int i = 0; i < CartFragment.Arr_cartId.size(); i++) {
-                                                                           if(CartFragment.Arr_cartId.get(i).equals(cartModal.getId())){
-                                                                               String s=  CartFragment.Arr_cartId.get(i).replace(CartFragment.Arr_cartId.get(i),cartModal.getId());
-                                                                               CartFragment.Arr_cartId.set(i,s);
-                                                                           }
-                                                                           cartFragment.ShowIds();
+                                                                         for (int i = 0; i < CartFragment.Arr_cartId.size(); i++) {
+                                                                             if (CartFragment.Arr_cartId.get(i).equals(cartModal.getId())) {
+                                                                                 String s = CartFragment.Arr_cartId.get(i).replace(CartFragment.Arr_cartId.get(i), cartModal.getId());
+                                                                                 CartFragment.Arr_cartId.set(i, s);
+                                                                             }
+                                                                             cartFragment.ShowIds();
 
-                                                                       }
+                                                                         }
 
-                                                                   }
+                                                                     }
 
-                                                               }
-
-
-                                                               stringBuilder2 = new StringBuilder();
-                                                               for (int i = 0; i <CartFragment.Arr_cartId.size(); i++) {
-                                                                   CartFragment.Arr_cartId.get(i);
-                                                                   stringBuilder2.append(CartFragment.Arr_cartId.get(i));
-                                                                   stringBuilder2.append(",");
-                                                               }
-
-                                                               holder.check_item.setChecked(true);
+                                                                 }
 
 
-                                                           } else {
+                                                                 stringBuilder2 = new StringBuilder();
+                                                                 for (int i = 0; i < CartFragment.Arr_cartId.size(); i++) {
+                                                                     CartFragment.Arr_cartId.get(i);
+                                                                     stringBuilder2.append(CartFragment.Arr_cartId.get(i));
+                                                                     stringBuilder2.append(",");
+                                                                 }
 
-                                                               holder.check_item.setChecked(false);
-                                                               CartFragment.Arr_cartId.remove(cartModal.getId());
-                                                               cartFragment.ShowIds();
-                                                           }
+                                                                 holder.check_item.setChecked(true);
 
 
-                                                       }
+                                                             } else {
 
-                                                   }
+                                                                 holder.check_item.setChecked(false);
+                                                                 CartFragment.Arr_cartId.remove(cartModal.getId());
+                                                                 cartFragment.ShowIds();
+                                                             }
+
+
+                                                         }
+
+                                                     }
 
         );
 
@@ -225,7 +222,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 */
 
-           Newqty=holder.txt_itemCount.getText().toString().trim();
+        Newqty = holder.txt_itemCount.getText().toString().trim();
 
          /*   if (!isSelectedAll) {
                 Log.e("dddfgdgd","Not");
@@ -339,16 +336,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });*/
 
 
-
         try {
-            Picasso.with(context).load(cartModal.getPath() + cartModal.getImage()).into(holder.img_product);
+            Glide.with(context).load(cartModal.getPath() + cartModal.getImage())
+                    .placeholder(R.drawable.logo_350).override(250, 250)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.img_product);
         } catch (Exception ignored) {
 
         }
 
-
+/*
         final int stock_count = Integer.parseInt(cartModal.getStock());
-        Log.e("retgryht", cartModal.getStock() + "");
+        Log.e("retgryht", cartModal.getStock() + "");*/
 
         final String showCartId = cartModal.getId();
         Log.e("dfdvg", cartModal.getId() + "");
@@ -383,85 +382,79 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(final View v) {
 
 
-                /*strProdQ = holder.txt_itemCount.getText().toString();
-
-                 new_str = String.valueOf(Integer.parseInt(strProdQ) + 1);
-
-                holder.txt_itemCount.setText(new_str);
-
-                int qty = Integer.parseInt(new_str);
-
-                if (qty > stock_count) {
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setMessage("Can't purchase more than stock Please select under the stock ");
-                    alertDialogBuilder.setPositiveButton("ok",
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface arg0, int arg1) {
-
-                                    Fragment fragment = new CartFragment();
-                                    FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
-
-
-                                }
-                            });
-
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-
-                } else {
-
-                }*/
-
-
                 if (!holder.check_item.isChecked()) {
-                    Toast.makeText(context, "you have to  select the checkbox", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "You have to  select the checkbox", Toast.LENGTH_SHORT).show();
                 } else {
 
 
                     strProdQ = holder.txt_itemCount.getText().toString();
-                    String new_str = String.valueOf(Integer.parseInt(strProdQ) + 1);
+                    new_str = String.valueOf(Integer.parseInt(strProdQ) + 1);
                     holder.txt_itemCount.setText(new_str);
                     Log.e("ddfddfd", new_str);
                     Log.e("dfdddd", CartFragment.Arr_cartId.size() + "");
                     Log.e("cnsjchjc", cartAdapterList.get(position).isIsselected() + "");
-                    if (cartAdapterList.get(position).isIsselected() == true) {
+                    if (cartAdapterList.get(position).isIsselected()) {
                         if (CartFragment.Arr_cartId.size() == 0) {
                             CartFragment.Arr_cartId.add(cartModal.getId());
-
                         } else {
                             if (!CartFragment.Arr_cartId.contains(cartModal.getId())) {
                                 CartFragment.Arr_cartId.add(cartModal.getId());
-
                             } else {
                                 for (int i = 0; i < CartFragment.Arr_cartId.size(); i++) {
                                     if (CartFragment.Arr_cartId.get(i).equals(cartModal.getId())) {
                                         String s = CartFragment.Arr_cartId.get(i).replace(CartFragment.Arr_cartId.get(i), cartModal.getId());
                                         CartFragment.Arr_cartId.set(i, s);
                                     }
-
                                 }
-
                             }
-
                         }
-
-
                         stringBuilder2 = new StringBuilder();
                         for (int i = 0; i < CartFragment.Arr_cartId.size(); i++) {
                             CartFragment.Arr_cartId.get(i);
                             stringBuilder2.append(CartFragment.Arr_cartId.get(i));
                             stringBuilder2.append(",");
                         }
-                        Log.e("dcdadaddd", stringBuilder2.toString().trim() + "");
-                        update_quantity(productId, new_str, holder, color_id, model_id);
+
+                        if (!cartModal.getStock().isEmpty()){
+                            if (!cartModal.getStock().isEmpty()){
+                                if (!cartModal.getStock().equals("null")){
+                                    if (Integer.parseInt(new_str) <= Integer.parseInt(cartModal.getStock())) {
+                                        update_quantity(productId, new_str, holder, color_id, model_id);
+
+
+                                    } else {
+                                        new_str = cartModal.getStock();
+                                        holder.txt_itemCount.setText(new_str);
+
+                                        Toast.makeText(context, "Out of stock", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+
+                            }
+                        }
+
 
                     } else {
-                        update_quantity(productId, new_str, holder, color_id, model_id);
+
+                        if (!cartModal.getStock().isEmpty()){
+                            if (!cartModal.getStock().equals("null")){
+                                if (Integer.parseInt(new_str) <= Integer.parseInt(cartModal.getStock())) {
+                                    update_quantity(productId, new_str, holder, color_id, model_id);
+
+
+                                } else {
+                                    new_str = cartModal.getStock();
+                                    holder.txt_itemCount.setText(new_str);
+
+
+
+                                }
+                            }
+
+                        }
+
+
                     }
 
 
@@ -476,8 +469,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 if (!holder.check_item.isChecked()) {
                     Toast.makeText(context, "you have to  select the checkbox", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     strProdQ = holder.txt_itemCount.getText().toString();
                     new_str = String.valueOf(Integer.parseInt(strProdQ) - 1);
                     int xyz = Integer.parseInt(strProdQ) - 1;
@@ -504,6 +496,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                         if (CartFragment.Arr_cartId.get(i).equals(cartModal.getId())) {
                                             String s = CartFragment.Arr_cartId.get(i).replace(CartFragment.Arr_cartId.get(i), cartModal.getId());
                                             CartFragment.Arr_cartId.set(i, s);
+                                           /* String s1 = CartFragment.Arr_ProQty.get(i).replace(CartFragment.Arr_ProQty.get(i), new_str);
+                                            CartFragment.Arr_ProQty.set(i, s1);*/
                                         }
 
                                     }
@@ -519,7 +513,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                 stringBuilder2.append(CartFragment.Arr_cartId.get(i));
                                 stringBuilder2.append(",");
                             }
-                            Log.e("dcdadaddd", stringBuilder2.toString().trim() + "");
+
+                         /*   stringBuilder1 = new StringBuilder();
+                            for (int i = 0; i < CartFragment.Arr_ProQty.size(); i++) {
+                                CartFragment.Arr_ProQty.get(i);
+                                stringBuilder1.append(CartFragment.Arr_ProQty.get(i));
+                                stringBuilder1.append(",");
+                            }*/
                             update_quantity(productId, new_str, holder, color_id, model_id);
 
                         } else {
@@ -570,15 +570,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
     }
 
-    public void CheckboxCheck(CartModal model, ViewHolder holder, int countAll){
+    public void CheckboxCheck(CartModal model, ViewHolder holder, int countAll) {
 
-        if (countAll==1){
-            Log.e("dfvsvsvxcvx", countAll+"" );
+        if (countAll == 1) {
+            Log.e("dfvsvsvxcvx", countAll + "");
             CartFragment.Arr_cartId.add(model.getId());
             holder.check_item.setChecked(true);
             check_all.setChecked(true);
-        }else  if (countAll==0){
-            Log.e("dfvsvsvxcvx", countAll+"" );
+        } else if (countAll == 0) {
+            Log.e("dfvsvsvxcvx", countAll + "");
             holder.check_item.setChecked(false);
             check_all.setChecked(false);
         }
@@ -597,38 +597,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
 
     public void update_quantity(String productId, String new_str, final ViewHolder holder, String color_id, String model_id) {
+
         Log.e("tgfdhg", productId);
         Log.e("tgfdhg", strUserId);
         Log.e("tgfdhg", new_str);
-        Log.e("tgfdhg", stringBuilder2+"");
+        Log.e("tgfdhg", color_id);
+        Log.e("tgfdhg", model_id);
 
-        // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?actCarion=update_quantity")
         AndroidNetworking.post(API.BASEURL + API.update_quantity)
                 .addBodyParameter("product_id", productId)
                 .addBodyParameter("user_id", strUserId)
                 .addBodyParameter("quantity", new_str)
                 .addBodyParameter("color_id", color_id)
                 .addBodyParameter("model_id", model_id)
-                .addBodyParameter("status",StrFinalStatus)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("etrfdeg", response.toString());
+                        Log.e("fgdghgnnn", response.toString());
                         try {
                             if (response.getString("result").equals("sucessfull")) {
-                                update_status(String.valueOf(stringBuilder2),strUserId);
+                                update_status(String.valueOf(stringBuilder2), strUserId);
                             }
                         } catch (JSONException e) {
-                            Log.e("tyhth", e.getMessage());
+                            Log.e("scxdcbjabjdcb", e.getMessage());
                         }
 
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("ukuihj", anError.getMessage());
+                        Log.e("scxdcbjabjdcb", anError.getMessage());
                     }
                 });
 
@@ -734,16 +734,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
 
-
-
-
-    public void update_status(String cart_id,String strUserId) {
+    public void update_status(String cart_id, String strUserId) {
         Log.e("dsrgdfh", cart_id);
         Log.e("dsrgdfh", strUserId);
         // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?actCarion=updatestatuscart")
         AndroidNetworking.post(API.BASEURL + API.updatestatuscart)
-                .addBodyParameter("cart_id",cart_id)
-                .addBodyParameter("user_id",strUserId)
+                .addBodyParameter("cart_id", cart_id)
+                .addBodyParameter("user_id", strUserId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -752,7 +749,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         Log.e("rfrrferer", response.toString());
                         try {
                             if (response.getString("msg").equals("susccess")) {
-                                ((CartFragment)cartFragment).ShowIds();
+                                ((CartFragment) cartFragment).ShowIds();
                             }
                         } catch (JSONException e) {
                             Log.e("tyhth", e.getMessage());

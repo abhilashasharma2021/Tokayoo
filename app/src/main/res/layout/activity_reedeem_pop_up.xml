@@ -241,7 +241,7 @@
         android:weightSum="2">
 
         <RelativeLayout
-            android:id="@+id/rl_cancel"
+
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -250,7 +250,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/btn_Cancel"
+                android:id="@+id/btnFinish"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/greycontinue_rounded"
@@ -347,7 +347,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/txt_weight"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="KG"
                     android:layout_marginRight="15dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />

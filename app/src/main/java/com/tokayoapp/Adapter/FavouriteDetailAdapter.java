@@ -2,6 +2,7 @@ package com.tokayoapp.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.tokayoapp.Activities.FavDetailsActivity;
 import com.tokayoapp.Activities.ProductDetailsActivity;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.R;
+import com.tokayoapp.Utils.AppConstant;
 
 import java.util.ArrayList;
 
@@ -61,24 +63,35 @@ public class FavouriteDetailAdapter extends RecyclerView.Adapter<FavouriteDetail
         holder.img_product1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.img_product1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                imgs = productDetailModal.getImage();
-                paths = productDetailModal.getPath();
-                Log.e("sbjsb", imgs + paths);
+                        imgs = productDetailModal.getImage();
+                        paths = productDetailModal.getPath();
+                        Log.e("sbjsb", imgs + paths);
 
-                try {
-                    Picasso.with(context).load(paths + imgs).into(ProductDetailsActivity.imgProduct);
-                    notifyDataSetChanged();
+                        AppConstant.sharedpreferences =context.getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                        editor.putString(AppConstant.ProductSubImages, paths + imgs);
+                        editor.putString(AppConstant.ProductSubImagesPosition, position+"");
+                        editor.commit();
 
-                } catch (Exception e) {
+                        try {
+                            Picasso.with(context).load(paths + imgs).into(FavDetailsActivity.imgProduct);
+                            notifyDataSetChanged();
+
+                        } catch (Exception e) {
 
 
-                }
+                        }
 
+                    }
+                });
             }
         });
 
-        FavDetailsActivity.imgProduct.setOnClickListener(new View.OnClickListener() {
+       /* FavDetailsActivity.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(context);
@@ -93,7 +106,7 @@ public class FavouriteDetailAdapter extends RecyclerView.Adapter<FavouriteDetail
                 dialog.show();
 
             }
-        });
+        });*/
 
     }
 

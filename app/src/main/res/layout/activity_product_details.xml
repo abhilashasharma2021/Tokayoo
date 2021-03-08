@@ -78,6 +78,7 @@
                     android:layout_alignParentRight="true"
                     android:background="@drawable/grey_circle"
                     android:layout_height="35dp">
+
                     <com.varunest.sparkbutton.SparkButton
                         android:id="@+id/spark_button"
                         android:layout_width="35dp"
@@ -245,10 +246,9 @@ android:background="#dbdbdb"/>
                     android:layout_height="40dp">
                     <Spinner
                         android:id="@+id/spin_color"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="70dp"
                         android:padding="1dip"
                         android:prompt="@string/spinner_color"
                         android:layout_height="wrap_content"
@@ -285,10 +285,9 @@ android:background="#dbdbdb"/>
                       android:layout_height="40dp">
                       <Spinner
                           android:id="@+id/spin_model"
-                          android:layout_width="fill_parent"
+                          android:layout_width="match_parent"
                           android:textSize="14sp"
                           android:layout_alignParentRight="true"
-                          android:layout_marginLeft="70dp"
                           android:padding="1dip"
                           android:prompt="@string/spinner_title"
                           android:layout_height="wrap_content"
@@ -327,10 +326,9 @@ android:background="#dbdbdb"/>
                     android:layout_height="40dp">
                     <Spinner
                         android:id="@+id/spin_size"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="70dp"
                         android:padding="1dip"
                         android:prompt="@string/spinner_title"
                         android:layout_height="wrap_content"
@@ -373,14 +371,15 @@ android:background="#dbdbdb"/>
                         android:id="@+id/tx_Weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:gravity="center"
+                        android:gravity="start"
+                        android:hint="select weight"
+                        android:textSize="15sp"
+                        android:paddingLeft="15dp"
+                        android:textColorHint="@color/black"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/black"
-                        android:text="Select weight"/>
+                        android:textColor="@color/black"/>
 
 
 

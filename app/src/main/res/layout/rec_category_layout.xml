@@ -24,7 +24,7 @@
                 android:maxHeight="?android:attr/listPreferredItemHeight"
                 android:maxWidth="?android:attr/listPreferredItemHeight"
                 android:scaleType="centerCrop"
-                android:src="@drawable/rod" />
+                 />
 
             <RelativeLayout
                 android:layout_width="match_parent"

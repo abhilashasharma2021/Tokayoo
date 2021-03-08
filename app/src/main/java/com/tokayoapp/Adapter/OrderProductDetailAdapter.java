@@ -2,6 +2,7 @@ package com.tokayoapp.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.tokayoapp.Activities.OrderProductDetails;
 import com.tokayoapp.Activities.ProductDetailsActivity;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.R;
+import com.tokayoapp.Utils.AppConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,12 +71,18 @@ public class OrderProductDetailAdapter extends RecyclerView.Adapter<OrderProduct
             @Override
             public void onClick(View view) {
 
-                 imgs = productDetailModal.getImage();
-                 paths = productDetailModal.getPath();
-                 Log.e("sbjsb", imgs + paths);
+                imgs = productDetailModal.getImage();
+                paths = productDetailModal.getPath();
+                Log.e("sbjsb", imgs + paths);
+
+                AppConstant.sharedpreferences =context.getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                editor.putString(AppConstant.ProductSubImages, paths + imgs);
+                editor.putString(AppConstant.ProductSubImagesPosition, position+"");
+                editor.commit();
 
                 try {
-                    Picasso.with(context).load(paths + imgs).into(ProductDetailsActivity.imgProduct);
+                    Picasso.with(context).load(paths + imgs).into(OrderProductDetails.imgProduct);
                     notifyDataSetChanged();
 
                 } catch (Exception e) {
@@ -112,7 +120,7 @@ public class OrderProductDetailAdapter extends RecyclerView.Adapter<OrderProduct
             }
         });
 */
-        OrderProductDetails.imgProduct.setOnClickListener(new View.OnClickListener() {
+      /*  OrderProductDetails.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(context);
@@ -127,7 +135,7 @@ public class OrderProductDetailAdapter extends RecyclerView.Adapter<OrderProduct
                 dialog.show();
 
             }
-        });
+        });*/
 
 
 

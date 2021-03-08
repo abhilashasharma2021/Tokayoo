@@ -1,11 +1,13 @@
 package com.tokayoapp.Activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,13 +27,19 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.tokayoapp.Adapter.ProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductVideoAdapter;
 import com.tokayoapp.Adapter.RedemptionDetailAdapter;
+import com.tokayoapp.Adapter.ScrollImagesAdapter;
+import com.tokayoapp.Adapter.ScrollImagesRedemptiondetailsAdapter;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.Modal.ProductVideoModal;
 import com.tokayoapp.Modal.RedemptionDetailModal;
+import com.tokayoapp.Modal.RewardDetailModal;
 import com.tokayoapp.R;
 import com.tokayoapp.Utils.API;
 import com.tokayoapp.Utils.AppConstant;
@@ -65,6 +73,10 @@ public class RedempItemDetailActivity extends AppCompatActivity {
     RecyclerView.LayoutManager videomanager;
     ImageView iv_copy;
     String company_name="",ship_time="";
+
+    SliderView sliderView;
+    ArrayList<RedemptionDetailModal> scrollList;
+    String strProductSubImage="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,8 +138,93 @@ public class RedempItemDetailActivity extends AppCompatActivity {
         rec_product_video.setLayoutManager(videomanager);
         rec_product_video.setHasFixedSize(true);
 
-
         imgProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(RedempItemDetailActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.custom_enlarge_image_layout, null);
+                dialogBuilder.setView(dialogView);
+                sliderView = dialogView.findViewById(R.id.imageSlider);
+                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                strProductSubImage = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImages, "");
+                final String ProductSubImagesPosition = AppConstant.sharedpreferences.getString(AppConstant.ProductSubImagesPosition, "");
+
+                sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+                sliderView.startAutoCycle();
+
+                AndroidNetworking.post(API.BASEURL + API.show_reward_order_detail)
+                        .addBodyParameter("user_id",strUserId)
+                        .addBodyParameter("product_id",strProdutId)
+                        .addBodyParameter("order_id",strORDERID)
+                        .setTag("show Product Detail")
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONArray(new JSONArrayRequestListener() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.e("fghgf", response.toString());
+
+                                scrollList = new ArrayList<>();
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        JSONObject jsonObject = response.getJSONObject(i);
+                                        String reward = jsonObject.getString("reward");
+                                        JSONArray jsonArray=new JSONArray(reward);
+                                        for (int j = 0; j <jsonArray.length() ; j++) {
+                                        JSONObject object=jsonArray.getJSONObject(j);
+                                            String img = object.getString("img");
+
+                                            Log.e("RedempItemDetailActivity", "onResponse: " +img);
+                                            JSONArray jsonArray1 = new JSONArray(img);
+
+                                            for (int k = 0; k < jsonArray1.length(); k++) {
+                                                RedemptionDetailModal productDetailModal = new RedemptionDetailModal();
+                                                JSONObject jsonObject1 = jsonArray1.getJSONObject(k);
+                                                productDetailModal.setImage(jsonObject1.getString("image"));
+                                                productDetailModal.setPath(object.getString("path"));
+                                                scrollList.add(productDetailModal);
+                                            }
+                                        }
+
+                                    }
+
+
+                                    ScrollImagesRedemptiondetailsAdapter productDetailAdapter = new ScrollImagesRedemptiondetailsAdapter(RedempItemDetailActivity.this, scrollList);
+                                    sliderView.setSliderAdapter(productDetailAdapter);
+                                  /*  if (!ProductSubImagesPosition.equals("")) {
+                                        int pos = Integer.parseInt(ProductSubImagesPosition);
+                                        recyclerviewSroll.scrollToPosition(pos);
+                                    }*/
+
+                                } catch (JSONException e) {
+                                    Log.e("fdgfdbgf", e.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                Log.e("trytrh", anError.getMessage());
+
+                            }
+                        });
+
+
+                ImageView imageView = dialogView.findViewById(R.id.my_image);
+
+                try {
+                    Picasso.with(RedempItemDetailActivity.this).load(strProductSubImage).into(imageView);
+
+                } catch (Exception e) {
+
+                }
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+  /*      imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(RedempItemDetailActivity.this);
@@ -136,12 +233,12 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
                 ImageView img = dialog.findViewById(R.id.img);
 
-                /*try {
+                *//*try {
                     Picasso.with(context).load(paths+imgs).into(img);
                 } catch (Exception e) {
 
 
-                }*/
+                }*//*
 
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -152,7 +249,7 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                 dialog.show();
 
             }
-        });
+        });*/
     }
 
 
@@ -185,7 +282,7 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
-                                RedemptionDetailModal redemptionDetailModal = new RedemptionDetailModal();
+
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 String id = jsonObject.getString("id");
                                 String user_id = jsonObject.getString("user_id");
@@ -306,58 +403,44 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                         }
                                     });
 
-                                 /*   if(order_status.equals("0")){
-                                        rl_process.setVisibility(View.GONE);
-                                        txt_progress.setText("In Process");
-                                    }
-                                    else {
-                                        rl_process.setVisibility(View.VISIBLE);
-                                        txt_progress.setText("Ship out");
-                                    }*/
                                     String img = object.getString("img");
                                     Log.e("mnvm",img);
                                     JSONArray jsonArray1=new JSONArray(img);
-
-                                    for (int k=0;k<jsonArray1.length();k++){
-
-
+                                    for (int k=0; k<jsonArray1.length();k++){
+                                        RedemptionDetailModal redemptionDetailModal = new RedemptionDetailModal();
                                         JSONObject jsonObject1=jsonArray1.getJSONObject(k);
+                                        Log.e("dcsl", jsonArray1.length() + "");
 
-                                        JSONObject object1=jsonArray1.getJSONObject(0);
-
-                                        String id_1=jsonObject1.getString("id");
-
+                                        JSONObject object1 = jsonArray1.getJSONObject(0);
                                         final String image2 = object1.getString("image");
 
-                                        Log.e("jdhfjdh",image);
-                                        Log.e("jdhfjdh",path);
-
+                                        Log.e("sgdgvdfvb",image2);
+                                        Log.e("sgdgvdfvb",path);
                                         try {
-                                            if (object!=null){
-
-                                                Picasso.with(RedempItemDetailActivity.this).load(path +image2).into(imgProduct);
+                                            if (object1 != null) {
+                                                Picasso.with(RedempItemDetailActivity.this).load(path + image2).into(imgProduct);
 
                                             }
                                         } catch (Exception ignored) {
 
                                         }
+
                                         redemptionDetailModal.setImage(jsonObject1.getString("image"));
-                                        redemptionDetailModal.setPath(object.getString("path"));
+                                        redemptionDetailModal.setPath(path);
                                         redemptionArrayList.add(redemptionDetailModal);
                                     }
 
 
 
-
-
                                 }
-
 
                             }
 
                             detailAdapter = new RedemptionDetailAdapter(RedempItemDetailActivity.this, redemptionArrayList);
                             rec_redmptn_detail.setAdapter(detailAdapter);
                             spin_kit.setVisibility(View.GONE);
+
+
                         } catch (JSONException e) {
                             Log.e("nkvckmv",e.getMessage());
                             spin_kit.setVisibility(View.GONE);

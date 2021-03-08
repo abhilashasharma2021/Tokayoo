@@ -13,6 +13,7 @@ public class API {
     public  static String add_cart="action=add_cart";
     public  static String fav_products="action=fav_products";
     public  static String show_cart="action=show_cart";
+    public  static String show_reward_size="action=show_reward_size";
     public  static String show_filter_brands="action=show_filter_brands";
     public  static String mobile_varification="action=mobile_varification";
     public  static String update_quantity="action=update_quantity";

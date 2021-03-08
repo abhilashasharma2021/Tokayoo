@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PatternMatcher;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +39,8 @@ import com.tokayoapp.Utils.AppConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -102,7 +106,16 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Password and Confirm Password Not Matched,Please Enter Correct Password", Toast.LENGTH_LONG).show();
 
                 } else {
-                    signUp();
+
+
+                    if (Patterns.EMAIL_ADDRESS.matcher(emailEmail.getText().toString().trim()).matches()){
+                        signUp();
+                    }else  {
+                        Toast.makeText(RegisterActivity.this, "Please Enter Valid Email", Toast.LENGTH_LONG).show();
+
+                    }
+
+
 
                 }
 
@@ -197,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        spin_kit.setVisibility(View.GONE);
                         Log.e("dsfdv", response.toString());
                         try {
                             if (response.getString("result").equals("successfully Insert")) {
@@ -209,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                                editor.putString(AppConstant.UserId, id);
+                                editor.putString(AppConstant.Id, id);
                                 editor.putString(AppConstant.UserName, username);
                                 editor.putString(AppConstant.UserEmail, email);
                                 editor.commit();
@@ -218,7 +231,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 Animatoo.animateZoom(RegisterActivity.this);
                                 Toast.makeText(RegisterActivity.this, response.getString("result"), Toast.LENGTH_SHORT).show();
 
-                                spin_kit.setVisibility(View.GONE);
+
+                            }else {
+                                Toast.makeText(RegisterActivity.this, response.getString("result"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Log.e("rtrtt", e.getMessage());

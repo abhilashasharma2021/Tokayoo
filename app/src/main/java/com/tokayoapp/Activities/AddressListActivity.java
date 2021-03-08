@@ -70,7 +70,7 @@ public class AddressListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(AddressListActivity.this,AddNewActivity.class));
-                finish();
+
             }
         });
 
@@ -81,6 +81,13 @@ public class AddressListActivity extends AppCompatActivity {
 
         show_AddressList();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        show_AddressList();
+    }
+
     public void show_AddressList(){
 
         spin_kit.setVisibility(View.VISIBLE);

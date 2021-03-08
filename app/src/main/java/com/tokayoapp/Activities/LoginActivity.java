@@ -348,11 +348,10 @@ public class LoginActivity extends AppCompatActivity{
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        spin_kit.setVisibility(View.GONE); // monu ne kiya ye visible rehta tha
                         Log.e("dsgdfdsg",response.toString());
                         try {
                             if (response.getString("result").equals("Login SuccessFully")) {
-
 
                                 String id=response.getString("id");
                                 String username=response.getString("username");
@@ -362,19 +361,12 @@ public class LoginActivity extends AppCompatActivity{
                                 Log.e("dfkldk",response.getString("id"));
                                 Log.e("dskv;ldsk", contact );/*+60-896767668*/
 
-
                                 String[] splitStr = contact.split("-");
                                 String selected_country_code=splitStr[0];
                                 String split_otwo=splitStr[0];
-
-
-
-
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 Animatoo.animateZoom(LoginActivity.this);
                                 Toast.makeText(LoginActivity.this, response.getString("result"), Toast.LENGTH_SHORT).show();
-
-
                                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                 editor.putString(AppConstant.UserId,id);
@@ -386,7 +378,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
 
-                                spin_kit.setVisibility(View.GONE);
+
                             }
                             else {
                                 Toast.makeText(LoginActivity.this, response.getString("result"), Toast.LENGTH_SHORT).show();

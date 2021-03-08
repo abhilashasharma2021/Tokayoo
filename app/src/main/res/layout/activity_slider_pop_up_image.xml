@@ -7,9 +7,9 @@
     tools:context=".Activities.SliderPopUp_imageActivity">
     <ImageView
         android:id="@+id/img"
-        android:scaleType="centerInside"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:src="@drawable/a5"
+
         />
 </RelativeLayout>

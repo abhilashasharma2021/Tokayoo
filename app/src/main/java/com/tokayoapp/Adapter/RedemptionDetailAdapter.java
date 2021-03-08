@@ -2,6 +2,7 @@ package com.tokayoapp.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.tokayoapp.Activities.RedempItemDetailActivity;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.Modal.RedemptionDetailModal;
 import com.tokayoapp.R;
+import com.tokayoapp.Utils.AppConstant;
 
 import java.util.ArrayList;
 
@@ -74,9 +76,15 @@ public class RedemptionDetailAdapter extends RecyclerView.Adapter<RedemptionDeta
             @Override
             public void onClick(View view) {
 
-                 imgs = redemptionDetailModal.getImage();
-                 paths = redemptionDetailModal.getPath();
-                 Log.e("dfvvxc", imgs + paths);
+                imgs = redemptionDetailModal.getImage();
+                paths = redemptionDetailModal.getPath();
+                Log.e("sbjsb", imgs + paths);
+
+                AppConstant.sharedpreferences =context.getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                editor.putString(AppConstant.ProductSubImages, paths + imgs);
+                editor.putString(AppConstant.ProductSubImagesPosition, position+"");
+                editor.commit();
 
                 try {
                     Picasso.with(context).load(paths + imgs).into(RedempItemDetailActivity.imgProduct);
@@ -86,7 +94,6 @@ public class RedemptionDetailAdapter extends RecyclerView.Adapter<RedemptionDeta
 
 
                 }
-
             }
         });
 /*
@@ -119,7 +126,7 @@ public class RedemptionDetailAdapter extends RecyclerView.Adapter<RedemptionDeta
         });
 */
 
-        RedempItemDetailActivity.imgProduct.setOnClickListener(new View.OnClickListener() {
+       /* RedempItemDetailActivity.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(context);
@@ -135,7 +142,7 @@ public class RedemptionDetailAdapter extends RecyclerView.Adapter<RedemptionDeta
 
             }
         });
-
+*/
 
      /*   if (position==0){
 

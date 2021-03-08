@@ -22,9 +22,9 @@
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/lure" />
+                    />
 
 
                 <RelativeLayout
@@ -217,10 +217,9 @@
 
                     <Spinner
                         android:id="@+id/spin_color"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="70dp"
                         android:padding="1dip"
                         android:prompt="@string/spinner_color"
                         android:layout_height="wrap_content"
@@ -258,10 +257,9 @@
 
                     <Spinner
                         android:id="@+id/spin_model"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="70dp"
                         android:padding="1dip"
                         android:prompt="@string/spinner_title"
                         android:layout_height="wrap_content"
@@ -271,6 +269,93 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/rl_size"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:text="Size"/>
+
+                <RelativeLayout
+                    android:layout_width="240dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txt_size"
+                    android:background="@drawable/greylight_stroke"
+                    android:layout_height="40dp">
+                    <Spinner
+                        android:id="@+id/spin_size"
+                        android:layout_width="match_parent"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:padding="1dip"
+                        android:prompt="@string/spinner_title"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/rl_weight"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/black"
+                    android:text="Weight"/>
+
+                <RelativeLayout
+                    android:layout_width="240dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txtWeight"
+                    android:background="@drawable/greylight_stroke"
+                    android:layout_height="40dp">
+
+
+
+
+                    <TextView
+                        android:id="@+id/tx_Weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="start"
+                        android:paddingLeft="15dp"
+                        android:hint="select weight"
+                        android:textSize="15sp"
+                        android:textColorHint="@color/black"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:textColor="@color/black" />
+
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -422,11 +507,13 @@
                     android:layout_below="@+id/txt_brand"
                     android:layout_marginTop="5dp"
                     android:text="Weight     :"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_1"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_brand"
@@ -462,8 +549,8 @@
                     android:id="@+id/txt_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_1"
-                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/txt_brand1"
+                    android:layout_marginTop="10dp"
                     android:text="Description :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />

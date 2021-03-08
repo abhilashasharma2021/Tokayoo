@@ -40,7 +40,6 @@
                         android:id="@+id/img_product"
                         android:layout_width="120dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/rod"
                         android:layout_height="120dp"/>
                 </RelativeLayout>
 

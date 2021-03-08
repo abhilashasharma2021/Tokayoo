@@ -160,7 +160,11 @@ public class AddNewActivity extends AppCompatActivity {
                 }
 
                 strName = edt_name.getText().toString().trim();
-                strContact = edt_contact.getText().toString().trim();
+                if (strSelectedCountryCode.equals("")){
+                    strContact="+60-"+edt_contact.getText().toString().trim();
+                }else {
+                    strContact=strSelectedCountryCode+"-"+edt_contact.getText().toString().trim();
+                }
                 strAddress = edt_address.getText().toString().trim();
 
                 if (strName.equals("")) {
@@ -261,12 +265,6 @@ public class AddNewActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
@@ -284,8 +282,6 @@ public class AddNewActivity extends AppCompatActivity {
         final AlertDialog alert = builder.create();
         alert.show();
     }
-
-
     public void add_Newaddress() {
 
         LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);

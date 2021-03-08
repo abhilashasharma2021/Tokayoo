@@ -33,7 +33,6 @@
                     android:id="@+id/img_product"
                     android:layout_width="match_parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/lure"
                      android:layout_margin="4dp"
                     android:layout_height="120dp"/>
 

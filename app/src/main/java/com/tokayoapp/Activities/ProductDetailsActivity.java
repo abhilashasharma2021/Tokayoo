@@ -60,9 +60,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     ProductDetailAdapter productDetailAdapter;
     ArrayList<ProductDetailModal> productModelArrayList = new ArrayList<>();
-    String strUserId = "", strProdutId = "", strColor = "", strModel = "",strSize="";
+    String strUserId = "", strProdutId = "", strColor = "", strModel = "", strSize = "";
     SparkButton spark_button, spark_fav_already;
-    Spinner spin_model, spin_color,spin_size;
+    Spinner spin_model, spin_color, spin_size;
     ArrayList<String> arrayListColorID;
     ArrayList<String> arrayListSizeID;
     ArrayList<String> arrayListModelID;
@@ -74,7 +74,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ArrayList<String> arrayListModel;
     ImageView img_plus, img_minus;
     public static ImageView imgProduct;
-    TextView txt_itemCount, txtStock,tx_Weight, txt_product_name, txt_brandName, txt_catName, txt_price, txt_brand, txt_weight, txt_description;
+    TextView txt_itemCount, txtStock, tx_Weight, txt_product_name, txt_brandName, txt_catName, txt_price, txt_brand, txt_weight, txt_description;
     String strProdQ;
     String strProdutStatus = "";
     String strProductSubImage = "";
@@ -83,13 +83,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ProgressBar spin_kit;
     ArrayList<ProductDetailModal> scrollList;
     int stock_count = 0;
-    String ColorStatus = "", ModelStatus = "",SizeStatus="";
+    String ColorStatus = "", ModelStatus = "", SizeStatus = "";
 
     ProductVideoAdapter productVideoAdapter;
     ArrayList<ProductVideoModal> videoModalArrayList = new ArrayList<>();
     RecyclerView rec_product_video;
     RecyclerView.LayoutManager videomanager;
     SliderView sliderView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +100,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         strProdutId = AppConstant.sharedpreferences.getString(AppConstant.ProdutId, "");
         strProdutStatus = AppConstant.sharedpreferences.getString(AppConstant.ProdutStatus, "");
 
-
-        // Toast.makeText(ProductDetailsActivity.this,strUserId,Toast.LENGTH_LONG).show();
 
         Log.e("dskdf", strUserId);
         Log.e("dskdf", strProdutId);
@@ -136,9 +135,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         rec_product_video.setHasFixedSize(true);
 
 
-
-
-            AvailableStock(strProdutId);
+        AvailableStock(strProdutId);
 
 
         imgProduct.setOnClickListener(new View.OnClickListener() {
@@ -223,10 +220,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String strQuantity = txt_itemCount.getText().toString().trim();
-                if (strColor.equals("")) {
-                    Toast.makeText(ProductDetailsActivity.this, "Please select Color", Toast.LENGTH_SHORT).show();
-                } else if (strModel.equals("")) {
-                    Toast.makeText(ProductDetailsActivity.this, "Please select Model", Toast.LENGTH_SHORT).show();
+                String weight = tx_Weight.getText().toString().trim();
+                if (weight.equals("")) {
+                    Toast.makeText(ProductDetailsActivity.this, "Please select Variation", Toast.LENGTH_SHORT).show();
                 } else {
                     add_to_cart(strQuantity);
                 }
@@ -234,19 +230,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+        Log.e("ProductDetailsActivity", "onCreate: " +strProdutStatus);
+
         if (strProdutStatus.equals("Category")) {
             show_ProductDetail();
             show_video();
         } else {
             newArrival_details();
             show_arrivalVideo();
+
+
         }
 
 
         change_ModelAll();
         change_colorAll();
         change_SizeAll();
-
 
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,6 +254,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @Override
@@ -262,17 +262,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
         super.onResume();
 
 
-        arrayListModel = new ArrayList<>();
-        arrayListModelID = new ArrayList<>();
-        arrayListModelID.add("0");
-        arrayListModel.add("Select Model");
         spin_model.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     if (ColorStatus.equals("1")) {
                         strModel = arrayListModelID.get(i);
-                        Log.e("dcadsdsdssda", "if");
+
+                        Log.e("dcadsdsdssda", arrayListModelID.get(i));
+                    } else if (SizeStatus.equals("1")) {
+                        if (arrayListSizeID.get(i).equals("0")) {
+                            strModel = "";
+                        } else {
+                            strModel = arrayListModelID.get(i);
+                        }
+                        Log.e("ProductDetailsActivity", "strColor: " + strModel);
                     } else {
                         Log.e("dcadsdsdssda", "else");
                     }
@@ -286,13 +290,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     ModelStatus = "1";
                     if (ModelStatus.equals("1")) {
                         change_color(strModel);
-                        change_SizeModel(strColor,strModel);
-                       // AvailableStock(strColor, strModel,strSize);
+                        change_SizeModel(strColor, strModel);
+                        AvailableStockFilter(strColor, strModel, strSize);
+                        // AvailableStock(strColor, strModel,strSize);
                     }
 
                 }
 
-                AvailableStockFilter(strColor, strModel,strSize);
+
             }
 
             @Override
@@ -301,85 +306,86 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-        arrayListColor = new ArrayList<>();
-        arrayListColorID = new ArrayList<>();
-        arrayListColorID.add("0");
-        arrayListColor.add("Select Color");
         spin_color.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     if (ModelStatus.equals("1")) {
                         strColor = arrayListColorID.get(i);
+                        Log.e("dvfbfbdfbdfbdf", "check"+strColor );
+
+                    } else if (SizeStatus.equals("1")) {
+                        if (arrayListColorID.get(i).equals("0")) {
+                            strColor = "";
+                            Log.e("dvfbfbdfbdfbdf", "elseififffcheck"+strColor );
+                        } else {
+                            strColor = arrayListColorID.get(i);
+                            Log.e("dvfbfbdfbdfbdf", "elseifelsecheck"+strColor );
+                        }
+                    } else {
+                        Log.e("dvfbfbdfbdfbdf", "checkelse"+strColor );
+                    }
+                } else {
+
+                    Log.e("ddjbd", strColor);
+                    Log.e("ddjbd", strModel);
+                    Log.e("dvfbfbdfbdfbdf", "check"+strColor+"elsefinal" );
+                    ColorStatus = "1";
+
+                    strColor = arrayListColorID.get(i);
+                    if (ColorStatus.equals("1")) {
+                        Log.e("dvfbfbdfbdfbdf", "check"+strColor+"iffinal" );
+                        change_Model(strColor);
+                        change_Size(strColor, strModel);
+                        AvailableStockFilter(strColor, strModel, strSize);
+                    }
+
+
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spin_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // strSize = arrayListSizeID.get(i);
+
+
+                Log.e("ProductDetailsActivity", "strSize:1 " + strSize);
+                if (i == 0) {
+                    if (ModelStatus.equals("1")) {
+
+                        Log.e("ProductDetailsActivity", "strColor: " + strColor);
+                        strSize = arrayListSizeID.get(i);
+
+                    } else if (ColorStatus.equals("1")) {
+                        if (arrayListSizeID.get(i).equals("0")) {
+                            strSize = "";
+                        } else {
+                            strSize = arrayListSizeID.get(i);
+                        }
                     } else {
 
                     }
                 } else {
+                    strSize = arrayListSizeID.get(i);
 
-
-                    strColor = arrayListColorID.get(i);
-                        Log.e("ddjbd", strColor);
-                        Log.e("ddjbd", strModel);
-
-                        ColorStatus = "1";
-
-                        if (ColorStatus.equals("1")) {
-                            change_Model(strColor);
-                            change_Size(strColor,strModel);
-                          //  AvailableStock(strColor, strModel,strSize);
-                        }
-
-
-
-
+                    SizeStatus = "1";
+                    if (SizeStatus.equals("1")) {
+                        change_filterSize(strSize);
+                        change_FilterModel(strSize);
+                        AvailableStockFilter(strColor, strModel, strSize);
+                    }
 
                 }
-                AvailableStockFilter(strColor, strModel,strSize);
-            }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
-
-
-
-        arrayListSize = new ArrayList<>();
-        arrayListSizeID = new ArrayList<>();
-        arrayListSizeID.add("0");
-        arrayListSize.add("Select Size");
-        spin_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-                    if (ModelStatus.equals("1")) {
-                            strColor = arrayListColorID.get(i);
-                            Log.e("ProductDetailsActivity", "strColor: " +strColor);
-
-
-                    } else if (ColorStatus.equals("1")){
-                        strModel=arrayListModelID.get(i);
-                        Log.e("ProductDetailsActivity", "strColor: " +strModel);
-                    }
-
-                    else {
-
-                    }
-                }else {
-                        strSize = arrayListSizeID.get(i);
-
-                        SizeStatus = "1";
-                        if (SizeStatus.equals("1")) {
-                            change_Size(strColor,strModel);
-                        }
-
-                    }
-                AvailableStockFilter(strColor, strModel,strSize);
-                }
-
-
 
 
             @Override
@@ -388,10 +394,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
 
     }
@@ -438,11 +440,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
         spin_kit.setIndeterminateDrawable(chasingDots);
-        Log.e("dsflkd", strUserId);
-        Log.e("dsflkd", strProdutId);
-        Log.e("dsflkd", strQuantity);
-        Log.e("dsflkd", strColor);
-        Log.e("dsflkd", strModel);
+
+        Log.e("efrfggdgbgdgngngnf", "strUserId: " + strUserId);
+        Log.e("efrfggdgbgdgngngnf", "strProdutId: " + strProdutId);
+        Log.e("efrfggdgbgdgngngnf", "strColor: " + strColor);
+        Log.e("efrfggdgbgdgngngnf", "strModel: " + strModel);
+        Log.e("efrfggdgbgdgngngnf", "strSize: " + strSize);
+        Log.e("efrfggdgbgdgngngnf", "strQuantity: " + strQuantity);
 
         // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=add_cart")
         AndroidNetworking.post(API.BASEURL + API.add_cart)
@@ -450,6 +454,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .addBodyParameter("product_id", strProdutId)
                 .addBodyParameter("color_id", strColor)
                 .addBodyParameter("model_id", strModel)
+                .addBodyParameter("size_id", strSize)
                 .addBodyParameter("quantity", strQuantity)
                 .setTag("Add To Cart Product")
                 .setPriority(Priority.HIGH)
@@ -557,7 +562,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                 txt_description.setText(description);
                                 //  txtStock.setText("Available stock"+" "+stock);
-                              //  txt_weight.setText(weight);
+                                //  txt_weight.setText(weight);
                                 txt_product_name.setText(name);
                                 //     txt_price.setText(price);
                                 // txt_itemCount.setText(cart_quantity);
@@ -579,9 +584,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                             if (buttonState) {
                                                 // Button is active
                                                 Add_Favorite();
-                                             AppConstant.sharedpreferences=getSharedPreferences(AppConstant.MyPREFERENCES,Context.MODE_PRIVATE);
-                                                SharedPreferences.Editor editor=AppConstant.sharedpreferences.edit();
-                                                editor.putString(AppConstant.Favorite,"0");
+                                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                                                editor.putString(AppConstant.Favorite, "0");
                                                 editor.commit();
 
                                             } else {
@@ -641,7 +646,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                                 String video_new = jsonObject.getString("video");
-
 
 
                                 if (!stock.equals("")) {
@@ -775,6 +779,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_color")
         ColorStatus = "0";
         ModelStatus = "1";
+        SizeStatus = "0";
         AndroidNetworking.post(API.BASEURL + API.show_color)
                 .addBodyParameter("product_id", strProdutId)
                 .addBodyParameter("model_id", Model)
@@ -801,14 +806,26 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                 String color_info = jsonObject.getString("color_info");
 
-                                JSONObject object = new JSONObject(color_info);
 
-                                String id_new = object.getString("id");
-                                String color_new = object.getString("color");
+                                if (!color_info.equals("null")) {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    JSONObject object = new JSONObject(color_info);
 
-                                arrayListColorID.add(id_new);
-                                Log.e("dkjfkdj", id_new);
-                                arrayListColor.add(color_new);
+
+                                    String id_new = object.getString("id");
+                                    String color_new = object.getString("color");
+
+                                    arrayListColorID.add(id_new);
+                                    Log.e("dkjfkdj", id_new);
+                                    arrayListColor.add(color_new);
+
+
+                                } else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    arrayListColorID.add("");
+                                    ;
+                                    arrayListColor.add("Not Available");
+                                }
 
 
                             }
@@ -849,9 +866,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         arrayListColor = new ArrayList<>();
                         arrayListColorID = new ArrayList<>();
-                        arrayListColorID.add("0");
+                        arrayListColorID.add("");
+                        ;
                         arrayListColor.add("Select Color");
-
+                        Log.e("ProductDetailsActivity", "onResponse:one time " + arrayListColorID.size());
 
                         try {
 
@@ -860,12 +878,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                 if (!jsonObject.getString("id").equals("null")) {
 
+                                    // Log.e("fdbhfn","null nhi h");
                                     String id = jsonObject.getString("id");
                                     String product_id = jsonObject.getString("product_id");
                                     String color = jsonObject.getString("color");
 
                                     String color_info = jsonObject.getString("color_info");
-
                                     JSONObject object = new JSONObject(color_info);
 
                                     String id_new = object.getString("id");
@@ -876,13 +894,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                     arrayListColor.add(color_new);
 
-                                } else if (jsonObject.getString("id").equals("null")){
+                                } else {
+                                    // Log.e("fdbhfn","null h");
 
-                                    arrayListColor.add("Not Available");
                                 }
 
                             }
+                            if (arrayListColorID.size() == 1) {
+                                arrayListColor.set(0, "Not Available");
+                            } else {
+                                arrayListColor.set(0, "Select Color");
+                            }
 
+                            Log.e("ProductDetailsActivity", "onResponse:after addtion time " + arrayListColorID.size());
                             adaptercolor = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListColor);
                             adaptercolor.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                             spin_color.setAdapter(adaptercolor);
@@ -917,6 +941,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_model")
         ColorStatus = "1";
         ModelStatus = "0";
+        SizeStatus = "0";
         AndroidNetworking.post(API.BASEURL + API.show_model)
                 .addBodyParameter("product_id", strProdutId)
                 .addBodyParameter("color_id", colorID)
@@ -940,7 +965,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 Log.e("dfsdfsf", model_info);
 
                                 if (!model_info.equals("null")) {
-
+                                    Log.e("xnsjnskl", "null h");
                                     JSONObject object = new JSONObject(model_info);
                                     String id_new = object.getString("id");
                                     String name_new = object.getString("name");
@@ -954,11 +979,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     }
 
 
-                                }
-                                else if (model_info.equals("null")){
-
+                                } else {
+                                    //   Log.e("xnsjnskl","null nhi h");
+                                    arrayListModelID.add("");
                                     arrayListModel.add("Not Available");
                                 }
+
 
                             }
                             adapterModel = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
@@ -995,7 +1021,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         arrayListModel = new ArrayList<>();
                         arrayListModelID = new ArrayList<>();
-                        arrayListModelID.add("0");
+                        arrayListModelID.add("");
                         arrayListModel.add("Select Model");
 
                         try {
@@ -1013,18 +1039,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     JSONObject object = new JSONObject(model_info);
                                     String id_new = object.getString("id");
                                     String name_new = object.getString("name");
-                                    Log.e("retyr", id_new);
+                                    Log.e("fdfdfdfdfdfd", id_new);
                                     Log.e("retyr", name_new);
                                     arrayListModelID.add(id_new);
                                     arrayListModel.add(name_new);
 
 
                                 }
-                                else if (model_info.equals("null")){
 
-                                    arrayListModel.add("Not Available");
-                                }
+                            }
 
+                            if (arrayListModelID.size() == 1) {
+                                arrayListModel.set(0, "Not Available");
+                            } else {
+                                arrayListModel.set(0,"Select Model");
                             }
                             adapterModel = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
                             adapterModel.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -1053,8 +1081,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
 
-
-
     public void change_SizeAll() {
         Log.e("ergrthgth", strProdutId);
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_size")
@@ -1070,7 +1096,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         arrayListSize = new ArrayList<>();
                         arrayListSizeID = new ArrayList<>();
-                        arrayListSizeID.add("0");
+                        arrayListSizeID.add("");
                         arrayListSize.add("Select Size");
 
                         try {
@@ -1097,6 +1123,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 }
 
                             }
+
+                            if (arrayListSizeID.size() == 1) {
+                                arrayListSize.set(0, "Not available");
+                            } else {
+                                arrayListSize.set(0, "Select Size");
+                            }
+                            
                             adapterSize = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
                             adapterSize.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                             spin_size.setAdapter(adapterSize);
@@ -1124,11 +1157,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     public void change_SizeModel(String strColor, String strModel) {
-        Log.e("ytjyuj", strColor+"color");
-        Log.e("ytjyuj", strModel+"Model");
+        Log.e("ytjyuj", strColor + "color");
+        Log.e("ytjyuj", strModel + "Model");
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_size")
         ColorStatus = "0";
         ModelStatus = "1";
+        SizeStatus = "0";
         AndroidNetworking.post(API.BASEURL + API.show_size)
                 .addBodyParameter("product_id", strProdutId)
                 //.addBodyParameter("color_id", strColor)
@@ -1167,6 +1201,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     }
 
 
+                                } else {
+                                    Log.e("xnsjnskl", "null nhi h");
+                                    arrayListSizeID.add("");
+                                    arrayListSize.add("Not Available");
                                 }
                             }
                             adapterSize = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
@@ -1190,14 +1228,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
 
-
-
     public void change_Size(String strColor, String strModel) {
-        Log.e("ytjyuj", strColor+"color");
-        Log.e("ytjyuj", strModel+"Model");
+        Log.e("ytjyuj", strColor + "color");
+        Log.e("ytjyuj", strModel + "Model");
         //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_size")
-        ColorStatus = "0";
-        ModelStatus = "1";
+        ColorStatus = "1";
+        ModelStatus = "0";
+        SizeStatus = "0";
         AndroidNetworking.post(API.BASEURL + API.show_size)
                 .addBodyParameter("product_id", strProdutId)
                 .addBodyParameter("color_id", strColor)
@@ -1236,7 +1273,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     }
 
 
+                                } else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    arrayListSizeID.add("");
+                                    arrayListSize.add("Not Available");
                                 }
+
 
                             }
                             adapterSize = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListSize);
@@ -1259,91 +1301,93 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
-        public void AvailableStock(String strProdutId) {
+    public void AvailableStock(String strProdutId) {
 
-            Log.e("trhngfn", strProdutId);
+        Log.e("trhngfn", strProdutId);
 
 
-            AndroidNetworking.post(API.BASEURL + API.available_stock)
-                    .addBodyParameter("product_id", strProdutId)
-                   //.addBodyParameter("color_id", strColor)
-                    //.addBodyParameter("model_id", strModel)
-                  //  .addBodyParameter("size_id", strSize)
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.e("etrfdeg", response.toString());
-                            try {
-                                String total_stock = (response.getString("total_stock"));
-                                String price = (response.getString("price"));
-                                String weight = (response.getString("Weight"));
+        AndroidNetworking.post(API.BASEURL + API.available_stock)
+                .addBodyParameter("product_id", strProdutId)
+                //.addBodyParameter("color_id", strColor)
+                //.addBodyParameter("model_id", strModel)
+                //  .addBodyParameter("size_id", strSize)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("etrfdeg", response.toString());
+                        try {
+                            String total_stock = (response.getString("total_stock"));
+                            String price = (response.getString("price"));
+                            String weight = (response.getString("Weight"));
 
-                                Log.e("ProductDetailsActivity", "total_stock: " + total_stock);
-                                Log.e("ProductDetailsActivity", "price: " + price);
-                                Log.e("ProductDetailsActivity", "weight: " + weight);
-                                txtStock.setText(total_stock);
-                                txt_price.setText(price);
-                                tx_Weight.setText("Select Weight");
+                            Log.e("ProductDetailsActivity", "total_stock: " + total_stock);
+                            Log.e("ProductDetailsActivity", "price: " + price);
+                            Log.e("ProductDetailsActivity", "weight: " + weight);
+                            txtStock.setText(total_stock);
+                            txt_price.setText(price);
+                            // tx_Weight.setText("");
 
-                            } catch (JSONException e) {
-                                Log.e("tyhth", e.getMessage());
-                            }
-
+                        } catch (JSONException e) {
+                            Log.e("tyhth", e.getMessage());
                         }
 
-                        @Override
-                        public void onError(ANError anError) {
-                            Log.e("ukuihj", anError.getMessage());
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("ukuihj", anError.getMessage());
+                    }
+                });
+
+
+    }
+
+    public void AvailableStockFilter(String strColor, String strModel, String strSize) {
+
+        Log.e("trhngfn", strProdutId);
+        Log.e("trhngfn", strColor);
+        Log.e("trhngfn", strModel);
+        Log.e("trhngfn", strSize);
+
+        AndroidNetworking.post(API.BASEURL + API.available_stock)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("color_id", strColor)
+                .addBodyParameter("model_id", strModel)
+                .addBodyParameter("size_id", strSize)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("etrfdeg", response.toString());
+                        try {
+                            String total_stock = (response.getString("total_stock"));
+                            String price = (response.getString("price"));
+                            String weight = (response.getString("Weight"));
+
+                            Log.e("ProductDetailsActivity", "total_stock: " + total_stock);
+                            Log.e("ProductDetailsActivity", "price: " + price);
+                            Log.e("ProductDetailsActivity", "weight: " + weight);
+
+                            stock_count = Integer.parseInt(total_stock);
+
+                            txtStock.setText(total_stock);
+                            txt_price.setText(price);
+                            tx_Weight.setText(weight);
+
+                        } catch (JSONException e) {
+                            Log.e("tyhth", e.getMessage());
                         }
-                    });
 
+                    }
 
-        }
-            public void AvailableStockFilter(String strColor, String strModel,String strSize) {
-
-                Log.e("trhngfn", strProdutId);
-                Log.e("trhngfn", strColor);
-                Log.e("trhngfn", strModel);
-                Log.e("trhngfn", strSize);
-
-                AndroidNetworking.post(API.BASEURL + API.available_stock)
-                        .addBodyParameter("product_id", strProdutId)
-                        .addBodyParameter("color_id", strColor)
-                        .addBodyParameter("model_id", strModel)
-                        .addBodyParameter("size_id", strSize)
-                        .setPriority(Priority.HIGH)
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.e("etrfdeg", response.toString());
-                                try {
-                                    String total_stock = (response.getString("total_stock"));
-                                    String price = (response.getString("price"));
-                                    String weight = (response.getString("Weight"));
-
-                                    Log.e("ProductDetailsActivity", "total_stock: " +total_stock);
-                                    Log.e("ProductDetailsActivity", "price: " +price);
-                                    Log.e("ProductDetailsActivity", "weight: " +weight);
-                                    txtStock.setText(total_stock);
-                                    txt_price.setText(price);
-                                    tx_Weight.setText(weight);
-
-                                } catch (JSONException e) {
-                                    Log.e("tyhth", e.getMessage());
-                                }
-
-                            }
-
-                            @Override
-                            public void onError(ANError anError) {
-                                Log.e("ukuihj", anError.getMessage());
-                            }
-                        });
-
-
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("ukuihj", anError.getMessage());
+                    }
+                });
 
 
     }
@@ -1352,6 +1396,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Log.e("tgfdhg", new_str);
         Log.e("tgfdhg", incrmntId);
         Log.e("tgfdhg", strUserId);
+        Log.e("tgfdhg", strColor);
+        Log.e("tgfdhg", strModel);
         // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=update_quantity")
         AndroidNetworking.post(API.BASEURL + API.update_quantity)
                 .addBodyParameter("product_id", incrmntId)
@@ -1394,6 +1440,158 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
 
     }
+
+
+    public void change_filterSize(String sizeId) {
+        Log.e("yhjhjh", strProdutId);
+        Log.e("yhjhjh", strModel);
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_color")
+        ColorStatus = "0";
+        ModelStatus = "0";
+        SizeStatus = "1";
+        AndroidNetworking.post(API.BASEURL + API.show_color)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("size_id", sizeId)
+                .setTag("Choose")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("gvdfgvbcfv", response.toString());
+
+                        arrayListColor = new ArrayList<>();
+                        arrayListColorID = new ArrayList<>();
+
+
+                        try {
+
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String color = jsonObject.getString("color");
+
+                                String color_info = jsonObject.getString("color_info");
+
+
+                                if (!color_info.equals("null")) {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    JSONObject object = new JSONObject(color_info);
+
+
+                                    String id_new = object.getString("id");
+                                    String color_new = object.getString("color");
+
+                                    arrayListColorID.add(id_new);
+                                    Log.e("dkjfkdj", id_new);
+                                    arrayListColor.add(color_new);
+
+
+                                } else {
+                                    //  Log.e("ProductDetailsActivity", "Null nhi h: " +color_info);
+                                    arrayListColorID.add("");
+                                    ;
+                                    arrayListColor.add("Not Available");
+                                }
+
+
+                            }
+
+                            adaptercolor = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListColor);
+                            adaptercolor.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_color.setAdapter(adaptercolor);
+
+
+                        } catch (JSONException e) {
+                            Log.e("dsfkdsk", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("rtfrgf", anError.getMessage());
+                    }
+                });
+
+
+    }
+
+
+    public void change_FilterModel(String sizeId) {
+        Log.e("hfvkjvk", strProdutId);
+        Log.e("hfvkjvk", sizeId);
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_model")
+        SizeStatus = "1";
+        ColorStatus = "0";
+        ModelStatus = "0";
+        AndroidNetworking.post(API.BASEURL + API.show_model)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("size_id", sizeId)
+                .setTag("Choose Modal")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("erytruyh", response.toString());
+                        arrayListModel = new ArrayList<>();
+                        arrayListModelID = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String id = jsonObject.getString("id");
+                                String product_id = jsonObject.getString("product_id");
+                                String model = jsonObject.getString("model");
+                                String model_info = jsonObject.getString("model_info");
+                                Log.e("dfsdfsf", model_info);
+
+                                if (!model_info.equals("null")) {
+                                    Log.e("xnsjnskl", "null h");
+                                    JSONObject object = new JSONObject(model_info);
+                                    String id_new = object.getString("id");
+                                    String name_new = object.getString("name");
+                                    Log.e("retyr", id_new);
+                                    Log.e("retyr", name_new);
+                                    arrayListModelID.add(id_new);
+                                    arrayListModel.add(name_new);
+
+                                    if (i == 0) {
+                                        strModel = object.getString("id");
+                                    }
+
+
+                                } else {
+                                    //   Log.e("xnsjnskl","null nhi h");
+                                    arrayListModelID.add("");
+                                    arrayListModel.add("Not Available");
+                                }
+
+
+                            }
+                            adapterModel = new ArrayAdapter<>(ProductDetailsActivity.this, android.R.layout.simple_list_item_1, arrayListModel);
+                            adapterModel.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                            spin_model.setAdapter(adapterModel);
+
+                        } catch (JSONException e) {
+                            Log.e("etfredg", e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("tryht", anError.getMessage());
+                    }
+                });
+
+    }
+
 
     public void newArrival_details() {
 
@@ -1438,7 +1636,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                                 txt_description.setText(description);
-                               // txt_weight.setText(weight);
+                                // txt_weight.setText(weight);
                                 txt_product_name.setText(name);
                                 txt_price.setText(price);
                                 // txt_itemCount.setText(cart_quantity);
@@ -1521,14 +1719,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 JSONArray jsonArray2 = new JSONArray(size_new);
 
 
-
                                 String video_new = jsonObject.getString("video");
                                 JSONArray jsonArray3 = new JSONArray(video_new);
 
 
-
-
-                              //  final int stock_count = Integer.parseInt(stock);
+                                //  final int stock_count = Integer.parseInt(stock);
 
                                 if (!stock.equals("")) {
                                     stock_count = Integer.parseInt(stock);
@@ -1606,15 +1801,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 String image = jsonObject.getString("image");
                                 Log.e("sajfckdjsvj", image);
                                 JSONArray jsonArray = new JSONArray(image);
+
+                                Log.e("dcsl", jsonArray.length() + "");
                                 for (int j = 0; j < jsonArray.length(); j++) {
                                     ProductDetailModal productDetailModal = new ProductDetailModal();
                                     JSONObject jsonObject1 = jsonArray.getJSONObject(j);
                                     JSONObject object = jsonArray.getJSONObject(0);
 
 
-
                                     final String image2 = object.getString("image");
-                                    Log.e("dshkfvdhvh", image2 );
+                                    Log.e("dshkfvdhvh", image2);
 
                                     try {
                                         if (object != null) {
@@ -1668,8 +1864,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("awefsfds", response.toString() );
-                        videoModalArrayList=new ArrayList<>();
+                        Log.e("awefsfds", response.toString());
+                        videoModalArrayList = new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
@@ -1680,12 +1876,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                     ProductVideoModal videoModal = new ProductVideoModal();
                                     JSONObject jsonObject1 = jsonArray.getJSONObject(j);
-                                    String status=jsonObject1.getString("status");
-
+                                    String status = jsonObject1.getString("status");
                                     videoModal.setVideo(jsonObject1.getString("link"));
                                     videoModal.setStatus(jsonObject1.getString("status"));
-
-                                    Log.e("xzlclxzklvkc", jsonObject1.getString("link") );
+                                    Log.e("xzlclxzklvkc", jsonObject1.getString("link"));
                                     videoModalArrayList.add(videoModal);
                                 }
 
@@ -1720,8 +1914,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("awefsfds", response.toString() );
-                        videoModalArrayList=new ArrayList<>();
+                        Log.e("awefsfds", response.toString());
+                        videoModalArrayList = new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
@@ -1732,12 +1926,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                     ProductVideoModal videoModal = new ProductVideoModal();
                                     JSONObject jsonObject1 = jsonArray.getJSONObject(j);
-                                    String status=jsonObject1.getString("status");
+                                    String status = jsonObject1.getString("status");
 
                                     videoModal.setVideo(jsonObject1.getString("link"));
                                     videoModal.setStatus(jsonObject1.getString("status"));
 
-                                    Log.e("xzlclxzklvkc", jsonObject1.getString("link") );
+                                    Log.e("xzlclxzklvkc", jsonObject1.getString("link"));
                                     videoModalArrayList.add(videoModal);
                                 }
 

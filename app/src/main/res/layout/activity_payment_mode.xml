@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_below="@+id/rl"
         android:layout_marginTop="10dp"
+        android:id="@+id/scroll"
         android:layout_above="@+id/rl_continue"
         android:layout_height="match_parent">
         <LinearLayout

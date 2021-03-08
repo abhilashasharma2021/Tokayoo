@@ -34,6 +34,17 @@
             android:textColor="#222"
             android:text="We will arrange to your parcel with in 3  working days."/>
 
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/txt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/btn_ok"
+            android:text="Ok"
+            android:textColor="@color/black"
+            android:background="@drawable/greyew_rounded"/>
 
 
     </RelativeLayout>

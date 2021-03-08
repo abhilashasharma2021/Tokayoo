@@ -122,7 +122,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         AndroidNetworking.post(API.BASEURL+API.show_order_detail)
                 .addBodyParameter("user_id",strUserId)
                 .addBodyParameter("order_id",strORDERID)
-              //  .addBodyParameter("product_id",strProdutId)
+                .addBodyParameter("cart_id",strProdutId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
@@ -210,7 +210,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                     });
 
 
-
+                                    Log.e("OrderDetailsActivity", "onResponse: " +net_weight);
 
                                     txt_orderNo.setText(order_id);
                                     txt_orderNo1.setText(order_id);
@@ -247,10 +247,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         String path=object.getString("path");
 
                                         OrderDetailModal detailModal=new OrderDetailModal();
-                                        detailModal.setId(object.getString("id"));
+                                        detailModal.setId(object.getString("cart_id"));
                                         detailModal.setName(object.getString("name"));
                                         detailModal.setQuantity(object.getString("purchased_quantity"));
-                                        detailModal.setWeight(object.getString("purchased_weight"));
+                                        detailModal.setWeight(jsonObject.getString("net_weight"));
                                         detailModal.setImage(object.getString("images"));
                                         detailModal.setModel(object.getString("purchased_model"));
                                         detailModal.setColor(object.getString("purchased_color"));

@@ -83,7 +83,6 @@ public class HomeFragment extends Fragment {
     HomeArrivalAdapter arrivalAdapter;
     ArrayList<HomeCategoryModal> categoryArrayList = new ArrayList<>();
     ArrayList<HomeNewArrivalModal> arrivalArrayList = new ArrayList<>();
-
     ImageView imgUser, imgchat, imgRemove;
     Uri whatsappURI;
     CardView cardRod;
@@ -122,14 +121,16 @@ public class HomeFragment extends Fragment {
                 Animatoo.animateSlideUp(getActivity());
             }
         });
-
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
         sliderView.setIndicatorSelectedColor(getResources().getColor(R.color.colorPrimaryDark));
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(3); //set scroll delay in seconds :
-        sliderView.startAutoCycle();
+        sliderView.setScrollTimeInSec(5); //set scroll delay in seconds :
+     sliderView.startAutoCycle();
+    // setSlider(3);
+
+
         show_Category();
         show_Arrival();
         show_Slider();
@@ -229,6 +230,12 @@ public class HomeFragment extends Fragment {
                     }
                 });*//*
     }*/
+
+
+
+    public  void setSlider(int position){
+        sliderView.setAutoCycleDirection(position);
+    }
 
 
     public void show_Slider() {

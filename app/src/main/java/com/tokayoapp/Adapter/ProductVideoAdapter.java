@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,10 +60,7 @@ public class ProductVideoAdapter extends RecyclerView.Adapter<ProductVideoAdapte
 
         String vi = videoModal.getVideo();
        String status = videoModal.getStatus();/*if Status =0 means simple video and 1= youtube video*/
-
        Log.e("kszdjvjxzikjv",status+"");
-
-
         Log.e("kszdjvjxzikjv",vi);
        if (status.equals("0")){
             holder.rel.setVisibility(View.VISIBLE);
@@ -104,14 +102,14 @@ public class ProductVideoAdapter extends RecyclerView.Adapter<ProductVideoAdapte
             Log.e("sdjvkjxc",  str1);
             Log.e("sdjvkjxc",  str2);
 
-
-
-
             holder.youtube_player_view.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     String videoId = str2;
                     youTubePlayer.loadVideo(videoId, 0);
+                    youTubePlayer.pause();
+
+
                 }
             });
 

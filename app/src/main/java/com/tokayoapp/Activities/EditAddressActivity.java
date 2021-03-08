@@ -76,10 +76,7 @@ public class EditAddressActivity extends AppCompatActivity {
         edt_name = findViewById(R.id.edt_name);
         rl_back = findViewById(R.id.rl_back);
 
-        edt_name.setText(strUserName);
-        edt_contact.setText(strUserMobile);
-        edt_address.setText(strUserAddress);
-        txt_country.setText(strSelectedCountryCode);
+
 
         if (strdefaultStatus.equals("1")){
             check_default.setChecked(true) ;
@@ -89,7 +86,7 @@ public class EditAddressActivity extends AppCompatActivity {
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EditAddressActivity.this, AddressListActivity.class));
+               finish();
             }
         });
 
@@ -124,13 +121,18 @@ public class EditAddressActivity extends AppCompatActivity {
                 }
                 strUserName = edt_name.getText().toString().trim();
                 strUserAddress = edt_address.getText().toString().trim();
-                strUserMobile = edt_contact.getText().toString().trim();
+                String code = txt_country.getText().toString().trim();
+                if (strSelectedCountryCode.equals("")){
+                    strUserMobile="+60-"+edt_contact.getText().toString().trim();
+                }else {
+                    strUserMobile=code+"-"+edt_contact.getText().toString().trim();
+                }
 
                 edit_Address();
             }
         });
 
-
+        show_address();
     }
 
 
@@ -241,18 +243,89 @@ public class EditAddressActivity extends AppCompatActivity {
                                 Log.e("yujy", status);
 
                                 edt_name.setText(name);
-                                edt_contact.setText(contact);
+                                String [] code=contact.split("-");
+                                txt_country.setText(code[0]);
+                                edt_contact.setText(code[1]);
                                 edt_address.setText(address);
 
                                 AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                                editor.putString(AppConstant.UserMobile, contact);
+                               /* editor.putString(AppConstant.UserMobile, contact);
                                 editor.putString(AppConstant.UserName, name);
-                                editor.putString(AppConstant.UserAddress, address);
+                                editor.putString(AppConstant.UserAddress, address);*/  // humne kiya
                                 editor.putString(AppConstant.defaultStatus, status);
                                 editor.commit();
+                                finish();
+                              //  startActivity(new Intent(EditAddressActivity.this, AddressListActivity.class));
 
-                                startActivity(new Intent(EditAddressActivity.this, AddressListActivity.class));
+                            }
+
+                        } catch (JSONException e) {
+                            Log.e("dojfdog", e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("truyt", anError.getMessage());
+                    }
+                });
+
+
+    }
+
+
+
+
+
+
+    public void show_address() {
+
+
+        Log.e("dfldfk", strAddressId);
+        // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=update_address")
+        AndroidNetworking.post(API.BASEURL + API.update_address)
+                .addBodyParameter("id", strAddressId)
+                .setTag("Edit Address")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("efhfhdkjf", response.toString());
+                        try {
+
+                            if (response.getString("result").equals("successfully")) {
+
+                                String id = response.getString("id");
+                                String user_id = response.getString("user_id");
+                                String name = response.getString("name");
+                                String contact = response.getString("contact");
+                                String address = response.getString("address");
+                                String status = response.getString("status");/*1 means checked and 0 means not checked*/
+
+                                Log.e("fudfvou", name);
+                                Log.e("fudfvou", contact);
+                                Log.e("fudfvou", address);
+                                Log.e("yujy", status);
+
+                                edt_name.setText(name);
+
+
+                                String [] code=contact.split("-");
+                                txt_country.setText(code[0]);
+                                edt_contact.setText(code[1]);
+
+                                edt_address.setText(address);
+
+                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                               /* editor.putString(AppConstant.UserMobile, contact);
+                                editor.putString(AppConstant.UserName, name);
+                                editor.putString(AppConstant.UserAddress, address);*/  // humne kiya
+                                editor.putString(AppConstant.defaultStatus, status);
+                                editor.commit();
 
                             }
 

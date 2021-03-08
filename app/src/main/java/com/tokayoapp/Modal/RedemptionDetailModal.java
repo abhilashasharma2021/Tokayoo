@@ -2,6 +2,9 @@ package com.tokayoapp.Modal;
 
 public class RedemptionDetailModal {
     public String image;
+    public String path;
+    public String Id;
+
 
     public String getImage() {
         return image;
@@ -27,8 +30,7 @@ public class RedemptionDetailModal {
         Id = id;
     }
 
-    public String path;
-    public String Id;
+
 
 
 }

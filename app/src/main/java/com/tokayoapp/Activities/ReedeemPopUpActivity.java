@@ -34,15 +34,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ReedeemPopUpActivity extends AppCompatActivity {
-    Button btn_Submit, btn_select_add;
+    Button btn_Submit, btn_select_add,btn_Cancel;
     EditText edt_name, edt_contact, edt_address;
     String st_defaultIdAddress = "",st_SelectedWeightName="";
-    String st_RewardWeight = "", strUserId = "", st_RewardPoints = "", st_delivery_charge = "",strRewardSelectedWeightName="", st_paymentStatus = "", st_RewardId = "";
+    String st_RewardWeight = "", strUserId = "", st_RewardPoints = "",strSize="", st_delivery_charge = "",strRewardSelectedWeightName="", st_paymentStatus = "", st_RewardId = "";
     TextView txt_weight, txt_deliv, txt_Totalprice, txt_CatName, txt_brand;
     ProgressBar spin_kit;
     TextView txt_name, txt_contact, txt_address;
     String strModel="",strColor="";
-
+Button btnFinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,8 @@ public class ReedeemPopUpActivity extends AppCompatActivity {
         st_SelectedWeightName = AppConstant.sharedpreferences.getString(AppConstant.SelectedWeightName, "");
         strColor = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedColorId, "");
         strModel = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedModelId, "");
-        strRewardSelectedWeightName = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedWeightName, "");
+        strSize = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedSizeId, "");
+        strRewardSelectedWeightName = AppConstant.sharedpreferences.getString(AppConstant.RewardSelectedWeightId, "");
 
 
         Log.e("sfgfgfggf", strModel );
@@ -75,6 +76,7 @@ public class ReedeemPopUpActivity extends AppCompatActivity {
         Log.e("tryhyh", st_delivery_charge);
 
         btn_Submit = findViewById(R.id.btn_Submit);
+        btnFinish = findViewById(R.id.btnFinish);
         txt_name = findViewById(R.id.txt_name);
         txt_address = findViewById(R.id.txt_address);
         txt_contact = findViewById(R.id.txt_contact);
@@ -92,19 +94,17 @@ public class ReedeemPopUpActivity extends AppCompatActivity {
         txt_Totalprice.setText(st_RewardPoints+".00");
         txt_deliv.setText(st_delivery_charge+".00");
 
-        btn_select_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_select_add.setOnClickListener(view -> {
 
-                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                editor.putString(AppConstant.SeletAddressStatus, "select");
-                editor.commit();
-                startActivity(new Intent(ReedeemPopUpActivity.this, RewardAddressList.class));
-                Animatoo.animateZoom(ReedeemPopUpActivity.this);
-            }
+            AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+            editor.putString(AppConstant.SeletAddressStatus, "select");
+            editor.commit();
+            startActivity(new Intent(ReedeemPopUpActivity.this, RewardAddressList.class));
+            Animatoo.animateZoom(ReedeemPopUpActivity.this);
         });
 
+        btnFinish.setOnClickListener(v -> finish());
         show_AddAddress();
     }
     public void show_AddAddress() {
@@ -147,7 +147,6 @@ public class ReedeemPopUpActivity extends AppCompatActivity {
                                 btn_Submit.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-
                                         AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                         editor.putString(AppConstant.RewardUserName, name);
