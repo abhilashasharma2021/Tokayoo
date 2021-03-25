@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.facebook.internal.DialogFeature;
 import com.tokayoapp.Activities.AddNewActivity;
 import com.tokayoapp.Activities.AddressListActivity;
 import com.tokayoapp.Activities.EditAddressActivity;
@@ -73,6 +75,17 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
 
         final AddressListModal addressListModal = addressListModals.get(position);
 
+        if (addressListModals.size() ==0){
+
+        }else {
+
+
+            AppConstant.sharedpreferences = context.getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+            editor.putString(AppConstant.defaultIdAddress, addressListModals.get(0).getId());
+            editor.commit();
+        }
+
         final String id = addressListModal.getId();
         Log.e("dfdfvcx", addressListModal.getId() + "");
         holder.txt_name.setText(addressListModal.getName());
@@ -93,6 +106,8 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
         Log.e("jhkljvc", addressListModal.getStatus() + "");/*1 means check default selected 0 means not selected*/
 
 
+
+
         if (default_Status.equals("1")) {
 
             holder.tx_details.setVisibility(View.VISIBLE);
@@ -111,6 +126,8 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
             SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
             editor.putString(AppConstant.defaultIdAddress, addressListModal.getId());
             editor.commit();
+
+            Log.i("fdkhfkdd", "onBindViewHolder: "+addressListModal.getId());
 
 
         } else {

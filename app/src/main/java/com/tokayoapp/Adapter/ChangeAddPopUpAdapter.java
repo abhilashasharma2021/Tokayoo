@@ -58,9 +58,13 @@ public class ChangeAddPopUpAdapter extends RecyclerView.Adapter<ChangeAddPopUpAd
 
 
 
-        holder.txt_country.setText(strSelectedCountryCode);
+       // holder.txt_country.setText(strSelectedCountryCode);
+
+        String [] strings = addressListModal.getContact().split("-");
+        holder.txt_country.setText(strings[0]);
+        holder.txtnumber.setText(strings[1]);
         holder.txt_name.setText(addressListModal.getName());
-        holder.txtnumber.setText(addressListModal.getContact());
+      //  holder.txtnumber.setText(addressListModal.getContact());
         holder.txtLocalAddress.setText(addressListModal.getAddress());
 
         holder.rl2.setOnClickListener(new View.OnClickListener() {

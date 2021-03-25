@@ -70,11 +70,11 @@ public class CartFragment extends Fragment {
     ArrayList<CartModal> cartModalArrayList = new ArrayList<>();
     ProgressBar spin_kit;
     RelativeLayout rl_empty;
-    TextView txt_Name, txt_contact, txtAddress,txt_country;
+    TextView txt_Name, txt_contact, txtAddress, txt_country;
     String strUserId = "", stdefaultIdAddress = "", strUserName = "", strProdutId = "", strItems = "", strUserAddress = "", strAddressId = "";
     LinearLayout ll_all;
     TextView btn_add, btnChangeAddress;
-    public  static  CheckBox check_all;
+    public static CheckBox check_all;
     RecyclerView rec_changedadd;
     RecyclerView.LayoutManager layoutManager1;
     ChangeAddPopUpAdapter addressListAdapter;
@@ -82,17 +82,17 @@ public class CartFragment extends Fragment {
     public static Button btn_delAll;
     public static Dialog dialog;
     String strCompanyID = "";
-    String strCompanyName = "",strSelectedCountryCode="";
+    String strCompanyName = "", strSelectedCountryCode = "";
     String strCountry = "";
     TextView txtShowComPrice;
     TextView txtCountry, txtMalaysia;
     public static ArrayList<String> arrayListItems;
     public static ArrayList<String> arrayListItemsQuantity;
-    public static String strItemsStatus = "", strSelectedItems = "",LastAddressId="";
-   String  size_id="";
-  public static   ArrayList<String>Arr_cartId = new ArrayList<>();
-  public static   ArrayList<String>Arr_ProQty = new ArrayList<>();
-  public  static int CountAll=0;
+    public static String strItemsStatus = "", strSelectedItems = "", LastAddressId = "";
+    String size_id = "";
+    public static ArrayList<String> Arr_cartId = new ArrayList<>();
+    public static ArrayList<String> Arr_ProQty = new ArrayList<>();
+    public static int CountAll = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +102,7 @@ public class CartFragment extends Fragment {
 
         AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
         strUserId = AppConstant.sharedpreferences.getString(AppConstant.UserId, "");
-       // strAddressId = AppConstant.sharedpreferences.getString(AppConstant.AddressId, "");
+        // strAddressId = AppConstant.sharedpreferences.getString(AppConstant.AddressId, "");
         strProdutId = AppConstant.sharedpreferences.getString(AppConstant.ProdutId, "");
         stdefaultIdAddress = AppConstant.sharedpreferences.getString(AppConstant.defaultIdAddress, "");
         strCompanyID = AppConstant.sharedpreferences.getString(AppConstant.CompanyID, "");
@@ -141,7 +141,7 @@ public class CartFragment extends Fragment {
         txt_delivery = view.findViewById(R.id.txt_delivery);
         txt_country = view.findViewById(R.id.txt_country);
         txt_Totalprice = view.findViewById(R.id.txt_Totalprice);
-        txt_country.setText(strSelectedCountryCode);
+        // txt_country.setText(strSelectedCountryCode);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,22 +200,27 @@ public class CartFragment extends Fragment {
                     Toast.makeText(getActivity(), "Select order items", Toast.LENGTH_SHORT).show();
                 } else {
 
-                        Arr_cartId=new ArrayList<>();
-                        AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                        editor.putString(AppConstant.CheckoutStatus, "OrderProduct");
-                        editor.putString(AppConstant.OrderItems, strItemsStatus);
-                        editor.putString(AppConstant.defaultIdAddress,stdefaultIdAddress );
-                        editor.putString(AppConstant.FinalSizeId,size_id);
+                    Arr_cartId = new ArrayList<>();
+                    AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                    editor.putString(AppConstant.CheckoutStatus, "OrderProduct");
+                    editor.putString(AppConstant.OrderItems, strItemsStatus);
+                    editor.putString(AppConstant.defaultIdAddress, stdefaultIdAddress);
+                    editor.putString(AppConstant.FinalSizeId, size_id);
+                    editor.commit();
+                    Log.e("CartFragment", "dsnhjdfgsyhdfgsuit: " + stdefaultIdAddress);
 
-                        editor.commit();
-                    Log.e("CartFragment", "size_id: " +size_id);
+
+                    if (txtAddress.getText().toString().isEmpty()) {
+                        Toast.makeText(getActivity(), "Please select address", Toast.LENGTH_SHORT).show();
+                    } else {
                         startActivity(new Intent(getActivity(), PaymentMode.class));
                         Animatoo.animateZoom(getActivity());
                     }
 
 
-                
+                }
+
 
             }
 
@@ -225,7 +230,6 @@ public class CartFragment extends Fragment {
         btnChangeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 dialog = new Dialog(getActivity());
@@ -250,16 +254,16 @@ public class CartFragment extends Fragment {
         });
 
 
-      /*On back of history to cart */
+        /*On back of history to cart */
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode== KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_UP){
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
 
-                    startActivity(new Intent(getActivity(),MainActivity.class));
-                    return  true;
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    return true;
                 }
 
                 return false;
@@ -285,7 +289,7 @@ public class CartFragment extends Fragment {
 
 
     public void ShowIds() {/*Product Id*/
-        Log.e("dxvsssdfsdf", "CALL" );
+        Log.e("dxvsssdfsdf", "CALL");
 
         strSelectedItems = "";
         for (int i = 0; i < Arr_cartId.size(); i++) {
@@ -295,10 +299,10 @@ public class CartFragment extends Fragment {
                 strSelectedItems = strSelectedItems + "," + Arr_cartId.get(i);
             }
         }
-        Log.e("dfssgsgfgfggffg", strSelectedItems+"");
+        Log.e("dfssgsgfgfggffg", strSelectedItems + "");
 
-        Log.e("CartFragment", "strUserId: " +strUserId);
-        Log.e("CartFragment", "cart_id: " +strSelectedItems);
+        Log.e("CartFragment", "strUserId: " + strUserId);
+        Log.e("CartFragment", "cart_id: " + strSelectedItems);
         AndroidNetworking.post(API.BASEURL + API.showCartTotalPrice)
                 .addBodyParameter("user_id", strUserId)
                 .addBodyParameter("cart_id", strSelectedItems)
@@ -317,18 +321,17 @@ public class CartFragment extends Fragment {
                                 String net_weight = response.getString("net_weight");
 
 
-                                Log.e("CartFragment", "grand_total1: " +grand_total);
+                                Log.e("CartFragment", "grand_total1: " + grand_total);
                                 txt_subTotal.setText(sub_total);
                                 txt_Totalprice.setText(grand_total);
                                 txt_delivery.setText(delivery_charge);
-                                txt_weight.setText(net_weight);
+                                txt_weight.setText(net_weight+"Kg");
 
                                 AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, 0);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                                 editor.putString(AppConstant.CartGrandTotal, grand_total);
                                 editor.putString(AppConstant.NetDeliveryCharge, delivery_charge);
                                 editor.commit();
-
 
 
                             }
@@ -348,11 +351,7 @@ public class CartFragment extends Fragment {
     }
 
 
-
-
-
-
-    public void show_Cart(){
+    public void show_Cart() {
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
         spin_kit.setIndeterminateDrawable(chasingDots);
@@ -361,17 +360,17 @@ public class CartFragment extends Fragment {
         // AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_cart")
         AndroidNetworking.post(API.BASEURL + API.show_cart)
                 .addBodyParameter("user_id", strUserId)
-               // .addBodyParameter("company_id", strCompanyID)
+                // .addBodyParameter("company_id", strCompanyID)
                 .setTag("Show Cart")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("ewflkjsdl",response.toString());
+                        Log.e("ewflkjsdl", response.toString());
                         cartModalArrayList = new ArrayList<>();
-                        arrayListItems=new ArrayList<>();
-                        Arr_cartId=new ArrayList<>();
+                        arrayListItems = new ArrayList<>();
+                        Arr_cartId = new ArrayList<>();
                         try {
 
                             String status_all = response.getString("status_all");
@@ -385,16 +384,16 @@ public class CartFragment extends Fragment {
                             Log.e("dfkjdj", sub_total);
 
                             txtShowComPrice.setText(response.getString("company_delivery_charge"));
-                            Log.e("CartFragment", "show: " +grand_total);
+                            Log.e("CartFragment", "show: " + grand_total);
                             Log.e("dfkjdj", sub_total);
                             JSONArray jsonArray = new JSONArray(product);
 
                             for (int j = 0; j < jsonArray.length(); j++) {
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(j);
                                 String id_new = jsonObject1.getString("id");
-                               size_id = jsonObject1.getString("size_id");
+                                size_id = jsonObject1.getString("size_id");
 
-                                Log.e("CartFragment", "size_id: " +size_id);
+                                Log.e("CartFragment", "size_id: " + size_id);
                                 Log.e("sgvdsgb", id_new);
 
                                /* AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -403,7 +402,6 @@ public class CartFragment extends Fragment {
                                 editor.putString(AppConstant.FinalSizeId, jsonObject1.getString("size_id"));
 
                                 editor.commit();*/
-
 
 
                                 CartModal myCartModal = new CartModal();
@@ -432,38 +430,38 @@ public class CartFragment extends Fragment {
                             }
 
 
-                        if (jsonArray.length() == 0) {
-                            rl_empty.setVisibility(View.VISIBLE);
-                            ll_all.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), "There is no product in  cart!!!!", Toast.LENGTH_SHORT).show();
-                            spin_kit.setVisibility(View.GONE);
-                        } else {
+                            if (jsonArray.length() == 0) {
+                                rl_empty.setVisibility(View.VISIBLE);
+                                ll_all.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), "There is no product in  cart!!!!", Toast.LENGTH_SHORT).show();
+                                spin_kit.setVisibility(View.GONE);
+                            } else {
 
-                            layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                            rec_cart.setLayoutManager(layoutManager);
-                            rec_cart.setHasFixedSize(true);
-                            cartAdapter = new CartAdapter(getActivity(), cartModalArrayList, CartFragment.this);
-                            rec_cart.setAdapter(cartAdapter);
-                            spin_kit.setVisibility(View.GONE);
+                                layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                                rec_cart.setLayoutManager(layoutManager);
+                                rec_cart.setHasFixedSize(true);
+                                cartAdapter = new CartAdapter(getActivity(), cartModalArrayList, CartFragment.this);
+                                rec_cart.setAdapter(cartAdapter);
+                                spin_kit.setVisibility(View.GONE);
 
-                        }
-
-
-                        check_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                                if (isChecked) {
-                                    CountAll=1;
-                                    show_Cart();
-                                    Arr_cartId=new ArrayList<>();
-                                }else {
-                                    CountAll=0;
-                                    show_Cart();
-                                    Arr_cartId=new ArrayList<>();
-                                }
                             }
-                        });
+
+
+                            check_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                                    if (isChecked) {
+                                        CountAll = 1;
+                                        show_Cart();
+                                        Arr_cartId = new ArrayList<>();
+                                    } else {
+                                        CountAll = 0;
+                                        show_Cart();
+                                        Arr_cartId = new ArrayList<>();
+                                    }
+                                }
+                            });
 
 
 
@@ -489,7 +487,7 @@ public class CartFragment extends Fragment {
                                         *//*cartAdapter.selectAll();
                                         cartAdapter.notifyDataSetChanged();*//*
 
-                                   *//*status:1 = single product deleted, 0= delete all*//*
+                             *//*status:1 = single product deleted, 0= delete all*//*
 
 
                                         AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -513,10 +511,9 @@ public class CartFragment extends Fragment {
 */
 
 
-
                         } catch (JSONException e) {
-                          Log.e("dsfjkj",e.getMessage());
-                          spin_kit.setVisibility(View.GONE);
+                            Log.e("dsfjkj", e.getMessage());
+                            spin_kit.setVisibility(View.GONE);
                         }
 
 
@@ -524,14 +521,12 @@ public class CartFragment extends Fragment {
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("ewtff",anError.getMessage());
+                        Log.e("ewtff", anError.getMessage());
                         spin_kit.setVisibility(View.GONE);
                     }
                 });
 
     }
-
-
 
 
     public void change_Address() {
@@ -589,8 +584,8 @@ public class CartFragment extends Fragment {
 
     public void show_AddAddress() {
 
-        Log.e("fsgsgssgs", "show_AddAddress: " );
-        Log.e("fsgsgssgs",stdefaultIdAddress);
+        Log.e("fsgsgssgs", "show_AddAddress: ");
+        Log.e("fsgsgssgs", stdefaultIdAddress);
         //AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_address")
         AndroidNetworking.post(API.BASEURL + API.show_address)
                 .addBodyParameter("user_id", strUserId)
@@ -619,15 +614,17 @@ public class CartFragment extends Fragment {
                                 Log.e("ghfuhb", name);
                                 Log.e("ghfuhb", contact);
                                 Log.e("ghfuhb", address);
+                                stdefaultIdAddress=id;
 
-
-                                AppConstant.sharedpreferences =getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                                AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                                editor.putString(AppConstant.defaultIdAddress,stdefaultIdAddress );
+                                editor.putString(AppConstant.defaultIdAddress, stdefaultIdAddress);
                                 editor.commit();
-                             //   txtCountry.setText(strCountry);
+                                //   txtCountry.setText(strCountry);
                                 txt_Name.setText(name);
-                                txt_contact.setText(contact);
+                                String[] strings = contact.split("-");
+                                txt_country.setText(strings[0]);
+                                txt_contact.setText(strings[1]);
                                 txtAddress.setText(address);
                                 //  txtMalaysia.setText("Malaysia");
                             }
@@ -653,8 +650,8 @@ public class CartFragment extends Fragment {
 
     public void show_changeAddress(String id, String name, String contact, String address) {
 
-        Log.e("fsgsgssgs", "show_changeAddress: " );
-        Log.e("fsgsgssgs",id);
+        Log.e("fsgsgssgs", "show_changeAddress: ");
+        Log.e("fsgsgssgs", id);
         //AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_address")
         AndroidNetworking.post(API.BASEURL + API.show_address)
                 .addBodyParameter("id", id)
@@ -679,17 +676,18 @@ public class CartFragment extends Fragment {
                                 String address = jsonObject.getString("address");
 
 
-
-                                stdefaultIdAddress=id;
+                                stdefaultIdAddress = id;
                                 Log.e("dfdfdfdfdf", stdefaultIdAddress);
 
-                                AppConstant.sharedpreferences =getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                                AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-                                editor.putString(AppConstant.defaultIdAddress,stdefaultIdAddress );
+                                editor.putString(AppConstant.defaultIdAddress, stdefaultIdAddress);
                                 editor.commit();
 
                                 txt_Name.setText(name);
-                                txt_contact.setText(contact);
+                                String[] strings = contact.split("-");
+                                txt_country.setText(strings[0]);
+                                txt_contact.setText(strings[1]);
                                 txtAddress.setText(address);
 
                             }
@@ -709,7 +707,6 @@ public class CartFragment extends Fragment {
                     }
                 });
     }
-
 
 
 }

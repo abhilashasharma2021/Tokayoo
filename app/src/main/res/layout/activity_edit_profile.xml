@@ -242,10 +242,13 @@
                         android:orientation="vertical"
                         android:layout_gravity="center_vertical">
 
-                        <TextView
+                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
+                            android:inputType="number"
+                            android:hint="+60"
+                            android:digits="+1234567890"
                             android:id="@+id/txt_countrycode"/>
                         <View
                             android:layout_width="match_parent"

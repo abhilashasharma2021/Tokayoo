@@ -83,13 +83,52 @@
                 app:sliderStartAutoCycle="true" />
 
             <ImageView
+                android:id="@+id/imgCart"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_toLeftOf="@+id/imgchat"
+            android:layout_marginEnd="16dp"
+                android:layout_marginTop="14dp"
+                android:background="?actionBarItemBackground"
+                android:src="@drawable/cart"
+                android:tint="@color/grey_light" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:textColor="@color/black"
+                android:id="@+id/cardViewCart"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:visibility="visible"
+                card_view:cardBackgroundColor="@color/gray"
+                android:layout_toLeftOf="@+id/imgchat"
+                card_view:cardCornerRadius="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewCartSize"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_margin="4dp"
+                   android:gravity="center"
+                   />
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+            <ImageView
                 android:id="@+id/imgchat"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="14dp"
                 android:background="?actionBarItemBackground"
-                android:padding="8dp"
                 android:src="@drawable/chat_100"
                 android:tint="@color/grey_light" />
         </RelativeLayout>

@@ -107,14 +107,14 @@
                     android:textSize="14sp"
                     android:layout_marginTop="5dp"
                     android:textColor="#222"
-                    android:text=""/>
+                  />
 
                 <TextView
                     android:id="@+id/txt_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="-"
+
                     android:layout_below="@+id/txt_Name"
                     android:textColor="#222"
                     android:fontFamily="@font/lato_bold"
@@ -130,7 +130,7 @@
                     android:layout_marginLeft="2dp"
                     android:textSize="14sp"
                     android:textColor="#222"
-                    android:text="-"/>
+                    />
 
                 <TextView
                     android:id="@+id/btn_add"
@@ -189,7 +189,7 @@
                     android:layout_marginTop="5dp"
                     android:textSize="14sp"
                     android:textColor="#444"
-                    android:text=""/>
+                    />
 
 
                 <TextView
@@ -203,7 +203,7 @@
                     android:layout_marginTop="5dp"
                     android:textSize="14sp"
                     android:textColor="#444"
-                    android:text=""/>
+                    />
                 <TextView
                     android:id="@+id/btnCompany"
                     android:layout_width="wrap_content"

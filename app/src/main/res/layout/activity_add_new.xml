@@ -150,17 +150,19 @@
                 android:textStyle="normal" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/txt_country"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:text=" "
                 android:gravity="center_vertical"
                 android:layout_below="@+id/txt2"
-                android:textColor="@color/grey_light"
+                android:textColor="@color/black"
                 android:fontFamily="@font/open_sans_regular"
                 android:textSize="16sp"
+                android:digits="+1234567890"
+                android:inputType="number"
+                android:hint="+60"
                 android:textStyle="normal" />
 
             <EditText

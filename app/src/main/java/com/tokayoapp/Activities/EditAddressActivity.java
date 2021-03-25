@@ -46,8 +46,8 @@ public class EditAddressActivity extends AppCompatActivity {
     Button btn_save;
     String strAddressId = "";
     RelativeLayout rl_back;
-   TextView txt_country,edt_address;
-    EditText  edt_contact, edt_name;
+   TextView edt_address;
+    EditText  edt_contact, edt_name,txt_country;
     String strUserName = "", strUserAddress = "", strUserMobile = "",strdefaultStatus="";
     CheckBox check_default;
     String strDefaultStatus = "",strSelectedCountryCode="";

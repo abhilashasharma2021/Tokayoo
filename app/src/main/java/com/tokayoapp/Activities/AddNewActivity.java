@@ -58,11 +58,12 @@ public class AddNewActivity extends AppCompatActivity {
     Button btn_save;
     String strName = "", strContact = "", strAddress = "", strUserId = "", strAddAddressType = "", strAddressId = "";
 
-    TextView txt_country,edt_address;
+    TextView edt_address;
     String strDefaultStatus = "",strSelectedCountryCode="",SelectedCountryCode="";
     ProgressBar spin_kit;
     CheckBox check_default;
     String country_name ="";
+    EditText txt_country;
 
     private static final int AUTOCOMPLETE_REQUEST_CODE_SEARCH = 1111;
     @Override

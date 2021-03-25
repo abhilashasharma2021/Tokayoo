@@ -109,7 +109,22 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                     if (Patterns.EMAIL_ADDRESS.matcher(emailEmail.getText().toString().trim()).matches()){
-                        signUp();
+                      //  signUp();
+
+                        AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                        editor.putString(AppConstant.nickName, strFullName);
+                        editor.putString(AppConstant.signupEmail, emailEmail.getText().toString().trim());
+                        editor.putString(AppConstant.signupPassword, strPassword);
+                        editor.putString(AppConstant.signupRegID, strregId);
+                        editor.commit();
+
+                       startActivity(new Intent(RegisterActivity.this,MobileOTPActivity.class ));
+                      finishAffinity();
+
+
+
+
                     }else  {
                         Toast.makeText(RegisterActivity.this, "Please Enter Valid Email", Toast.LENGTH_LONG).show();
 

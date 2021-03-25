@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,17 +36,21 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.ChasingDots;
 import com.github.ybq.android.spinkit.style.FadingCircle;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.tokayoapp.Activities.ChatActivity;
+import com.tokayoapp.Activities.MainActivity;
 import com.tokayoapp.Activities.ShowNewArrival;
 import com.tokayoapp.Activities.SubCategoryActivity;
+import com.tokayoapp.Adapter.CartAdapter;
 import com.tokayoapp.Adapter.ChatAdapter;
 import com.tokayoapp.Adapter.HomeArrivalAdapter;
 import com.tokayoapp.Adapter.HomeCategoryAdapter;
 import com.tokayoapp.Adapter.SliderAdapterExample;
+import com.tokayoapp.Modal.CartModal;
 import com.tokayoapp.Modal.ChatModal;
 import com.tokayoapp.Modal.HomeCategoryModal;
 import com.tokayoapp.Modal.HomeNewArrivalModal;
@@ -66,6 +71,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -76,7 +82,6 @@ public class HomeFragment extends Fragment {
     SliderAdapterExample sliderAdapter;
     List<SliderModel> listOfSlider = new ArrayList<>();
     SliderView sliderView;
-
     RecyclerView rec_cat, rec_newArrival;
     RecyclerView.LayoutManager layoutManager, layoutManager1;
     HomeCategoryAdapter categoryAdapter;
@@ -91,6 +96,8 @@ public class HomeFragment extends Fragment {
     TextView txt_more;
     EditText edit_Search;
     String st_serach = "";
+    CardView cardViewCart;
+    TextView textViewCartSize;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,6 +113,8 @@ public class HomeFragment extends Fragment {
         edit_Search = view.findViewById(R.id.edit_Search);
         imgchat = view.findViewById(R.id.imgchat);
         rec_newArrival = view.findViewById(R.id.rec_newArrival);
+        cardViewCart = view.findViewById(R.id.cardViewCart);
+        textViewCartSize = view.findViewById(R.id.textViewCartSize);
 
         txt_more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +136,8 @@ public class HomeFragment extends Fragment {
         sliderView.setIndicatorSelectedColor(getResources().getColor(R.color.colorPrimaryDark));
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
         sliderView.setScrollTimeInSec(5); //set scroll delay in seconds :
-     sliderView.startAutoCycle();
-    // setSlider(3);
+        sliderView.startAutoCycle();
+        // setSlider(3);
 
 
         show_Category();
@@ -159,29 +168,43 @@ public class HomeFragment extends Fragment {
         });
 
 
-   edit_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-       @Override
-       public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+        edit_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
 
-           if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-               AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
-               SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
-               editor.putString(AppConstant.SearchQuery, edit_Search.getText().toString());
-               editor.commit();
-               startActivity(new Intent(getActivity(),SubCategoryActivity.class));
-               Log.e("sdfdsfsf",edit_Search.getText().toString());
-               return true;
-           }
-           // Return true if you have consumed the action, else false.
-           return false;
-       }
-   });
+                    AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
+                    editor.putString(AppConstant.SearchQuery, edit_Search.getText().toString());
+                    editor.commit();
+                    startActivity(new Intent(getActivity(), SubCategoryActivity.class));
+                    Log.e("sdfdsfsf", edit_Search.getText().toString());
+                    return true;
+                }
+                // Return true if you have consumed the action, else false.
+                return false;
+            }
+        });
 
+
+        show_Cart();
+cardViewCart.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        ((MainActivity) requireActivity()).showFragment(new CartFragment());
+    }
+});
         return view;
     }
 
-  /*  public void ShowSliderImages() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        show_Cart();
+    }
+
+    /*  public void ShowSliderImages() {
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
@@ -232,8 +255,7 @@ public class HomeFragment extends Fragment {
     }*/
 
 
-
-    public  void setSlider(int position){
+    public void setSlider(int position) {
         sliderView.setAutoCycleDirection(position);
     }
 
@@ -419,7 +441,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     public void show_AllProduct() {
         //AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=search_product")
         AndroidNetworking.post(API.BASEURL + API.search_product)
@@ -493,6 +514,51 @@ public class HomeFragment extends Fragment {
                         Log.e("frftr", anError.getMessage());
                     }
                 });
+    }
+
+    public void show_Cart() {
+        AppConstant.sharedpreferences = getActivity().getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+        String strUserId = AppConstant.sharedpreferences.getString(AppConstant.UserId, "");
+        AndroidNetworking.post(API.BASEURL + API.show_cart)
+                .addBodyParameter("user_id", strUserId)
+                // .addBodyParameter("company_id", strCompanyID)
+                .setTag("Show Cart")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String product = response.getString("product");
+
+                            JSONArray jsonArray = new JSONArray(product);
+
+                            if (jsonArray.length() == 0) {
+                                cardViewCart.setVisibility(View.GONE);
+                            } else {
+                                textViewCartSize.setText(String.valueOf(jsonArray.length()));
+                                cardViewCart.setVisibility(View.VISIBLE);
+                            }
+
+                            Log.i("fmdklghfd", "onResponse: " + jsonArray.length());
+
+
+                        } catch (JSONException e) {
+                            Log.e("dsfjkj", e.getMessage());
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("ewtff", anError.getMessage());
+
+                    }
+                });
+
     }
 
 

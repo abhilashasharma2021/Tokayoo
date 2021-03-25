@@ -5,116 +5,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.ProductDetailsActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/rl8"
+            <RelativeLayout
+                android:id="@+id/rl8"
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+
+                <ImageView
+                    android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp">
-
-
-                    <ImageView
-                        android:id="@+id/imgProduct"
-                        android:layout_width="match_parent"
-                        android:scaleType="centerInside"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/placeholder"/>
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/placeholder" />
 
                 <RelativeLayout
                     android:id="@+id/rl_back"
                     android:layout_width="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentLeft="true"
-                    android:background="@drawable/grey_circle"
-                    android:layout_height="35dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/grey_circle">
+
                     <ImageView
                         android:id="@+id/imgBack"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:padding="8dp"
                         android:layout_centerInParent="true"
                         android:background="?actionBarItemBackground"
+                        android:padding="8dp"
 
-                        android:tint="@color/white"
                         android:src="@drawable/back"
-                        />
+                        android:tint="@color/white" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="35dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/rl_chat"
-                    android:background="@drawable/grey_circle"
-                    android:layout_height="35dp">
+                    android:background="@drawable/grey_circle">
+
                     <ImageView
                         android:id="@+id/imgshare"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:padding="10dp"
                         android:layout_centerInParent="true"
                         android:background="?actionBarItemBackground"
-                        android:tint="@color/white"
-                        android:src="@drawable/share"/>
+                        android:padding="10dp"
+                        android:src="@drawable/share"
+                        android:tint="@color/white" />
                 </RelativeLayout>
-
 
 
                 <RelativeLayout
                     android:id="@+id/rl_chat"
                     android:layout_width="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-
+                    android:layout_height="35dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/grey_circle"
-                    android:layout_height="35dp">
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/grey_circle">
 
                     <com.varunest.sparkbutton.SparkButton
                         android:id="@+id/spark_button"
                         android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:layout_height="35dp"
                         app:sparkbutton_activeImage="@drawable/heart_new"
-                        app:sparkbutton_inActiveImage="@drawable/fav"
                         app:sparkbutton_iconSize="25dp"
+                        app:sparkbutton_inActiveImage="@drawable/fav"
                         app:sparkbutton_primaryColor="@color/pink"
                         app:sparkbutton_secondaryColor="@color/pink" />
 
                     <com.varunest.sparkbutton.SparkButton
                         android:id="@+id/spark_fav_already"
                         android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:layout_height="35dp"
                         android:visibility="gone"
                         app:sparkbutton_activeImage="@drawable/fav"
-                        app:sparkbutton_inActiveImage="@drawable/heart_new"
                         app:sparkbutton_iconSize="25dp"
+                        app:sparkbutton_inActiveImage="@drawable/heart_new"
                         app:sparkbutton_primaryColor="@color/pink"
                         app:sparkbutton_secondaryColor="@color/pink" />
                 </RelativeLayout>
             </RelativeLayout>
 
 
-
-
-
-<View
-android:layout_width="match_parent"
-android:layout_height="1dp"
-android:layout_marginTop="5dp"
-android:background="#dbdbdb"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#dbdbdb" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -125,262 +125,260 @@ android:background="#dbdbdb"/>
                 android:layout_marginTop="5dp" />
 
             <RelativeLayout
-    android:id="@+id/rl1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:id="@+id/rl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-    <TextView
-        android:id="@+id/txt_product_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/img_product"
-        android:fontFamily="@font/open_sans_regular"
-        android:textColor="@color/grey_light"
-        android:text="-"/>
+                <TextView
+                    android:id="@+id/txt_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_product"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
+                    android:textColor="@color/grey_light"
+                    android:textSize="16sp" />
 
-    <RelativeLayout
-        android:id="@+id/relPrice"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/txt_product_name"
-        android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/relPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_product_name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/txt_sym"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="RM"
-            android:layout_marginRight="5dp"
-            android:textColor="@color/pink"
-            android:textSize="14sp" />
-
-
-        <TextView
-            android:id="@+id/txt_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/txt_sym"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="-"
-            android:textColor="@color/pink"
-            android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/txt_sym"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="RM"
+                        android:textColor="@color/pink"
+                        android:textSize="14sp" />
 
 
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/txt_available"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/relPrice"
-        android:fontFamily="@font/open_sans_regular"
-        android:textColor="@color/grey_light"
-        android:text="Available Stock"/>
+                    <TextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@+id/txt_sym"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/pink"
+                        android:textSize="14sp" />
 
 
-    <TextView
-        android:id="@+id/txtStock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_toRightOf="@+id/txt_available"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/relPrice"
-        android:fontFamily="@font/open_sans_regular"
-        android:textColor="@color/grey_light"
-        android:text=""/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relPrice"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Available Stock"
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
 
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/txtStock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relPrice"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txt_available"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text=""
+                    android:textColor="@color/grey_light"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
 
 
             <TextView
                 android:id="@+id/txt_brandName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:layout_marginLeft="20dp"
                 android:layout_below="@+id/txt_product_name"
+                android:layout_marginLeft="20dp"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="AM XXXX"
                 android:textColor="@color/pink"
-                android:text="AM XXXX"/>
-
+                android:textSize="14sp"
+                android:visibility="gone" />
 
 
             <RelativeLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/rl_3"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:id="@+id/txt_colo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/open_sans_regular"
+                    android:text="Color"
                     android:textColor="@color/black"
-                    android:text="Color"/>
+                    android:textSize="14sp" />
 
 
                 <RelativeLayout
                     android:id="@+id/rl_new"
                     android:layout_width="240dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="30dp"
                     android:layout_toRightOf="@+id/txt_colo"
-                    android:background="@drawable/greylight_stroke"
-                    android:layout_height="40dp">
+                    android:background="@drawable/greylight_stroke">
+
                     <Spinner
                         android:id="@+id/spin_color"
                         android:layout_width="match_parent"
-                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:padding="1dip"
                         android:prompt="@string/spinner_color"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
             </RelativeLayout>
 
-              <RelativeLayout
-                  android:layout_width="wrap_content"
-                  android:id="@+id/rl_4"
-                  android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rl_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
 
-                  <TextView
-                      android:id="@+id/txt_model"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="14sp"
-                      android:layout_centerVertical="true"
-                      android:layout_marginTop="10dp"
-                      android:layout_marginLeft="10dp"
-                      android:fontFamily="@font/open_sans_regular"
-                      android:textColor="@color/black"
-                      android:text="Model"/>
+                <TextView
+                    android:id="@+id/txt_model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Model"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
 
-                  <RelativeLayout
-                      android:layout_width="240dp"
-                      android:layout_marginLeft="25dp"
-                      android:layout_marginTop="10dp"
-                      android:layout_toRightOf="@+id/txt_model"
-                      android:background="@drawable/greylight_stroke"
-                      android:layout_height="40dp">
-                      <Spinner
-                          android:id="@+id/spin_model"
-                          android:layout_width="match_parent"
-                          android:textSize="14sp"
-                          android:layout_alignParentRight="true"
-                          android:padding="1dip"
-                          android:prompt="@string/spinner_title"
-                          android:layout_height="wrap_content"
-                          android:layout_centerVertical="true"/>
-                  </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="240dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/txt_model"
+                    android:background="@drawable/greylight_stroke">
+
+                    <Spinner
+                        android:id="@+id/spin_model"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="1dip"
+                        android:prompt="@string/spinner_title"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
 
-
-
-              </RelativeLayout>
-
+            </RelativeLayout>
 
 
             <RelativeLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/rl_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/txt_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/open_sans_regular"
+                    android:text="Size"
                     android:textColor="@color/black"
-                    android:text="Size"/>
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="240dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/txt_size"
-                    android:background="@drawable/greylight_stroke"
-                    android:layout_height="40dp">
+                    android:background="@drawable/greylight_stroke">
+
                     <Spinner
                         android:id="@+id/spin_size"
                         android:layout_width="match_parent"
-                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:padding="1dip"
                         android:prompt="@string/spinner_title"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"/>
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
 
             </RelativeLayout>
 
 
-
             <RelativeLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/rl_weight"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/txtWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/open_sans_regular"
+                    android:text="Weight"
                     android:textColor="@color/black"
-                    android:text="Weight"/>
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="240dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/txtWeight"
-                    android:background="@drawable/greylight_stroke"
-                    android:layout_height="40dp">
-
-
+                    android:background="@drawable/greylight_stroke">
 
 
                     <TextView
                         android:id="@+id/tx_Weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:hint="select weight"
-                        android:textSize="15sp"
-                        android:paddingLeft="15dp"
-                        android:textColorHint="@color/black"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/black"/>
-
+                        android:gravity="start"
+                        android:hint="select weight"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="15sp" />
 
 
                 </RelativeLayout>
@@ -389,68 +387,62 @@ android:background="#dbdbdb"/>
             </RelativeLayout>
 
 
-
-
-
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <RelativeLayout
                     android:id="@+id/rl"
                     android:layout_width="120dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_height="35dp"
-                    >
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp">
 
 
                     <ImageView
                         android:id="@+id/img_minus"
                         android:layout_width="37dp"
-                        android:padding="8dp"
+                        android:layout_height="37dp"
                         android:layout_centerVertical="true"
                         android:background="?actionBarItemBackground"
-                        android:layout_height="37dp"
+                        android:padding="8dp"
                         android:src="@drawable/min" />
 
                     <TextView
                         android:id="@+id/txt_itemCount"
                         android:layout_width="wrap_content"
-                        android:textSize="14sp"
-                        android:text="1"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/grey_light"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_centerInParent="true"
+                        android:text="1"
+                        android:textColor="@color/grey_light"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/img_plus"
                         android:layout_width="37dp"
-                        android:padding="8dp"
+                        android:layout_height="37dp"
                         android:layout_alignParentRight="true"
                         android:background="?actionBarItemBackground"
-                        android:layout_height="37dp"
+                        android:padding="8dp"
                         android:src="@drawable/add" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
 
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="25dp"
                     android:id="@+id/rl2"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
 
-                    android:layout_height="45dp">
+                    android:layout_marginTop="25dp">
 
                     <Button
                         android:id="@+id/btn_add_cart"
                         android:layout_width="120dp"
                         android:layout_height="35dp"
-                        android:layout_marginRight="40dp"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="40dp"
                         android:background="@drawable/pinkcart_rounded"
                         android:fontFamily="@font/open_sans_regular"
                         android:text="Add to cart"
@@ -459,13 +451,14 @@ android:background="#dbdbdb"/>
                         android:textSize="14sp" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_toRightOf="@+id/rl2"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginRight="5dp"
-                    android:layout_height="45dp">
+                    android:layout_toRightOf="@+id/rl2">
 
                     <Button
                         android:id="@+id/btn_buy"
@@ -474,10 +467,10 @@ android:background="#dbdbdb"/>
                         android:background="@drawable/pinkcart_rounded"
                         android:fontFamily="@font/open_sans_regular"
                         android:text="Buy Now"
-                        android:visibility="gone"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -486,15 +479,15 @@ android:background="#dbdbdb"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
+
             <RelativeLayout
                 android:id="@+id/rl_mrp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                >
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp">
 
                 <TextView
                     android:id="@+id/txt_mrp1"
@@ -504,8 +497,6 @@ android:background="#dbdbdb"/>
                     android:text="Category  :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-
 
 
                 <TextView
@@ -523,75 +514,71 @@ android:background="#dbdbdb"/>
                     android:id="@+id/txt_brand1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_catName"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Brand       :"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_catName"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-
 
 
                 <TextView
                     android:id="@+id/txt_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_catName"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_catName"
                     android:layout_toRightOf="@+id/txt_brand1"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/txt_weight1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_brand"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Weight      :"
-                    android:visibility="gone"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_brand"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
 
                 <RelativeLayout
                     android:id="@+id/rl_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_below="@+id/txt_brand"
-                    android:layout_toRightOf="@+id/txt_weight1">
+                    android:layout_toRightOf="@+id/txt_weight1"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txt_weight11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                         android:visibility="gone"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-
                         android:text=""
+
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/txt_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/txt_weight11"
-                        android:layout_marginLeft="5dp"
                         android:text="Kg"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </RelativeLayout>
-
 
 
                 <TextView
@@ -599,9 +586,9 @@ android:background="#dbdbdb"/>
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl_1"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Description :"
-                    android:layout_marginTop="10dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -611,10 +598,10 @@ android:background="#dbdbdb"/>
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_des"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="-"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -622,29 +609,30 @@ android:background="#dbdbdb"/>
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_product_video"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rec_product_video"/>
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/img_video"
                 android:layout_width="120dp"
-                android:scaleType="fitXY"
-                android:visibility="gone"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/download"
-                android:layout_height="120dp"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
-    <com.github.ybq.android.spinkit.SpinKitView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
-        android:layout_width="70dp"
-        android:layout_gravity="center"
-        android:layout_height="70dp"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
         style="@style/SpinKitView.ChasingDots"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
         app:SpinKit_Color="@color/pink" />
 </RelativeLayout>

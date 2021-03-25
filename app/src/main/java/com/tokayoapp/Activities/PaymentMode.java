@@ -45,11 +45,12 @@ public class PaymentMode extends AppCompatActivity {
     ProgressBar spin_kit;
     String st_paymentStatus = "", st_user_id = "", st_delivery_charge = "", st_TotalAmount = "", st_address_id = "", st_CheckoutStatus = "", st_NetDeliveryCharge = "";
     String st_RewardId = "", st_RewardPoints = "", strMobile = "", strFullName = "", strAddress = "";
-    String st_WeightId = "", st_ColorId = "", st_ModelId = "", strOrderItems = "", st_RewardSizeId = "", st_SizeId = "",strUserId="";
-   ScrollView scroll;
-
+    String st_WeightId = "", st_ColorId = "", st_ModelId = "", strOrderItems = "", st_RewardSizeId = "", st_SizeId = "", strUserId = "";
+    ScrollView scroll;
+String checkCoins = "";
     TextView message;
-     Dialog dialog;
+    Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,40 +114,47 @@ public class PaymentMode extends AppCompatActivity {
         if (st_CheckoutStatus.equals("OrderProduct")) {
             scroll.setVisibility(View.VISIBLE);
             btn_checkout.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             scroll.setVisibility(View.GONE);
             btn_checkout.setVisibility(View.GONE);
-             dialog = new Dialog(PaymentMode.this);
+            dialog = new Dialog(PaymentMode.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.points_dialog);
-             message = dialog.findViewById(R.id.message);
-            Button  btn_redeem = dialog.findViewById(R.id.btn_redeem);
+            message = dialog.findViewById(R.id.message);
+            Button btn_redeem = dialog.findViewById(R.id.btn_redeem);
 
-            AndroidNetworking.post(API.BASEURL+API.update_profile)
-                    .addBodyParameter("id",strUserId)
+            AndroidNetworking.post(API.BASEURL + API.update_profile)
+                    .addBodyParameter("id", strUserId)
                     .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Log.e("fjdhfdj",response.toString());
+                            Log.e("fjdhfdj", response.toString());
                             try {
-                                if (response.getString("result").equals("successfully")){
+                                if (response.getString("result").equals("successfully")) {
                                     String reward_point = response.getString("reward_point");
+                                    if (reward_point.equals("null")) {
+                                        message.setText("You dont have enough points");
+                                    } else {
+                                        message.setText("You have " + reward_point + " points");
+                                    }
+                                    Log.e("sfhcsdkj", reward_point);
 
-                                    Log.e("sfhcsdkj",reward_point);
-                                    message.setText("You have "+reward_point+" points");
                                     btn_redeem.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
 
-                                            checkout_Reward();
+
+                                                checkout_Reward();
+
+
                                         }
                                     });
 
-                                }else {
+                                } else {
                                     message.setText("You dont have enough points");
                                 }
 
@@ -293,7 +301,7 @@ public class PaymentMode extends AppCompatActivity {
                                 dialog.setCancelable(false);
                                 dialog.setContentView(R.layout.paymentsucessful);
                                 RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.rl);
-                                Button btn_ok =  dialog.findViewById(R.id.btn_ok);
+                                Button btn_ok = dialog.findViewById(R.id.btn_ok);
 
                                 btn_ok.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -354,8 +362,6 @@ public class PaymentMode extends AppCompatActivity {
         Log.e("dgfdvg", "sadfasfa" + st_ColorId);
         Log.e("dgfdvg", "sadfasfa" + st_ModelId);
         Log.e("dgfdvg", "sadfasfa" + st_RewardSizeId);
-
-
         /*user_id=%@&product_id=%@&color_id=%@&model_id=%@&weight=%@&username=%@&contact=%@&address=%@&
         total_point=%@&order_type=%@&order_status=%@&delevery_charge=%@&size_id=%@*/
         Log.e("sdhvcklsdhjvc", st_delivery_charge);
@@ -417,6 +423,8 @@ public class PaymentMode extends AppCompatActivity {
                             } else {
                                 spin_kit.setVisibility(View.GONE);
                                 Toast.makeText(PaymentMode.this, response.getString("result"), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(PaymentMode.this,ReedeemPopUpActivity.class));
+                                finish();
                             }
                         } catch (JSONException e) {
                             Log.e("dgfvdg", e.getMessage());
@@ -434,24 +442,24 @@ public class PaymentMode extends AppCompatActivity {
     }
 
 
-    public void update_profile(){
+    public void update_profile() {
 
         //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
-        AndroidNetworking.post(API.BASEURL+API.update_profile)
-                .addBodyParameter("id",strUserId)
+        AndroidNetworking.post(API.BASEURL + API.update_profile)
+                .addBodyParameter("id", strUserId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.e("fjdhfdj",response.toString());
+                        Log.e("fjdhfdj", response.toString());
                         try {
-                            if (response.getString("result").equals("successfully")){
+                            if (response.getString("result").equals("successfully")) {
                                 String reward_point = response.getString("reward_point");
 
-                                Log.e("sfhcsdkj",reward_point);
-                                message.setText("You have "+reward_point+" points");
+                                Log.e("sfhcsdkj", reward_point);
+                                message.setText("You have " + reward_point + " points");
                           /*      .setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -461,7 +469,7 @@ public class PaymentMode extends AppCompatActivity {
                                     }
                                 });*/
 
-                            }else {
+                            } else {
                                 message.setText("You dont have enough points");
                             }
 
@@ -477,8 +485,6 @@ public class PaymentMode extends AppCompatActivity {
 
                     }
                 });
-
-
 
 
     }

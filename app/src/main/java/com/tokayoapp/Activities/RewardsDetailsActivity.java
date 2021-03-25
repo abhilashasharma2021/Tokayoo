@@ -1,5 +1,6 @@
 package com.tokayoapp.Activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -345,10 +348,19 @@ public class RewardsDetailsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i==0){
                     if (ColorStatus.equals("1")){
-                        strModel = arrayListModelID.get(i);
+
+                        if (arrayListModelID.get(i).equals("0")) {
+                            strModel = "";
+                        } else {
+                            strModel = arrayListModelID.get(i);
+                        }
                         Log.e("dcadsdsdssda", "if");
                     }else if (SizeStatus.equals("1")){
-                        strModel = arrayListModelID.get(i);
+                        if (arrayListModelID.get(i).equals("0")) {
+                            strModel = "";
+                        } else {
+                            strModel = arrayListModelID.get(i);
+                        }
                         Log.e("dcadsdsdssda", "if");
                     }else {
                         Log.e("dcadsdsdssda", "else");
@@ -358,12 +370,19 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     String produtId = AppConstant.sharedpreferences.getString(AppConstant.ProdutId, "");
                     strModel = arrayListModelID.get(i);
                     Log.e("dgfvbg", strModel);
+                    new Handler().postDelayed(new Runnable() {
+                                                  @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                                                  public void run() {
+                                                      AvailableStockFilter();
+                                                  }
+                                              }, 700
+                    );
 
                     ModelStatus="1";
                     if (ModelStatus.equals("1")){
                         change_color(strModel);
                         change_SizeModel(strColor,strModel);
-                        AvailableStockFilter(strColor, strModel,strSize);
+
                     }
 
                 }
@@ -386,11 +405,19 @@ public class RewardsDetailsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     if (i==0){
                         if (ModelStatus.equals("1")){
-                            strColor = arrayListColorID.get(i);
-                        }else if (SizeStatus.equals("1")){
-                            strColor = arrayListColorID.get(i);
-                        } else {
 
+                            if ( arrayListColorID.get(i).equals("0")) {
+                                strColor = "";
+                            } else {
+                                strColor = arrayListColorID.get(i);
+                            }
+                        }else if (SizeStatus.equals("1")){
+                            if ( arrayListColorID.get(i).equals("0")) {
+                                strColor = "";
+                            } else {
+                                strColor = arrayListColorID.get(i);
+                            }
+                        } else {
                         }
                 }else {
 
@@ -401,7 +428,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     if (ColorStatus.equals("1")){
                         change_Model(strColor);
                         change_Size(strColor);
-                        AvailableStockFilter(strColor, strModel,strSize);
+                        new Handler().postDelayed(new Runnable() {
+                                                      @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                                                      public void run() {
+                                                          AvailableStockFilter();
+                                                      }
+                                                  }, 700
+                        );
                     }
 
                 }
@@ -426,12 +459,21 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                 Log.e("ProductDetailsActivity", "strSize:1 " + strSize);
                 if (i == 0) {
                     if (ModelStatus.equals("1")) {
-                        strSize = arrayListSizeID.get(i);
+
+                        if ( arrayListSizeID.get(i).equals("0")) {
+                            strSize = "";
+                        } else {
+                            strSize = arrayListSizeID.get(i);
+                        }
                         Log.e("ProductDetailsActivity", "strColor: " + strColor);
 
 
                     } else if (ColorStatus.equals("1")) {
-                        strSize = arrayListSizeID.get(i);
+                        if ( arrayListSizeID.get(i).equals("0")) {
+                            strSize = "";
+                        } else {
+                            strSize = arrayListSizeID.get(i);
+                        }
                         Log.e("ProductDetailsActivity", "strColor: " + strModel);
                     } else {
 
@@ -444,7 +486,13 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     if (SizeStatus.equals("1")) {
                         change_filterSize(strSize);
                         change_FilterModel(strSize);
-                        AvailableStockFilter(strColor, strModel, strSize);
+                        new Handler().postDelayed(new Runnable() {
+                                                      @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                                                      public void run() {
+                                                          AvailableStockFilter();
+                                                      }
+                                                  }, 700
+                        );
                     }
 
                 }
@@ -1267,7 +1315,7 @@ public class RewardsDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void AvailableStockFilter(String strColor, String strModel,String strSize) {
+    public void AvailableStockFilter() {
 
 
         Log.e("RewardsDetailsActivity", "strRewardId: " +strRewardId);

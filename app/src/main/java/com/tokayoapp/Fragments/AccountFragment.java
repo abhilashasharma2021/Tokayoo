@@ -25,6 +25,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.facebook.internal.DialogFeature;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
 import com.squareup.picasso.Picasso;
@@ -268,7 +269,7 @@ public class AccountFragment extends Fragment {
 
     public void update_profile(){
 
-
+        Log.i("fkdjkfl", "update_profile: "+strUserId);
 
         //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
         AndroidNetworking.post(API.BASEURL+API.update_profile)
@@ -279,7 +280,7 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.e("fjdhfdj",response.toString());
+                        Log.e("gfgfgfgfgfgg",response.toString());
                         try {
                             if (response.getString("result").equals("successfully")){
                                 String strId=response.getString( "id");
@@ -291,6 +292,7 @@ public class AccountFragment extends Fragment {
                                 String state = response.getString("state");
                                 String image = response.getString("image");
                                 String reward_point = response.getString("reward_point");
+
 
                                 Log.e("sfhcsdkj",reward_point);
 
@@ -304,12 +306,18 @@ public class AccountFragment extends Fragment {
 
                                 }
 
-                                txt_point.setText(reward_point);
+                                if (reward_point.equals("null")){
+                                    txt_point.setText("0");
+                                }else {
+                                    txt_point.setText(reward_point);
+                                }
+
+
                                 txt_name.setText(username);
 
                             }
                         } catch (JSONException e) {
-                            Log.e("fdvgfdfbl", e.getMessage());
+                            Log.e("fdfdfdf", e.getMessage());
 
                         }
                     }

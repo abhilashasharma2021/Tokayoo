@@ -25,6 +25,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.facebook.internal.DialogFeature;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -58,14 +59,15 @@ public class OrderProductDetails extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     OrderProductDetailAdapter productDetailAdapter;
     ArrayList<ProductDetailModal> productModelArrayList = new ArrayList<>();
-    TextView txt_product_name, txt_price, txt_description, txt_catName, txt_color, txt_brand, txt_weight, txt_qty;
+    TextView txt_product_name, txt_price, txt_description, txt_catName, txt_color, txt_brand, txt_weight, txt_qty, textModel, textSize;
     String strUserId = "", strOrderId = "", strProdutId = "";
     ProductVideoAdapter productVideoAdapter;
     ArrayList<ProductVideoModal> videoModalArrayList = new ArrayList<>();
     RecyclerView rec_product_video;
     RecyclerView.LayoutManager videomanager;
     SliderView sliderView;
-    String strProductSubImage="";
+    String strProductSubImage = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,7 @@ public class OrderProductDetails extends AppCompatActivity {
         Log.e("gffbv", strUserId);
         Log.e("gffbv", strOrderId);
         Log.e("gffbv", strProdutId);
-   //     Toast.makeText(OrderProductDetails.this,strUserId,Toast.LENGTH_LONG).show();
+        //     Toast.makeText(OrderProductDetails.this,strUserId,Toast.LENGTH_LONG).show();
         rl_back = findViewById(R.id.rl_back);
         txt_qty = findViewById(R.id.txt_qty);
         txt_color = findViewById(R.id.txt_color);
@@ -93,6 +95,8 @@ public class OrderProductDetails extends AppCompatActivity {
         txt_weight = findViewById(R.id.txt_weight);
         txt_description = findViewById(R.id.txt_description);
         txt_product_name = findViewById(R.id.txt_product_name);
+        textModel = findViewById(R.id.textModel);
+        textSize = findViewById(R.id.textSize);
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,10 +116,10 @@ public class OrderProductDetails extends AppCompatActivity {
         rec_product_video.setHasFixedSize(true);
 
 
-    imgProduct.setOnClickListener(new View.OnClickListener() {
+        imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Toast.makeText(OrderProductDetails.this, "check", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(OrderProductDetails.this, "check", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OrderProductDetails.this);
                 LayoutInflater inflater = getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.custom_enlarge_image_layout, null);
@@ -131,13 +135,13 @@ public class OrderProductDetails extends AppCompatActivity {
                 sliderView.startAutoCycle();
 
 
-                Log.e("OrderProductDetails", "onClick: " +strUserId);
-                Log.e("OrderProductDetails", "strOrderId: " +strOrderId);
-                Log.e("OrderProductDetails", "strProdutId: " +strProdutId);
+                Log.e("OrderProductDetails", "onClick: " + strUserId);
+                Log.e("OrderProductDetails", "strOrderId: " + strOrderId);
+                Log.e("OrderProductDetails", "strProdutId: " + strProdutId);
                 AndroidNetworking.post(API.BASEURL + API.show_orderProduct_detail)
                         .addBodyParameter("user_id", strUserId)
                         .addBodyParameter("order_id", strOrderId)
-                        .addBodyParameter("product_id", strProdutId)
+                        .addBodyParameter("cart_id", strProdutId)
                         .setTag("single order detail")
                         .setPriority(Priority.HIGH)
                         .build()
@@ -145,18 +149,18 @@ public class OrderProductDetails extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.e("dsbvxcbcx", response.toString());
-                                productModelArrayList=new ArrayList<>();
+                                productModelArrayList = new ArrayList<>();
                                 try {
                                     String img = response.getString("img");
                                     String path = response.getString("path");
-                                    Log.e("OrderProductDetails", "onResponse: " +img);
+                                    Log.e("OrderProductDetails", "onResponse: " + img);
                                     JSONArray jsonArray = new JSONArray(img);
 
                                     for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject jsonObject=jsonArray.getJSONObject(i);
-                                        String image=jsonObject.getString("image");
-                                       ProductDetailModal productDetailModal = new ProductDetailModal();
-                                       productDetailModal.setImage(jsonObject.getString("image"));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        String image = jsonObject.getString("image");
+                                        ProductDetailModal productDetailModal = new ProductDetailModal();
+                                        productDetailModal.setImage(jsonObject.getString("image"));
                                         productDetailModal.setPath(response.getString("path"));
                                         productModelArrayList.add(productDetailModal);
 
@@ -181,7 +185,6 @@ public class OrderProductDetails extends AppCompatActivity {
                         });
 
 
-
                 ImageView imageView = dialogView.findViewById(R.id.my_image);
 
                 try {
@@ -194,8 +197,6 @@ public class OrderProductDetails extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
-
 
 
         spark_button.setEventListener(new SparkEventListener() {
@@ -240,7 +241,7 @@ public class OrderProductDetails extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("fdgvvg", response.toString());
+                        Log.i("dffdsgfdfxfd", "onResponse: " + response);
 
                         try {
                             String id = response.getString("id");
@@ -255,6 +256,7 @@ public class OrderProductDetails extends AppCompatActivity {
                             String purchased_weight = response.getString("purchased_weight");
                             String purchased_color = response.getString("purchased_color");
                             String purchased_model = response.getString("purchased_model");
+                            String purchased_size = response.getString("purchased_size");
                             String category = response.getString("category");
                             String brand = response.getString("brand");
                             String path = response.getString("path");
@@ -263,10 +265,31 @@ public class OrderProductDetails extends AppCompatActivity {
                             txt_description.setText(description);
                             txt_weight.setText(purchased_weight);
                             txt_product_name.setText(name);
-                            txt_price.setText(price_NEW);
-                            txt_color.setText(purchased_color);
-                            txt_qty.setText(purchased_quantity);
 
+
+                            txt_price.setText(price_NEW);
+
+
+                            if (purchased_color.equals("null")) {
+                                txt_color.setText("Not available");
+                            } else {
+                                txt_color.setText(purchased_color);
+                            }
+
+                            if (purchased_model.equals("null")) {
+                                textModel.setText("Not available");
+                            } else {
+                                textModel.setText(purchased_model);
+                            }
+
+                            if (purchased_size.equals("null")) {
+                                textSize.setText("Not available");
+                            } else {
+                                textSize.setText(purchased_size);
+                            }
+
+
+                            txt_qty.setText(purchased_quantity);
                             txt_brand.setText(brand);
                             txt_catName.setText(category);
                             JSONArray jsonArray = new JSONArray(img);
@@ -318,7 +341,6 @@ public class OrderProductDetails extends AppCompatActivity {
 
 
     }
-
     public void Add_Favorite() {
         Log.e("sdjsjh", strProdutId);
         Log.e("sdjsjh", strUserId);
@@ -359,9 +381,6 @@ public class OrderProductDetails extends AppCompatActivity {
                     }
                 });
     }
-
-
-
     public void show_video() {
         Log.e("sdaljds", strProdutId);
         Log.e("sdaljds", strUserId);
@@ -369,13 +388,15 @@ public class OrderProductDetails extends AppCompatActivity {
         AndroidNetworking.post(API.BASEURL + API.show_orderProduct_detail)
                 .addBodyParameter("user_id", strUserId)
                 .addBodyParameter("order_id", strOrderId)
-                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("cart_id", strProdutId)
                 .setTag("show Video")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        Log.i("nxnccmnmn", "onResponse: "+response.toString());
                         try {
                             String video = response.getString("video");
                             JSONArray jsonArray = new JSONArray(video);
@@ -384,11 +405,10 @@ public class OrderProductDetails extends AppCompatActivity {
 
                                 ProductVideoModal videoModal = new ProductVideoModal();
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(j);
-                                String status=jsonObject1.getString("status");
-
+                                String status = jsonObject1.getString("status");
                                 videoModal.setVideo(jsonObject1.getString("link"));
                                 videoModal.setStatus(jsonObject1.getString("status"));
-                                Log.e("xzlclxzklvkc", jsonObject1.getString("link") );
+                                Log.e("xzlclxzklvkc", jsonObject1.getString("link"));
                                 videoModalArrayList.add(videoModal);
                             }
 

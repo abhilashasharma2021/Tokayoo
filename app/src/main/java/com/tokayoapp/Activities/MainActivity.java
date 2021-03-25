@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showFragment(Fragment fragment) {
+    public  void showFragment(Fragment fragment) {
 
         getSupportFragmentManager().beginTransaction()
                 /*  .setCustomAnimations(R.anim.enter_anim, R.anim.exit_anim ,R.anim.enter_anim, R.anim.enter_anim)*/

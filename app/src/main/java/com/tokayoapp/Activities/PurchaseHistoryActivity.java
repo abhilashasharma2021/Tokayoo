@@ -162,6 +162,8 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
                                     historyModalArrayList.add(historyModal);
                                 }*/
                             }
+
+
                             if (response.length() == 0) {
                                 rl_empty.setVisibility(View.VISIBLE);
                                 Toast.makeText(PurchaseHistoryActivity.this, "Here is no history available yet!!!!", Toast.LENGTH_SHORT).show();

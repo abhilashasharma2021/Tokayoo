@@ -26,6 +26,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.facebook.internal.DialogFeature;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
 import com.github.ybq.android.spinkit.style.FadingCircle;
@@ -52,12 +53,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     File f;
     TextView txt_email;
-    EditText edt_country,edt_state,edt_pin,edt_name,edt_contact;
-    String strUserId="",strUserName="",strUserMobile="",strUserImage="",strCountry="",strState="",strPostal="",strUserEmail="",strSelectedCountryCode="";
+    EditText edt_country, edt_state, edt_pin, edt_name, edt_contact;
+    String strUserId = "", strUserName = "", strUserMobile = "", strUserImage = "", strCountry = "", strState = "", strPostal = "", strUserEmail = "", strSelectedCountryCode = "";
     ProgressBar spin_kit;
     ImageView img_back;
     Button btn_update;
-    TextView txt_countrycode;
+    EditText txt_countrycode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-            });
+        });
 
         edt_pin = findViewById(R.id.edt_pin);
         edt_contact = findViewById(R.id.edt_contact);
@@ -83,15 +85,15 @@ public class EditProfileActivity extends AppCompatActivity {
         txt_countrycode = findViewById(R.id.txt_countrycode);
 
 
-       AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+        AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
         strUserId = AppConstant.sharedpreferences.getString(AppConstant.UserId, "");
         strUserName = AppConstant.sharedpreferences.getString(AppConstant.UserName, "");
-        strUserMobile= AppConstant.sharedpreferences.getString(AppConstant.UserMobile, "");
-        strUserEmail= AppConstant.sharedpreferences.getString(AppConstant.UserEmail, "");
-        strUserImage= AppConstant.sharedpreferences.getString(AppConstant.UserImage, "");
-        strCountry= AppConstant.sharedpreferences.getString(AppConstant.UserCountry, "");
-        strState= AppConstant.sharedpreferences.getString(AppConstant.UserState, "");
-        strPostal= AppConstant.sharedpreferences.getString(AppConstant.UserPin, "");
+        strUserMobile = AppConstant.sharedpreferences.getString(AppConstant.UserMobile, "");
+        strUserEmail = AppConstant.sharedpreferences.getString(AppConstant.UserEmail, "");
+        strUserImage = AppConstant.sharedpreferences.getString(AppConstant.UserImage, "");
+        strCountry = AppConstant.sharedpreferences.getString(AppConstant.UserCountry, "");
+        strState = AppConstant.sharedpreferences.getString(AppConstant.UserState, "");
+        strPostal = AppConstant.sharedpreferences.getString(AppConstant.UserPin, "");
         strSelectedCountryCode = AppConstant.sharedpreferences.getString(AppConstant.SelectedCountryCode, "");
 
         Log.e("dsfl", strUserId);
@@ -126,20 +128,20 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                strUserName=edt_name.getText().toString().trim();
-                String countrycode=txt_countrycode.getText().toString().trim();
-                if (strSelectedCountryCode.equals("")){
-                    strUserMobile="+60-"+edt_contact.getText().toString().trim();
-                }else {
-                    strUserMobile=countrycode+"-"+edt_contact.getText().toString().trim();
+                strUserName = edt_name.getText().toString().trim();
+                String countrycode = "+"+txt_countrycode.getText().toString().trim();
+                if (strSelectedCountryCode.equals("")) {
+                    strUserMobile = "+60-" + edt_contact.getText().toString().trim();
+                } else {
+                    strUserMobile = countrycode + "-" + edt_contact.getText().toString().trim();
                 }
-
-                strCountry=edt_country.getText().toString().trim();
-                strState=edt_state.getText().toString().trim();
-                strPostal=edt_pin.getText().toString().trim();
-
-                 update_profile(strUserName,strUserMobile,strCountry,strState,strPostal);
-
+               /* strUserMobile ="";
+                strUserMobile = "+"+txt_countrycode.getText().toString().trim().concat(edt_contact.getText().toString().trim());*/
+                Log.i("ffdmkhfdkl", "onClick: "+strUserMobile);
+                strCountry = edt_country.getText().toString().trim();
+                strState = edt_state.getText().toString().trim();
+                strPostal = edt_pin.getText().toString().trim();
+                update_profile(strUserName, strUserMobile, strCountry, strState, strPostal);
 
 
             }
@@ -256,51 +258,55 @@ public class EditProfileActivity extends AppCompatActivity {
         return "";
     }
 
-    public void update_profile(String strUserName, String strcontact, String strCountry, String strState, String strPostal){
+    public void update_profile(String strUserName, String strcontact, String strCountry, String strState, String strPostal) {
 
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
         spin_kit.setIndeterminateDrawable(chasingDots);
         Log.e("sdhjhdj", strUserName);
-        Log.e("sdhjhdj",strUserId);
-        Log.e("sdhjhdj",strcontact);
-        Log.e("sdhjhdj",strState);
-        Log.e("sdhjhdj",strCountry);
+        Log.e("sdhjhdj", strUserId);
+        Log.e("sdhjhdj", strcontact);
+        Log.e("sdhjhdj", strState);
+        Log.e("sdhjhdj", strCountry);
 
-     //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
-        AndroidNetworking.upload(API.BASEURL+API.update_profile)
-                .addMultipartParameter("id",strUserId)
-                .addMultipartParameter("username",strUserName)
-                .addMultipartParameter("contact",strcontact)
-                .addMultipartParameter("country",strCountry)
+        //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
+        AndroidNetworking.upload(API.BASEURL + API.update_profile)
+                .addMultipartParameter("id", strUserId)
+                .addMultipartParameter("username", strUserName)
+                .addMultipartParameter("contact", strcontact)
+                .addMultipartParameter("country", strCountry)
                 .addMultipartParameter("state", strState)
-                .addMultipartParameter("postal_code",strPostal)
-                .addMultipartFile("image",f)
+                .addMultipartParameter("postal_code", strPostal)
+                .addMultipartFile("image", f)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.e("fjdhfdj",response.toString());
+                        Log.e("fjdhfdj", response.toString());
                         try {
-                            if (response.getString("result").equals("successfully")){
-                                String strId=response.getString( "id");
-                                String username=response.getString( "username");
-                                String email=response.getString( "email");
-                                String contact=response.getString( "contact");
-                                String country=response.getString( "country");
-                                String postal_code=response.getString( "postal_code");
+                            if (response.getString("result").equals("successfully")) {
+                                String strId = response.getString("id");
+                                String username = response.getString("username");
+                                String email = response.getString("email");
+                                String contact = response.getString("contact");
+                                String country = response.getString("country");
+                                String postal_code = response.getString("postal_code");
                                 String state = response.getString("state");
                                 String image = response.getString("image");
                                 String reward_point = response.getString("reward_point");
 
-                                Log.e("sfhcsdkj",reward_point);
-                                Log.e("sdgbvdsfb",image);
+                                Log.e("sfhcsdkj", reward_point);
+                                Log.e("sdgbvdsfb", image);
 
 
-                                    edt_name.setText(username);
-                                String [] code=contact.split("-");
+                                edt_name.setText(username);
+                                String[] code = contact.split("-");
+                                if (code.length==1){
+
+                                }
+
                                 txt_countrycode.setText(code[0]);
                                 edt_contact.setText(code[1]);
 
@@ -312,8 +318,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 editor.putString(AppConstant.UserCountry, country);
                                 editor.putString(AppConstant.UserPin, postal_code);
                                 editor.putString(AppConstant.UserState, state);
-                                 editor.putString(AppConstant.UserImage, image);
-                               // editor.putString(AppConstant.UserRewardPoints,reward_point);
+                                editor.putString(AppConstant.UserImage, image);
+                                // editor.putString(AppConstant.UserRewardPoints,reward_point);
                                 editor.commit();
 
                                 try {
@@ -321,10 +327,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                 } catch (Exception ignored) {
 
                                 }
-                              //  Toast.makeText( EditProfileActivity.this,response.getString( "result" ),Toast.LENGTH_LONG ).show();
+                                //  Toast.makeText( EditProfileActivity.this,response.getString( "result" ),Toast.LENGTH_LONG ).show();
 
 
-                                Toast.makeText(EditProfileActivity.this,"Successfully updated your profile",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditProfileActivity.this, "Successfully updated your profile", Toast.LENGTH_SHORT).show();
 
                                 spin_kit.setVisibility(View.GONE);
                             }
@@ -342,14 +348,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
 
-
-
     }
 
 
-
-
-    public void show_profile(){
+    public void show_profile() {
 
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
@@ -357,33 +359,39 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         //   AndroidNetworking.upload("https://3511535117.co/Tokayo/api/process.php?action=update_profile")
-        AndroidNetworking.upload(API.BASEURL+API.update_profile)
-                .addMultipartParameter("id",strUserId)
+        AndroidNetworking.upload(API.BASEURL + API.update_profile)
+                .addMultipartParameter("id", strUserId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.e("fjdhfdj",response.toString());
+                        Log.e("fjdhfdj", response.toString());
                         try {
-                            if (response.getString("result").equals("successfully")){
-                                String strId=response.getString( "id");
-                                String username=response.getString( "username");
-                                String email=response.getString( "email");
-                                String contact=response.getString( "contact");
-                                String country=response.getString( "country");
-                                String postal_code=response.getString( "postal_code");
+                            if (response.getString("result").equals("successfully")) {
+                                String strId = response.getString("id");
+                                String username = response.getString("username");
+                                String email = response.getString("email");
+                                String contact = response.getString("contact");
+                                String country = response.getString("country");
+                                String postal_code = response.getString("postal_code");
                                 String state = response.getString("state");
                                 String image = response.getString("image");
                                 String reward_point = response.getString("reward_point");
 
-                                Log.e("sfhcsdkj",reward_point);
-                                Log.e("sdgbvdsfb",image);
+                                Log.e("sfhcsdkj", reward_point);
+                                Log.e("sdgbvdsfb", image);
 
-                                String [] code=contact.split("-");
-                                txt_countrycode.setText(code[0]);
-                                edt_contact.setText(code[1]);
+                                String[] code = contact.split("-");
+
+                                Log.i("hghghghgh", "onResponse: "+code.length);
+                                if (code.length == 1) {
+                                    txt_countrycode.setText(code[0]);
+                                } else if (code.length == 2) {
+                                    txt_countrycode.setText(code[0]);
+                                    edt_contact.setText(code[1]);
+                                }
 
 
                                 edt_name.setText(username);
@@ -429,13 +437,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
 
-
-
     }
 
 
-
-            }
+}
 
 
 

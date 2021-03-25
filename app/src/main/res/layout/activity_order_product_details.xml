@@ -5,95 +5,102 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.OrderProductDetails">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
+
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
-                    android:scaleType="centerInside"
                     android:layout_height="match_parent"
-                    />
+                    android:scaleType="centerInside" />
 
 
                 <RelativeLayout
                     android:id="@+id/rl_back"
                     android:layout_width="40dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
-                    android:background="@drawable/grey_circle"
-                    android:layout_height="40dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/grey_circle">
+
                     <ImageView
                         android:id="@+id/imgBack"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:padding="8dp"
                         android:layout_centerInParent="true"
                         android:background="?actionBarItemBackground"
+                        android:padding="8dp"
 
-                        android:tint="@color/white"
                         android:src="@drawable/back"
-                        />
+                        android:tint="@color/white" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="40dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/rl_chat"
-                    android:background="@drawable/grey_circle"
-                    android:layout_height="40dp">
+                    android:background="@drawable/grey_circle">
+
                     <ImageView
                         android:id="@+id/imgshare"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:padding="10dp"
                         android:layout_centerInParent="true"
                         android:background="?actionBarItemBackground"
+                        android:padding="10dp"
 
-                        android:tint="@color/white"
                         android:src="@drawable/share"
-                        />
+                        android:tint="@color/white" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl_chat"
                     android:layout_width="42dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
+                    android:layout_height="42dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/grey_circle"
-                    android:layout_height="42dp">
+                    android:visibility="gone">
+
                     <com.varunest.sparkbutton.SparkButton
                         android:id="@+id/spark_button"
                         android:layout_width="38dp"
-                        android:layout_centerVertical="true"
                         android:layout_height="38dp"
+                        android:layout_centerVertical="true"
                         app:sparkbutton_activeImage="@drawable/heart_new"
-                        app:sparkbutton_inActiveImage="@drawable/fav"
                         app:sparkbutton_iconSize="30dp"
+                        app:sparkbutton_inActiveImage="@drawable/fav"
                         app:sparkbutton_primaryColor="@color/pink"
                         app:sparkbutton_secondaryColor="@color/white" />
                 </RelativeLayout>
 
             </RelativeLayout>
+
             <View
-                android:layout_below="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/imgProduct"
                 android:layout_marginTop="10dp"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -105,27 +112,27 @@
                 android:id="@+id/txt_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_below="@+id/img_product"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/img_product"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="-"
                 android:textColor="@color/grey_light"
-                android:text="-"/>
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_product_name"
-                android:layout_height="wrap_content">
+                android:layout_marginLeft="10dp">
 
                 <TextView
                     android:id="@+id/txt_sym"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="RM"
-                    android:layout_marginRight="5dp"
                     android:textColor="@color/pink"
                     android:textSize="14sp" />
 
@@ -134,8 +141,8 @@
                     android:id="@+id/txt_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/txt_sym"
                     android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@+id/txt_sym"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="-"
                     android:textColor="@color/pink"
@@ -145,77 +152,205 @@
             </RelativeLayout>
 
 
-
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txt_qty1"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/black"
-                    android:text="Qty    :"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/txt_qty"
-                    android:layout_width="wrap_content"
+
+                    <TextView
+                        android:id="@+id/txt_colo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_qty1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Color :"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_qty1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/txt_colo"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/txt_qty1"
+                    android:orientation="horizontal">
 
 
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="-"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-                <TextView
-                    android:id="@+id/txt_colo"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/text_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_colo"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Model :"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textModel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_colo"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/text_model"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/txt_qty1"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/black"
-                    android:text="Color :"/>
-                <TextView
-                    android:id="@+id/txt_color"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_model"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Size :"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textModel"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/text_size"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_below="@+id/txt_qty1"
-                    android:layout_toRightOf="@+id/txt_colo"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/black"
-                    android:text="-"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_weight1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_brand"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Weight   :"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_weight11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/txt_weight"
+                        android:text="Kg"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
 
-            </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_brand"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Quantity   :"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/txt_qty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
             <View
-                android:layout_below="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/imgProduct"
                 android:layout_marginTop="10dp"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
 
 
             <RelativeLayout
                 android:id="@+id/rl_mrp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                >
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/txt_mrp1"
@@ -225,8 +360,6 @@
                     android:text="Category :"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-
 
 
                 <TextView
@@ -244,40 +377,26 @@
                     android:id="@+id/txt_brand1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_catName"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Brand     :"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_catName"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-
 
 
                 <TextView
                     android:id="@+id/txt_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_catName"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_catName"
                     android:layout_toRightOf="@+id/txt_brand1"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-                <TextView
-                    android:id="@+id/txt_weight1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Weight   :"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/txt_brand"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-
 
 
                 <RelativeLayout
@@ -287,30 +406,8 @@
                     android:layout_below="@+id/txt_brand"
                     android:layout_toRightOf="@+id/txt_weight1">
 
-                    <TextView
-                        android:id="@+id/txt_weight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
 
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txt_weight11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@+id/txt_weight"
-                        android:layout_marginLeft="5dp"
-                        android:text="Kg"
-                        android:visibility="gone"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
                 </RelativeLayout>
-
 
 
                 <TextView
@@ -318,9 +415,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl_1"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Description :"
-                    android:layout_marginTop="12dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -330,41 +427,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_des"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="-"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
 
             </RelativeLayout>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_product_video"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rec_product_video"/>
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/img_video"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/download" />
+                android:src="@drawable/download"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
-        android:layout_width="70dp"
-        android:layout_gravity="center"
-        android:layout_height="70dp"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
         style="@style/SpinKitView.ChasingDots"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
         app:SpinKit_Color="@color/pink" />
 </RelativeLayout>

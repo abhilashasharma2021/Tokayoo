@@ -91,7 +91,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         btn_track = findViewById(R.id.btn_track);
         txt_orderstatus = findViewById(R.id.txt_orderstatus);
 
-        txt_country.setText(strSelectedCountryCode);
+    //    txt_country.setText(strSelectedCountryCode);
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +147,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         String ship_time=jsonObject1.getString("ship_time");
                                         String ship_date=jsonObject1.getString("ship_date");
                                         txt_companyName.setText(company_name);
-
                                         txt_shipi_time.setText(ship_time);
                                         txt_shipi_date.setText(ship_date);
                                     }
@@ -215,7 +214,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                     txt_orderNo.setText(order_id);
                                     txt_orderNo1.setText(order_id);
                                     txt_price.setText(total_amount);
-                                    txt_weight.setText(net_weight);
+                                    txt_weight.setText(net_weight+"KG");
 
                                     txt_subtotal.setText(sub_total);
                                     txt_deliv.setText(delivery_charge);
@@ -282,7 +281,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
 
                                         txtName.setText(name);
-                                        txtNumber.setText(contact);
+                                        String [] strings = contact.split("-");
+                                        txt_country.setText(strings[0]);
+                                        txtNumber.setText(strings[1]);
                                         txtAddress.setText(address_new);
                                     }
 

@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_gravity="center"
                 android:text="Request TAC "/>
 
@@ -359,5 +359,17 @@
             style="?android:attr/progressBarStyleHorizontal"
             />
     </LinearLayout>
+
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_width="70dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.ChasingDots"
+        app:SpinKit_Color="@color/pink" />
 
 </RelativeLayout>

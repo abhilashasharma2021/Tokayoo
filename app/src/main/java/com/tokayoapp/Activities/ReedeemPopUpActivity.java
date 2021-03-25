@@ -65,7 +65,6 @@ Button btnFinish;
         Log.e("sfgfgfggf", strModel );
         Log.e("sfgfgfggf", strColor );
         Log.e("sfgfgfggf", strRewardSelectedWeightName );
-
         Log.e("tryhyh", strUserId);
         Log.e("rgfd", st_SelectedWeightName);
         Log.e("tryhyh", st_defaultIdAddress);
@@ -90,7 +89,7 @@ Button btnFinish;
         edt_name = findViewById(R.id.edt_name);
         edt_contact = findViewById(R.id.edt_contact);
         edt_address = findViewById(R.id.edt_address);
-        txt_weight.setText(strRewardSelectedWeightName+"."+"00");
+        txt_weight.setText(strRewardSelectedWeightName + "KG");
         txt_Totalprice.setText(st_RewardPoints+".00");
         txt_deliv.setText(st_delivery_charge+".00");
 
@@ -122,8 +121,6 @@ Button btnFinish;
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.e("rgdfrg", response.toString());
-
-
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
@@ -152,9 +149,7 @@ Button btnFinish;
                                         editor.putString(AppConstant.RewardUserName, name);
                                         editor.putString(AppConstant.RewardUserMobile, contact);
                                         editor.putString(AppConstant.RewardUserAddress, address);
-
                                         editor.commit();
-
                                         startActivity(new Intent(ReedeemPopUpActivity.this, PaymentMode.class));
                                         Animatoo.animateZoom(ReedeemPopUpActivity.this);
                                         finish();

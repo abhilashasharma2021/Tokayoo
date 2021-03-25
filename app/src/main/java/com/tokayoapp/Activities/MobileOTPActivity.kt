@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -15,6 +13,8 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.ChasingDots
 import com.rilixtech.Country
 import com.rilixtech.CountryCodePicker
 import com.rilixtech.CountryCodePicker.OnCountryChangeListener
@@ -22,6 +22,7 @@ import com.tokayoapp.R
 import com.tokayoapp.Utils.API
 import com.tokayoapp.Utils.AppConstant
 import com.tokayoapp.Utils.GenericTextWatcher
+import kotlinx.android.synthetic.main.activity_mobile_o_t_p.*
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -69,13 +70,11 @@ class MobileOTPActivity() : AppCompatActivity() {
         relVerify?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
 
-                if (validateFields()){
-                    newOtp  = editOne?.text.toString()+ editTwo?.text.toString()+ editThree?.text.toString()+ editFour?.text.toString()
-                    Log.e("ygfhf", "onClick: "+newOtp )
+                if (validateFields()) {
+                    newOtp = editOne?.text.toString() + editTwo?.text.toString() + editThree?.text.toString() + editFour?.text.toString()
+                    Log.e("ygfhf", "onClick: " + newOtp)
                     mobile_varification()
-                }
-
-                else{
+                } else {
                     validateFields()
                 }
 
@@ -88,7 +87,8 @@ class MobileOTPActivity() : AppCompatActivity() {
                 if ((editMobile?.text.toString() == "")) {
                     Toast.makeText(this@MobileOTPActivity, "Please Enter Valid Mobile Number", Toast.LENGTH_SHORT).show()
                 } else {
-                    genrate_otp()
+                    signUp()
+                   // genrate_otp()
                 }
             }
         })
@@ -97,16 +97,15 @@ class MobileOTPActivity() : AppCompatActivity() {
         editThree = findViewById(R.id.editThree)
         editFour = findViewById(R.id.editFour)
 
+        txtresend?.visibility = View.GONE
 
-
-        val edit = arrayOf<EditText>(editOne!!, editTwo!!, editThree!!,editFour!!)
+        val edit = arrayOf<EditText>(editOne!!, editTwo!!, editThree!!, editFour!!)
         editOne!!.addTextChangedListener(GenericTextWatcher(edit, editOne!!));
-        editTwo!!.addTextChangedListener(GenericTextWatcher(edit,editTwo!!));
+        editTwo!!.addTextChangedListener(GenericTextWatcher(edit, editTwo!!));
         editThree!!.addTextChangedListener(GenericTextWatcher(edit, editThree!!));
-        editFour!!.addTextChangedListener(GenericTextWatcher(edit,editFour!!));
-        
-        
-        
+        editFour!!.addTextChangedListener(GenericTextWatcher(edit, editFour!!));
+
+
         val countrycode = counntryPicker?.getDefaultCountryCodeWithPlus().toString()
         selected_country_code = countrycode
         Log.e("dsdjsb", countrycode)
@@ -135,7 +134,7 @@ class MobileOTPActivity() : AppCompatActivity() {
             editThree?.error = "Required"
             boolean = false
         } else if (editFour?.text.isNullOrEmpty()) {
-           editFour?.error = "Required"
+            editFour?.error = "Required"
             boolean = false
         } else {
             boolean = true
@@ -143,8 +142,6 @@ class MobileOTPActivity() : AppCompatActivity() {
 
         return boolean
     }
-
-
     fun resend_Otp() {
         AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE)
         strUserId = AppConstant.sharedpreferences.getString(AppConstant.Id, "")
@@ -160,7 +157,11 @@ class MobileOTPActivity() : AppCompatActivity() {
                     override fun onResponse(response: JSONObject) {
                         Log.e("sdkls", response.toString())
                         try {
-                            if ((response.getString("result") == "Otp Sent Successfully"));
+                            if ((response.getString("result") == "Otp Sent Successfully")) {
+                                timer()
+
+
+                            };
                             progress!!.visibility = View.GONE
                         } catch (e: JSONException) {
                             Log.e("efer", e.message)
@@ -174,7 +175,24 @@ class MobileOTPActivity() : AppCompatActivity() {
                     }
                 })
     }
+    private fun timer() {
+        txtresend!!.text = "Otp Sent Successfully"
+        txt_counter?.visibility = View.VISIBLE
+        object : CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                txt_counter!!.text = "Resend Code : " + millisUntilFinished / 1000
+                txtresend?.setOnClickListener { Toast.makeText(this@MobileOTPActivity, "Wait for ${millisUntilFinished / 1000} seconds", Toast.LENGTH_SHORT).show() }
+            }
 
+            override fun onFinish() {
+                txtresend!!.text = "Resend Otp"
+                txtresend?.setOnClickListener { resend_Otp() }
+                txt_counter?.visibility = View.GONE
+
+                //  txt_counter!!.text = "Done!!!!"
+            }
+        }.start()
+    }
     fun genrate_otp() {
         AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE)
         val strUserID = AppConstant.sharedpreferences.getString(AppConstant.Id, "")
@@ -191,6 +209,7 @@ class MobileOTPActivity() : AppCompatActivity() {
                         Log.e("fghhfg", response.toString())
                         try {
                             if ((response.getString("result") == "Otp Sent Successfully")) {
+                                txtresend?.visibility = View.VISIBLE
                                 val otp = response.getString("otp")
                                 val id = response.getString("id")
                                 val mobile = response.getString("mobile")
@@ -212,16 +231,20 @@ class MobileOTPActivity() : AppCompatActivity() {
                                 relsend!!.visibility = View.GONE
                                 relVerify!!.visibility = View.VISIBLE
                                 rl_count!!.visibility = View.VISIBLE
+
                                 object : CountDownTimer(60000, 1000) {
                                     override fun onTick(millisUntilFinished: Long) {
                                         txt_counter!!.text = "Resend Code : " + millisUntilFinished / 1000
+                                        txtresend?.setOnClickListener { Toast.makeText(this@MobileOTPActivity, "Wait for ${millisUntilFinished / 1000} seconds", Toast.LENGTH_SHORT).show() }
                                     }
 
                                     override fun onFinish() {
-                                        txt_counter!!.text = "Done!!!!"
+                                        txt_counter?.visibility = View.GONE
+                                        txtresend?.setOnClickListener { resend_Otp() }
+
+                                        //  txt_counter!!.text = "Done!!!!"
                                     }
                                 }.start()
-
 
 
 /*
@@ -339,14 +362,32 @@ class MobileOTPActivity() : AppCompatActivity() {
                         Log.e("dfsgfsgfdffh", response.toString())
                         try {
                             if ((response.getString("result") == "Mobile Verfication successfully")) {
+
                                 Toast.makeText(this@MobileOTPActivity, response.getString("result"), Toast.LENGTH_SHORT).show()
-                                val id = response.getString("id")
-                                val mobile = response.getString("mobile")
-                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE)
+                                //val id = response.getString("id")
+                              val mobile = response.getString("contact")
+
+                             /*   val id = response.getString("id")
+                                val username = response.getString("username")
+                                val email = response.getString("email")
+                                val password = response.getString("password")
+                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, MODE_PRIVATE)
                                 val editor = AppConstant.sharedpreferences.edit()
-                                editor.putString(AppConstant.UserMobile, mobile)
-                                editor.putString(AppConstant.UserId, id)
-                                editor.commit()
+                                editor.putString(AppConstant.Id, id)
+                                editor.putString(AppConstant.UserName, username)
+                                editor.putString(AppConstant.UserEmail, email)
+                                editor.commit()*/
+
+
+                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, MODE_PRIVATE)
+                                val strUserID = AppConstant.sharedpreferences.getString(AppConstant.Id, "")
+
+
+                                AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE)
+                                val editor2 = AppConstant.sharedpreferences.edit()
+                                editor2.putString(AppConstant.UserMobile, mobile)
+                                editor2.putString(AppConstant.UserId, response.getString("id"))
+                                editor2.commit()
                                 startActivity(Intent(this@MobileOTPActivity, MainActivity::class.java))
                                 Animatoo.animateZoom(this@MobileOTPActivity)
                                 finishAffinity()
@@ -367,4 +408,91 @@ class MobileOTPActivity() : AppCompatActivity() {
                     }
                 })
     }
+
+
+    ////////// /*USING FIREBASE SAVE ""REGDID"" END HERE ON LOGIN*///////////////////////////////////////////////
+    fun signUp() {
+        AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, MODE_PRIVATE)
+        val  signupEmail = AppConstant.sharedpreferences.getString(AppConstant.signupEmail, "")
+        val  nickName = AppConstant.sharedpreferences.getString(AppConstant.nickName, "")
+        val  signupRegID = AppConstant.sharedpreferences.getString(AppConstant.signupRegID, "")
+        val  signupPassword = AppConstant.sharedpreferences.getString(AppConstant.signupPassword, "")
+        spin_kit.setVisibility(View.VISIBLE)
+        val chasingDots: Sprite = ChasingDots()
+        spin_kit.setIndeterminateDrawable(chasingDots)
+
+        //  AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=signup")
+        AndroidNetworking.post(API.BASEURL + API.RegisterUser)
+                .addBodyParameter("regid", signupRegID)
+                .addBodyParameter("os_type", "1")
+                .addBodyParameter("username", nickName)
+                .addBodyParameter("email", signupEmail)
+                .addBodyParameter("mobile", "$selected_country_code-$strMobile")
+                .addBodyParameter("password", signupPassword)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(object : JSONObjectRequestListener {
+                    override fun onResponse(response: JSONObject) {
+                        spin_kit.setVisibility(View.GONE)
+                        Log.e("dsfdv", response.toString())
+                        try {
+                            if (response.getString("result") == "Otp send successfully") {
+                                txtresend?.visibility = View.VISIBLE
+                                //val otp = response.getString("otp")
+                               // val id2 = response.getString("id")
+                               // val mobile = response.getString("mobile")
+                               /* AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE)
+                                val editor2 = AppConstant.sharedpreferences.edit()
+                                editor2.putString(AppConstant.UserMobile, mobile)
+                                editor.putString(AppConstant.UserId, id);
+                                editor2.putString(AppConstant.OTP, otp)
+                                editor2.commit()*/
+                                Toast.makeText(this@MobileOTPActivity, response.getString("result") , Toast.LENGTH_SHORT).show()
+
+                                txtHintEnter!!.visibility = View.VISIBLE
+                                ll_otp!!.visibility = View.VISIBLE
+                                editOne!!.visibility = View.VISIBLE
+                                editTwo!!.visibility = View.VISIBLE
+                                editThree!!.visibility = View.VISIBLE
+                                editFour!!.visibility = View.VISIBLE
+                                relsend!!.visibility = View.GONE
+                                relVerify!!.visibility = View.VISIBLE
+                                rl_count!!.visibility = View.VISIBLE
+
+                                object : CountDownTimer(60000, 1000) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        txt_counter!!.text = "Resend Code : " + millisUntilFinished / 1000
+                                        txtresend?.setOnClickListener { Toast.makeText(this@MobileOTPActivity, "Wait for ${millisUntilFinished / 1000} seconds", Toast.LENGTH_SHORT).show() }
+                                    }
+
+                                    override fun onFinish() {
+                                        txt_counter?.visibility = View.GONE
+                                        txtresend?.setOnClickListener { resend_Otp() }
+                                        //  txt_counter!!.text = "Done!!!!"
+                                    }
+                                }.start()
+
+                                mobile_varification()
+
+
+                                Toast.makeText(this@MobileOTPActivity, response.getString("result"), Toast.LENGTH_SHORT).show()
+                            } else {
+                                Log.i("gfhgfhg", "onResponse: " + response.getString("result"))
+                                Toast.makeText(this@MobileOTPActivity, response.getString("result"), Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: JSONException) {
+                            Log.e("rtrtt", e.message)
+                            spin_kit.setVisibility(View.GONE)
+                        }
+                    }
+
+                    override fun onError(anError: ANError) {
+                        Log.e("yujyhj", anError.message)
+                        spin_kit.setVisibility(View.GONE)
+                    }
+                })
+    }
+
+
+
 }

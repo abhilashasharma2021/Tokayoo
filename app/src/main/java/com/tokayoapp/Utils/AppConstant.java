@@ -81,6 +81,13 @@ public class AppConstant {
     public static final String SEARCH_USER_LAT = "SEARCH_USER_LAT";
     public static final String SEARCH_USER_LONG = "SEARCH_USER_LONG";
 
+/// new signup process
+
+
+    public static final String nickName = "nickName";
+    public static final String signupEmail = "signupEmail";
+    public static final String signupPassword = "signupPassword";
+    public static final String signupRegID = "signupRegID";
 
 
 

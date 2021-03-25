@@ -25,6 +25,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.facebook.internal.DialogFeature;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -53,30 +54,31 @@ import java.util.ArrayList;
 
 public class RedempItemDetailActivity extends AppCompatActivity {
     RelativeLayout rl_back;
-    Button btn_track,btn_trackfad;
-  public  static   ImageView imgProduct;
+    Button btn_track, btn_trackfad;
+    public static ImageView imgProduct;
     ProgressBar spin_kit;
     RelativeLayout rl_process;
-    TextView txt_cat_name,txt_brand,txt_progress;
+    TextView txt_cat_name, txt_brand, txt_progress;
     RecyclerView rec_redmptn_detail;
-    String strUserId = "",strORDERID="";
-    TextView txt_product_name, txt_point, txt_weight, txt_description, txtName, txtNumber, txtAddress, txt_Netweight, txt_delivery, txt_Totalprice, txt_orderNo, txt_date, txt_time;
+    String strUserId = "", strORDERID = "";
+    TextView textSize, textModel, textColor, txt_product_name, txt_point, txt_weight, txt_description, txtName, txtNumber, txtAddress, txt_Netweight, txt_delivery, txt_Totalprice, txt_orderNo, txt_date, txt_time;
     RecyclerView.LayoutManager layoutManager;
     RedemptionDetailAdapter detailAdapter;
-    ArrayList<RedemptionDetailModal>redemptionArrayList = new ArrayList<>();
-   TextView txt_companyName,txt_shipi_time,txt_shipi_date,txt_tracking;
+    ArrayList<RedemptionDetailModal> redemptionArrayList = new ArrayList<>();
+    TextView txt_companyName, txt_shipi_time, txt_shipi_date, txt_tracking;
 
     ProductVideoAdapter productVideoAdapter;
-    ArrayList<ProductVideoModal>videoModalArrayList=new ArrayList<>();
+    ArrayList<ProductVideoModal> videoModalArrayList = new ArrayList<>();
     RecyclerView rec_product_video;
-    String strProdutId="";
+    String strProdutId = "";
     RecyclerView.LayoutManager videomanager;
     ImageView iv_copy;
-    String company_name="",ship_time="";
+    String company_name = "", ship_time = "";
 
     SliderView sliderView;
     ArrayList<RedemptionDetailModal> scrollList;
-    String strProductSubImage="";
+    String strProductSubImage = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +93,9 @@ public class RedempItemDetailActivity extends AppCompatActivity {
         txt_shipi_date = findViewById(R.id.txt_shipi_date);
         txt_companyName = findViewById(R.id.txt_companyName);
         txt_product_name = findViewById(R.id.txt_product_name);
+        textColor = findViewById(R.id.textColor);
+        textSize = findViewById(R.id.textSize);
+        textModel = findViewById(R.id.textModel);
         txt_point = findViewById(R.id.txt_point);
         txt_weight = findViewById(R.id.txt_weight);
         txt_cat_name = findViewById(R.id.txt_cat_name);
@@ -129,8 +134,6 @@ public class RedempItemDetailActivity extends AppCompatActivity {
         detail_RedemptionItem();
 
 
-
-
         rec_product_video = findViewById(R.id.rec_product_video);
 
         show_video();
@@ -156,9 +159,9 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                 sliderView.startAutoCycle();
 
                 AndroidNetworking.post(API.BASEURL + API.show_reward_order_detail)
-                        .addBodyParameter("user_id",strUserId)
-                        .addBodyParameter("product_id",strProdutId)
-                        .addBodyParameter("order_id",strORDERID)
+                        .addBodyParameter("user_id", strUserId)
+                        .addBodyParameter("product_id", strProdutId)
+                        .addBodyParameter("order_id", strORDERID)
                         .setTag("show Product Detail")
                         .setPriority(Priority.HIGH)
                         .build()
@@ -172,12 +175,12 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                     for (int i = 0; i < response.length(); i++) {
                                         JSONObject jsonObject = response.getJSONObject(i);
                                         String reward = jsonObject.getString("reward");
-                                        JSONArray jsonArray=new JSONArray(reward);
-                                        for (int j = 0; j <jsonArray.length() ; j++) {
-                                        JSONObject object=jsonArray.getJSONObject(j);
+                                        JSONArray jsonArray = new JSONArray(reward);
+                                        for (int j = 0; j < jsonArray.length(); j++) {
+                                            JSONObject object = jsonArray.getJSONObject(j);
                                             String img = object.getString("img");
 
-                                            Log.e("RedempItemDetailActivity", "onResponse: " +img);
+                                            Log.e("RedempItemDetailActivity", "onResponse: " + img);
                                             JSONArray jsonArray1 = new JSONArray(img);
 
                                             for (int k = 0; k < jsonArray1.length(); k++) {
@@ -266,19 +269,19 @@ public class RedempItemDetailActivity extends AppCompatActivity {
         Log.e("rgfg", strORDERID);
         Log.e("rgfg", strProdutId);
 
-     //   AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_order_detail")
-        AndroidNetworking.post(API.BASEURL+API.show_reward_order_detail)
-                .addBodyParameter("user_id",strUserId)
-                .addBodyParameter("product_id",strProdutId)
-                .addBodyParameter("order_id",strORDERID)
+        //   AndroidNetworking.post("https://3511535117.co/Tokayo/api/process.php?action=show_reward_order_detail")
+        AndroidNetworking.post(API.BASEURL + API.show_reward_order_detail)
+                .addBodyParameter("user_id", strUserId)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("order_id", strORDERID)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
                         redemptionArrayList = new ArrayList<>();
-                       Log.e("kbvblv",response.toString());
-                        String order_status="";
+                        Log.e("kbvblv", response.toString());
+                        String order_status = "";
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
@@ -296,26 +299,24 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                 String order_type = jsonObject.getString("order_type");
                                 String order_date = jsonObject.getString("order_date");
                                 String order_time = jsonObject.getString("order_time");
-                                 order_status = jsonObject.getString("order_status");
+                                order_status = jsonObject.getString("order_status");
                                 String tracking_no = jsonObject.getString("tracking_no");
                                 String tracking_status = jsonObject.getString("tracking_status");
                                 String deliver_status = jsonObject.getString("deliver_status");
                                 String delivery_charge = jsonObject.getString("delivery_charge");
                                 String reward = jsonObject.getString("reward");
-                                String courier_info=jsonObject.getString("courier_info");
+                                String courier_info = jsonObject.getString("courier_info");
 
 
+                                if (courier_info.equals("")) {
 
-                                if (courier_info.equals("")){
-
-                                }
-                                else{
-                                    JSONObject jsonObject1=new JSONObject(courier_info);
-                                    company_name=jsonObject1.getString("company_name");
-                                    String contact_track=jsonObject1.getString("contact");
-                                    String address_track=jsonObject1.getString("address");
-                                   ship_time=jsonObject1.getString("ship_time");
-                                //    String ship_date=jsonObject1.getString("ship_date");
+                                } else {
+                                    JSONObject jsonObject1 = new JSONObject(courier_info);
+                                    company_name = jsonObject1.getString("company_name");
+                                    String contact_track = jsonObject1.getString("contact");
+                                    String address_track = jsonObject1.getString("address");
+                                    ship_time = jsonObject1.getString("ship_time");
+                                    //    String ship_date=jsonObject1.getString("ship_date");
                                    /* txt_companyName.setText(company_name);
 
                                     txt_shipi_time.setText(ship_time);*/
@@ -323,8 +324,8 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                 }
 
                                 JSONArray jsonArray = new JSONArray(reward);
-                                Log.e("dlkfvk",user_id);
-                                Log.e("dlkfvk",username);
+                                Log.e("dlkfvk", user_id);
+                                Log.e("dlkfvk", username);
 
                                 for (int j = 0; j < jsonArray.length(); j++) {
 
@@ -341,7 +342,7 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                     String image = object.getString("image");
                                     String path = object.getString("path");
 
-                                    Log.e("dfvlkcv",path);
+                                    Log.e("dfvlkcv", path);
 
                                     String purchased_color = object.getString("purchased_color");
                                     String purchased_model = object.getString("purchased_model");
@@ -349,29 +350,58 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                     String category = object.getString("category");
                                     String brand = object.getString("brand");
                                     txt_product_name.setText(reward_name);
-                                    txt_point.setText(total_point);
+
+                         if (object.getString("purchased_color").equals("null")) {
+                                        textColor.setText("Not available");
+                                    } else {
+                                        textColor.setText(object.getString("purchased_color"));
+                                    }
+
+                                    if (object.getString("purchased_model").equals("null")) {
+                                        textModel.setText("Not available");
+                                    } else {
+                                        textModel.setText(object.getString("purchased_model"));
+
+                                    }
+                                    textSize.setText("Not available");
+
+                                   if (object.getString("purchased_size").equals("null")) {
+                                        textSize.setText("Not available");
+                                    } else {
+                                        textSize.setText(object.getString("purchased_size"));
+                                      //  textSize.setText(object.getString("purchased_size"));
+                                    }
+
+
+                                    if (total_point.equals("null")){
+                                        txt_point.setText("0");
+                                    }else {
+                                        txt_point.setText(total_point);
+                                    }
+
+
                                     txt_cat_name.setText(category);
                                     txt_brand.setText(brand);
-                                    Log.e("dfsfsdfsfsd",weight);
-                                    txt_weight.setText(purchased_weight+" "+"kg");
+                                    Log.e("dfsfsdfsfsd", weight);
+                                    txt_weight.setText(purchased_weight);
                                     txt_description.setText(description);
                                     txtName.setText(username);
                                     txtNumber.setText(contact);
-                                    txt_delivery.setText(delivery_charge+".00");
+                                    txt_delivery.setText(delivery_charge + ".00");
                                     txtAddress.setText(address);
                                     txt_Netweight.setText(purchased_weight);
-                                    txt_Totalprice.setText(total_point+".00");
+                                    txt_Totalprice.setText(total_point + ".00");
                                     txt_orderNo.setText(order_id);
                                     txt_date.setText(order_date);
                                     txt_time.setText(order_time);
-                                    if (tracking_status.equals("0")){
+                                    if (tracking_status.equals("0")) {
                                         //   txt1.setVisibility(View.GONE);
                                         btn_track.setVisibility(View.GONE);
                                         btn_trackfad.setVisibility(View.VISIBLE);
                                         txt_tracking.setVisibility(View.GONE);
                                         txt_progress.setText("In Process");
                                         txt_progress.setTextColor(getResources().getColor(R.color.pink));
-                                    }else{
+                                    } else {
                                         // txt1.setVisibility(View.VISIBLE);
                                         txt_tracking.setVisibility(View.VISIBLE);
                                         txt_tracking.setText(tracking_no);
@@ -389,33 +419,32 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                         btn_track.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                startActivity(new Intent(RedempItemDetailActivity.this,WebViewActivity.class));
+                                                startActivity(new Intent(RedempItemDetailActivity.this, WebViewActivity.class));
                                             }
                                         });
                                     }
-
                                     iv_copy.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            ClipboardManager cm = (ClipboardManager)RedempItemDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                                            ClipboardManager cm = (ClipboardManager) RedempItemDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
                                             cm.setText(txt_tracking.getText());
-                                            Toast.makeText(RedempItemDetailActivity.this,"Copied to clipboard", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RedempItemDetailActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
                                     String img = object.getString("img");
-                                    Log.e("mnvm",img);
-                                    JSONArray jsonArray1=new JSONArray(img);
-                                    for (int k=0; k<jsonArray1.length();k++){
+                                    Log.e("mnvm", img);
+                                    JSONArray jsonArray1 = new JSONArray(img);
+                                    for (int k = 0; k < jsonArray1.length(); k++) {
                                         RedemptionDetailModal redemptionDetailModal = new RedemptionDetailModal();
-                                        JSONObject jsonObject1=jsonArray1.getJSONObject(k);
+                                        JSONObject jsonObject1 = jsonArray1.getJSONObject(k);
                                         Log.e("dcsl", jsonArray1.length() + "");
 
                                         JSONObject object1 = jsonArray1.getJSONObject(0);
                                         final String image2 = object1.getString("image");
 
-                                        Log.e("sgdgvdfvb",image2);
-                                        Log.e("sgdgvdfvb",path);
+                                        Log.e("sgdgvdfvb", image2);
+                                        Log.e("sgdgvdfvb", path);
                                         try {
                                             if (object1 != null) {
                                                 Picasso.with(RedempItemDetailActivity.this).load(path + image2).into(imgProduct);
@@ -431,7 +460,6 @@ public class RedempItemDetailActivity extends AppCompatActivity {
                                     }
 
 
-
                                 }
 
                             }
@@ -442,7 +470,7 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
-                            Log.e("nkvckmv",e.getMessage());
+                            Log.e("nkvckmv", e.getMessage());
                             spin_kit.setVisibility(View.GONE);
                         }
 
@@ -451,7 +479,7 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("tuyiu",anError.getMessage());
+                        Log.e("tuyiu", anError.getMessage());
                         spin_kit.setVisibility(View.GONE);
                     }
                 });
@@ -460,27 +488,27 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
     public void show_video() {
 
-        Log.e("dskjdkjv", strProdutId );
-        Log.e("dskjdkjv", strUserId );
-        Log.e("dskjdkjv", strORDERID );
+        Log.e("dskjdkjv", strProdutId);
+        Log.e("dskjdkjv", strUserId);
+        Log.e("dskjdkjv", strORDERID);
         AndroidNetworking.post(API.BASEURL + API.show_reward_order_detail)
-                .addBodyParameter("user_id",strUserId)
-                .addBodyParameter("product_id",strProdutId)
-                .addBodyParameter("order_id",strORDERID)
+                .addBodyParameter("user_id", strUserId)
+                .addBodyParameter("product_id", strProdutId)
+                .addBodyParameter("order_id", strORDERID)
                 .setTag("show Video")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("awefsfds", response.toString() );
-                        videoModalArrayList=new ArrayList<>();
+                        Log.e("awefsfds", response.toString());
+                        videoModalArrayList = new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 String reward = jsonObject.getString("reward");
-                                JSONArray array=new JSONArray(reward);
-                                for (int j = 0; j <array.length() ; j++) {
+                                JSONArray array = new JSONArray(reward);
+                                for (int j = 0; j < array.length(); j++) {
 
                                     JSONObject object = array.getJSONObject(j);
                                     String video = object.getString("video");
@@ -490,17 +518,15 @@ public class RedempItemDetailActivity extends AppCompatActivity {
 
                                         ProductVideoModal videoModal = new ProductVideoModal();
                                         JSONObject jsonObject1 = jsonArray.getJSONObject(k);
-                                        String status=jsonObject1.getString("status");
+                                        String status = jsonObject1.getString("status");
 
                                         videoModal.setVideo(jsonObject1.getString("link"));
                                         videoModal.setStatus(jsonObject1.getString("status"));
-                                        Log.e("xzlclxzklvkc", jsonObject1.getString("link") );
+                                        Log.e("xzlclxzklvkc", jsonObject1.getString("link"));
                                         videoModalArrayList.add(videoModal);
                                     }
 
                                 }
-
-
 
 
                             }
