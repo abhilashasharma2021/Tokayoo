@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.androidnetworking.AndroidNetworking;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     class BottomNavigationViewHelper {
 

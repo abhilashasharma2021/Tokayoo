@@ -109,8 +109,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         show_Order();
     }
-
-
     public void show_Order(){
         spin_kit.setVisibility(View.VISIBLE);
         Sprite chasingDots = new ChasingDots();
@@ -247,6 +245,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                                         OrderDetailModal detailModal=new OrderDetailModal();
                                         detailModal.setId(object.getString("cart_id"));
+                                        detailModal.setNewID(id_new);
                                         detailModal.setName(object.getString("name"));
                                         detailModal.setQuantity(object.getString("purchased_quantity"));
                                         detailModal.setWeight(jsonObject.getString("net_weight"));
@@ -256,8 +255,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         detailModal.setPath(object.getString("path"));
                                         detailModal.setPrice(object.getString("purchased_price"));
                                         detailModal.setOrder_id(jsonObject.getString("order_id"));
-
-
                                         orderDetailModalArrayList.add(detailModal);
 
 

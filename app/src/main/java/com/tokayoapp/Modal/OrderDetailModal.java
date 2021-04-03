@@ -2,6 +2,15 @@ package com.tokayoapp.Modal;
 
 public class OrderDetailModal {
     public String image;
+public  String newID;
+
+    public String getNewID() {
+        return newID;
+    }
+
+    public void setNewID(String newID) {
+        this.newID = newID;
+    }
 
     public String getModel() {
         return model;

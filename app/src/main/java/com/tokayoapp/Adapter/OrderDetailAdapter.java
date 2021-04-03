@@ -69,6 +69,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                SharedPreferences.Editor editor = AppConstant.sharedpreferences.edit();
                editor.putString(AppConstant.ORDERID,orderDetailModal.getOrder_id());
                editor.putString(AppConstant.ProdutId, orderDetailModal.getId());
+               editor.putString(AppConstant.newID, orderDetailModal.getNewID());
                editor.commit();
              context.startActivity(new Intent(context,OrderProductDetails.class));
            }

@@ -7,15 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,19 +25,14 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.facebook.internal.DialogFeature;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
-import com.tokayoapp.Adapter.OrderDetailAdapter;
 import com.tokayoapp.Adapter.OrderProductDetailAdapter;
-import com.tokayoapp.Adapter.ProductDetailAdapter;
 import com.tokayoapp.Adapter.ProductVideoAdapter;
 import com.tokayoapp.Adapter.ScrollImagesAdapter;
-import com.tokayoapp.Modal.OrderDetailModal;
 import com.tokayoapp.Modal.ProductDetailModal;
 import com.tokayoapp.Modal.ProductVideoModal;
 import com.tokayoapp.R;
@@ -67,7 +64,8 @@ public class OrderProductDetails extends AppCompatActivity {
     RecyclerView.LayoutManager videomanager;
     SliderView sliderView;
     String strProductSubImage = "";
-
+    ProgressBar simpleProgressBar;
+Button btnReview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,10 +95,19 @@ public class OrderProductDetails extends AppCompatActivity {
         txt_product_name = findViewById(R.id.txt_product_name);
         textModel = findViewById(R.id.textModel);
         textSize = findViewById(R.id.textSize);
+        btnReview = findViewById(R.id.btnReview);
+        simpleProgressBar = findViewById(R.id.simpleProgressBar);
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btnReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup();
             }
         });
 
@@ -109,7 +116,6 @@ public class OrderProductDetails extends AppCompatActivity {
 
 
         show_video();
-
 
         videomanager = new LinearLayoutManager(OrderProductDetails.this, RecyclerView.HORIZONTAL, false);
         rec_product_video.setLayoutManager(videomanager);
@@ -222,6 +228,31 @@ public class OrderProductDetails extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void popup(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.rate_popup);
+        Button btn_add = dialog.findViewById(R.id.btn_add);
+        EditText ratingText = dialog.findViewById(R.id.etEdittext);
+        RatingBar ratingBar = dialog.findViewById(R.id.rating_Star);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                simpleProgressBar.setVisibility(View.VISIBLE);
+                String ratingBarText = ratingText.getText().toString()+ "Rating: "
+                        + ratingBar.getRating();
+
+                if (ratingBar.getRating()>0){
+                    addReview( ""+ratingBar.getRating(),ratingText.getText().toString(),dialog);
+                }else {
+                    Toast.makeText(OrderProductDetails.this, "Please rate the product", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     public void show_orderProduct_detail() {
@@ -429,6 +460,34 @@ public class OrderProductDetails extends AppCompatActivity {
 
 
     }
+
+    public void addReview(String rating, String text, Dialog dialog){
+        AppConstant.sharedpreferences = getSharedPreferences(AppConstant.MyPREFERENCES, Context.MODE_PRIVATE);
+      String  newID = AppConstant.sharedpreferences.getString(AppConstant.newID, "");
+        AndroidNetworking.post(API.add_review)
+                .addBodyParameter("product_id", newID)
+                .addBodyParameter("user_id", strUserId)
+                .addBodyParameter("score", rating)
+                .addBodyParameter("comment", text)
+                .setTag("show Video")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        simpleProgressBar.setVisibility(View.GONE);
+                        dialog.dismiss();
+                        Toast.makeText(OrderProductDetails.this, "Review Added Succcessfully", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("dfghfh", anError.getMessage());
+                        simpleProgressBar.setVisibility(View.GONE);
+                    }
+                });
+    }
+
 }
 
 

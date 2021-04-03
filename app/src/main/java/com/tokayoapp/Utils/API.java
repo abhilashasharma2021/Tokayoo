@@ -8,6 +8,7 @@ public class API {
 
     public static String BASEURL="https://3511535117.co/Tokayo/api/process.php?";
     public  static String loginUser="action=login";
+    public  static String add_review=BASEURL+"action=add_review";
     public  static String RegisterUser="action=signup";
     public  static String Show_slider="action=show_slider";
     public  static String show_brand="action=show_brand";

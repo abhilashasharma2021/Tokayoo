@@ -19,6 +19,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:backgroundTint="#FFFFFF"
+                    android:text="Add Review"
+                    app:cornerRadius="20dp"
+                    android:textSize="12dp"
+                    android:textColor="@color/black" />
+
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
@@ -465,4 +479,11 @@
         android:layout_gravity="center"
         android:visibility="gone"
         app:SpinKit_Color="@color/pink" />
+
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

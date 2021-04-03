@@ -78,7 +78,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment {
 
-
     SliderAdapterExample sliderAdapter;
     List<SliderModel> listOfSlider = new ArrayList<>();
     SliderView sliderView;
